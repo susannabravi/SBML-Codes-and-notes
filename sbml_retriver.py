@@ -3,7 +3,7 @@ import pandas as pd
 from reactome2py import content
 
 # Read and process the text file with pathway details
-with open('/Users/susannabravi/Documents/DS/Tesi/ExtractionProva/complete_list_of_pathways.txt', 'r') as file:
+with open('./complete_list_of_pathways.txt', 'r') as file:
     pathways = file.read().splitlines()
 df = pd.DataFrame([line.split('\t') for line in pathways], columns=['ID', 'Pathway_Name', 'Species'])
 df_human = df[df['Species'] == 'Homo sapiens'].reset_index(drop=True)
