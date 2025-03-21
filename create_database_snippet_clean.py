@@ -41,7 +41,7 @@ def remove_namespaces_and_elements(elem):
     return new_elem
 
 # Specify the directory containing the SBML files.
-data_dir = "/Users/susannabravi/Documents/DS/Tesi/ExtractionProva/sbml_exports"  # Modify as needed.
+data_dir = "./sbml_exports"  # Modify as needed.
 records = []  # This list will store the extracted reaction records.
 
 # Iterate over all SBML files in the directory.
@@ -109,5 +109,5 @@ table = pa.Table.from_pydict({
 })
 
 # Save the table to a Parquet file.
-pq.write_table(table, 'sbml_exports/reactions.parquet')
+pq.write_table(table, './reactions.parquet')
 print("Parquet file 'reactions.parquet' has been created.")
