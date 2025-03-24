@@ -171,3 +171,5 @@ cython_debug/
 .pypirc
 
 sbml_exports
+test.parquet
+train.parquet
