@@ -2,6 +2,7 @@ import os
 import xml.etree.ElementTree as ET
 import pyarrow as pa
 import pyarrow.parquet as pq
+import re
 
 # Define namespaces for RDF and XHTML.
 ns = {
@@ -39,6 +40,17 @@ def remove_namespaces_and_elements(elem):
             new_elem.append(new_child)
 
     return new_elem
+
+def remove_citations(text):
+    if not text:
+        return text, None
+    # Regular expression to match citations like (Lai et al. 2012).
+    pattern = r'\([^)]*et al\.[^)]*\)'
+    citations = re.findall(pattern, text)
+    cleaned_text = re.sub(pattern, '', text)
+    cleaned_text = " ".join(cleaned_text.split())
+    citations_str = "; ".join(citations) if citations else None
+    return cleaned_text, citations_str
 
 # Specify the directory containing the SBML files.
 data_dir = "./sbml_exports"  # Modify as needed.
@@ -91,12 +103,22 @@ for filename in os.listdir(data_dir):
                 notes_text = p_elem.text.strip()
             elif notes_elem.text:
                 notes_text = notes_elem.text.strip()
+         # Store the original notes before processing.
+        original_notes = notes_text
         
-        # Append the extracted data to the records list, including the file identifier.
+        # Remove citations from the notes.
+        if notes_text:
+            cleaned_notes, only_references = remove_citations(notes_text)
+        else:
+            cleaned_notes, only_references = notes_text, None
+        
+        # Append the extracted data including original and processed notes.
         records.append({
-            'file_id': filename,  # The file identifier is set to the filename.
+            'file_id': filename,
             'reaction_id': reaction_id,
-            'notes': notes_text,
+            'original_notes': original_notes,
+            'notes': cleaned_notes,
+            'only_references': only_references,
             'snippet': snippet
         })
 
@@ -104,9 +126,12 @@ for filename in os.listdir(data_dir):
 table = pa.Table.from_pydict({
     'file_id': [record['file_id'] for record in records],
     'reaction_id': [record['reaction_id'] for record in records],
+    'original_notes': [record['original_notes'] for record in records],
     'notes': [record['notes'] for record in records],
+    'only_references': [record['only_references'] for record in records],
     'snippet': [record['snippet'] for record in records]
 })
+
 
 # Save the table to a Parquet file.
 pq.write_table(table, './reactions.parquet')
