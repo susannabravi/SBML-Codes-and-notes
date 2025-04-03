@@ -27,7 +27,7 @@ dataset = dataset.rename_column("notes", "target")
 print(dataset)
 
 # Load the model and tokenizer
-
+'''
 model = AutoModelForCausalLM.from_pretrained("deepseek-ai/DeepSeek-Coder-V2-Lite-Base", trust_remote_code=True)
 tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-Coder-V2-Lite-Base", trust_remote_code=True)
 
@@ -46,3 +46,4 @@ tokenized_dataset = dataset.map(
     preprocess_function,
     batched=True
 )
+'''

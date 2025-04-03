@@ -44,12 +44,19 @@ def remove_namespaces_and_elements(elem):
 def remove_citations(text):
     if not text:
         return text, None
-    # Regular expression to match citations like (Lai et al. 2012).
-    pattern = r'\([^)]*et al\.[^)]*\)'
+    # (Author et al. Year)
+    pattern = r'\(\s*[A-Z][^)]*et al\.[^)]*\s?\d{4}\)'
+    # Find all citations matching the pattern.
     citations = re.findall(pattern, text)
+    # Remove the citations from the text.
     cleaned_text = re.sub(pattern, '', text)
+    # Remove extra spaces before punctuation (e.g., " ) ." becomes ").")
+    cleaned_text = re.sub(r'\s+([.,;:!?])', r'\1', cleaned_text)
+    # Clean up any remaining extra whitespace.
     cleaned_text = " ".join(cleaned_text.split())
+    # Join citations with a semicolon if any were found.
     citations_str = "; ".join(citations) if citations else None
+
     return cleaned_text, citations_str
 
 # Specify the directory containing the SBML files.
