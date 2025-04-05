@@ -1,0 +1,5 @@
+datasets==3.5.0
+pandas==2.2.3
+pyarrow==19.0.1
+reactome2py==3.0.0
+transformers==4.50.3
