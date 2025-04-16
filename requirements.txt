@@ -1,5 +1,5 @@
 transformers==4.39.3
-torch==2.6.0+cu124
+torch==2.6.0
 datasets==3.5.0
 pandas==2.2.3
 pyarrow==19.0.1
