@@ -33,5 +33,4 @@ RUN pip install --upgrade pip && \
 # Download models
 # RUN python download_models.py
 
-# Optional: Expose ports or CMD
-CMD ["python"]
+#CMD ["python"]
