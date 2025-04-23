@@ -1,5 +1,5 @@
 # Base image with CUDA 12.4 and Ubuntu 22.04
-FROM nvidia/cuda:12.4.0-base-ubuntu22.04
+FROM nvidia/cuda:12.4.0-devel-ubuntu22.04
 
 # Set up environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -22,15 +22,13 @@ WORKDIR /app
 
 # Copy application files
 COPY requirements.txt /app/
-# COPY download_models.py /app/
-# COPY scripts/ /app/
-# COPY utils/ /app/
 
 # Install Python packages
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Download models
-# RUN python download_models.py
+# Install flash-attn (requires CUDA compiler present in devel image)
+RUN pip install --no-cache-dir flash_attn --no-build-isolation
 
-#CMD ["python"]
+# Uncomment if you want to auto-run something
+# CMD ["python", "download_models.py"]

@@ -1,6 +1,8 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModelForCausalLM
 import os
+import flash_attn
+
 
 def download_model_hf(model_path, model_name):
     """Download a Hugging Face model and tokenizer to the specified directory"""
