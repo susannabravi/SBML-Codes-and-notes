@@ -5,10 +5,10 @@ from reactome2py import content
 
 # === CONFIG ===
 output_dir = './sbml_exports/'
-input_file = './complete_list_of_pathways.txt'
+input_file = './complete_list_of_pathways_nuova.txt'
 retry_file = 'failed_downloads.txt'
 max_workers = 15
-retry_mode = False  # Set to True to retry from failed_downloads.txt
+retry_mode = True  # Set to True to retry from failed_downloads.txt
 
 # === LOAD IDS ===
 if retry_mode:
@@ -36,6 +36,10 @@ def download_pathway(path_id):
     
     try:
         result = content.export_event(id=path_id, format='sbml', file=path_id, path=output_dir)
+          # Check result for signs of failure
+        if result is None:
+            failed_ids.append(path_id)
+            return f"No response (possibly 404) for {path_id}"
         return f"Exported {path_id}"
     except Exception as e:
         failed_ids.append(path_id)
