@@ -27,8 +27,7 @@ COPY requirements.txt /app/
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Install flash-attn (requires CUDA compiler present in devel image)
+# Install flash-attn 
 RUN pip install --no-cache-dir flash_attn --no-build-isolation
 
-# Uncomment if you want to auto-run something
 # CMD ["python", "download_models.py"]
