@@ -65,6 +65,7 @@ def remove_citations(text):
 def process_file(file_path):
     filename = os.path.basename(file_path)
     records = []
+    reaction_count = 0
 
     # Parse the SBML file.
     try:
@@ -84,7 +85,8 @@ def process_file(file_path):
         reaction_xpath = ".//sbml:reaction"
 
     reactions = root.findall(reaction_xpath, default_ns)
-    print(f"Found {len(reactions)} reaction(s) in {filename}.")
+    reaction_count = len(reactions)
+    print(f"Found {reaction_count} reaction(s) in {filename}.")
 
     # Iterate over each reaction element.
     for reaction in reactions:
@@ -125,13 +127,14 @@ def process_file(file_path):
             'snippet': snippet
         })
 
-    return records
+    return records, reaction_count
 
 def main():
     data_dir = "./sbml_exports"
     files = [os.path.join(data_dir, f) for f in os.listdir(data_dir) if f.endswith(".sbml")]
     total_files = len(files)
     all_records = []
+    reaction_counts = []
     completed = 0
 
     print(f"Processing {total_files} SBML files...")
@@ -141,13 +144,15 @@ def main():
         futures = {executor.submit(process_file, f): f for f in files}
         for future in as_completed(futures):
             file_path = futures[future]
-            result = future.result()
+            result,reaction_count = future.result()
             all_records.extend(result)
+            reaction_counts.append({'file_id': os.path.basename(file_path), 'reaction_count': reaction_count})
             completed += 1
             print(f"[{completed}/{total_files}] Processed: {os.path.basename(file_path)}")
 
     print(f"\nFinished processing {completed} of {total_files} files.")
 
+    # Create table for dataset
     table = pa.Table.from_pydict({
         'file_id': [r['file_id'] for r in all_records],
         'reaction_id': [r['reaction_id'] for r in all_records],
@@ -158,6 +163,14 @@ def main():
     })
     pq.write_table(table, './reactions.parquet')
     print("Parquet file 'reactions.parquet' has been created.")
+
+    # Create table for reaction counts
+    reaction_count_table = pa.Table.from_pydict({
+        'file_id': [r['file_id'] for r in reaction_counts],
+        'reaction_count': [r['reaction_count'] for r in reaction_counts]
+    })
+    pq.write_table(reaction_count_table, './reaction_counts.parquet')
+    print("Parquet file 'reaction_counts.parquet' has been created.")
 
 # Necessary for using ProcessPoolExecutor
 if __name__ == "__main__":

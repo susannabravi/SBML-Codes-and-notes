@@ -2,8 +2,6 @@ import pandas as pd
 from datasets import load_dataset
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-
-
 # Params
 max_source_length = 128
 max_target_length = 128
