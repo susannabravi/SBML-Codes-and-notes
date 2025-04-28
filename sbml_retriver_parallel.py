@@ -7,7 +7,7 @@ from reactome2py import content
 output_dir = './sbml_exports/'
 input_file = './complete_list_of_pathways_nuova.txt'
 retry_file = 'failed_downloads.txt'
-max_workers = 15 # A casaccio per ora
+max_workers = min(int(os.cpu_count()/2), 15)
 retry_mode = False  # Set to True to retry from failed_downloads.txt
 
 
@@ -34,15 +34,9 @@ def download_pathway(path_id):
     # If the file already exists, skip it.
     existing_files = os.listdir(output_dir)
     if any(fname.startswith(path_id) for fname in existing_files):
-        return f"Skipped {path_id} (already exists)"
-    
+        print(f"Skipped {path_id} (already exists)")
     try:
         result = content.export_event(id=path_id, format='sbml', file=path_id, path=output_dir)
-          # Check result for signs of failure
-        if result is None:
-            failed_ids.append(path_id)
-            return f"No response for {path_id}"
-        return f"Exported {path_id}"
     except Exception as e:
         failed_ids.append(path_id)
         return f"Failed {path_id}: {str(e)}"
@@ -51,5 +45,11 @@ def download_pathway(path_id):
 # Parallel download 
 with ThreadPoolExecutor(max_workers = max_workers) as executor:
     futures = [executor.submit(download_pathway, pid) for pid in id_list]
-    for future in as_completed(futures):
-        print(future.result())
+
+# Save faildes_ids to retry file.
+if failed_ids:
+    with open(retry_file, 'w') as f:
+        f.write("\n".join(failed_ids))
+    print(f"Failed downloads saved to {retry_file}")
+else:
+    print("No failed downloads.")

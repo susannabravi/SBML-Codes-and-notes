@@ -5,6 +5,9 @@ import pyarrow.parquet as pq
 import re
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
+# Define num of max_workers.
+max_workers = int(os.cpu_count()/2)
+
 # Define namespaces for RDF and XHTML.
 ns = {
     'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
@@ -134,7 +137,7 @@ def main():
     print(f"Processing {total_files} SBML files...")
 
     # Parallel part 
-    with ProcessPoolExecutor() as executor:
+    with ProcessPoolExecutor(max_workers = max_workers) as executor:
         futures = {executor.submit(process_file, f): f for f in files}
         for future in as_completed(futures):
             file_path = futures[future]
