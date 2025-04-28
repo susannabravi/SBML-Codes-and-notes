@@ -1,11 +1,10 @@
 import requests
 
-# === CONFIG ===
+# Link to reactomr and output file 
 url = "https://reactome.org/download/current/ReactomePathways.txt"
 output_file = "complete_list_of_pathways_nuova.txt"
 
-# === DOWNLOAD ===
-print(f"Downloading pathway list from Reactome...")
+print(f"Downloading pathway list from Reactome")
 response = requests.get(url)
 
 if response.status_code == 200:

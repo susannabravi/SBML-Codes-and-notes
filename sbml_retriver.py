@@ -9,7 +9,7 @@ df = pd.DataFrame([line.split('\t') for line in pathways], columns=['ID', 'Pathw
 df_human = df[df['Species'] == 'Homo sapiens'].reset_index(drop=True)
 id_list = list(df_human['ID'])
 
-# Try with only the first 20 files 
+# Try with only the first 100 files 
 id_list = id_list[:100] 
 
 # Define the output directory for SBML files
