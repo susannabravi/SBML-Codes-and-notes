@@ -44,23 +44,38 @@ def remove_namespaces_and_elements(elem):
             new_elem.append(new_child)
     return new_elem
 
+import re
+
+import re
+
 def remove_citations(text):
     if not text:
         return text, None
-    # (Author et al. Year)
-    pattern = r'\(\s*[A-Z][^)]*et al\.[^)]*\s?\d{4}\)'
-    # Find all citations matching the pattern.
-    citations = re.findall(pattern, text)
-    # Remove the citations from the text.
-    cleaned_text = re.sub(pattern, '', text)
-    # Remove extra spaces before punctuation (e.g., " ) ." becomes ").")
-    cleaned_text = re.sub(r'\s+([.,;:!?])', r'\1', cleaned_text)
-    # Clean up any remaining extra whitespace.
-    cleaned_text = " ".join(cleaned_text.split())
-    # Join citations with a semicolon if any were found.
+
+    citations = []
+
+    # Pattern 1: Parenthetical citations (e.g., (Amin et al, 2016), (Lambert 2008))
+    paren_pattern = r'\(\s*(?:e\.g\.\s*)?[A-Z][^()]*?\d{4}[a-z]?\s*\)'
+    paren_citations = re.findall(paren_pattern, text)
+    citations.extend(paren_citations)
+    text = re.sub(paren_pattern, '', text)
+
+    # Pattern 2: Inline citations (e.g., Amin et al, 2016 or Katayama et al 2014)
+    inline_pattern = r'\b[A-Z][a-z]+(?:\s(?:et al\.?|and\s[A-Z][a-z]+)?)?(?:,)?\s+et al\.?(?:,)?\s*\d{4}[a-z]?\b'
+    inline_citations = re.findall(inline_pattern, text)
+    citations.extend(inline_citations)
+    text = re.sub(inline_pattern, '', text)
+
+    # Clean up stray colons or punctuation left behind
+    text = re.sub(r'\s*:\s*', ': ', text)  # fix spacing after colons
+    text = re.sub(r'\s+([.,;:!?])', r'\1', text)  # remove space before punctuation
+    text = " ".join(text.split())  # remove excessive whitespace
+
     citations_str = "; ".join(citations) if citations else None
 
-    return cleaned_text, citations_str
+    return text, citations_str
+
+
 
 def process_file(file_path):
     filename = os.path.basename(file_path)
