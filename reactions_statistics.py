@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -12,32 +13,41 @@ df = pd.read_parquet("./reaction_counts.parquet")
 reaction_count = df['reaction_count']
 
 # Function to plot data
-def plot_data(data, logscale_x=False, logscale_y=False, outputname="fig1.png", n_bins=30, boxplot=False):
-    if logscale_x:
-        data = np.log(data)
+def plot_data(data, logscale_x=False, logscale_y=False, outputname="fig1.png", output_dir="plots", n_bins=30, boxplot=False):
+    # Create output directory if it doesn't exist
+    os.makedirs(output_dir, exist_ok=True)
 
+    # Prepare data
+    if logscale_x:
+        data = np.log(data)  
+
+    # Set up figure layout
     if boxplot:
         fig, axs = plt.subplots(2, 1, figsize=(8, 6), gridspec_kw={'height_ratios': [3, 1]})
     else:
         fig, axs = plt.subplots(1, 1, figsize=(8, 4))
-        axs = [axs]  
+        axs = [axs]  # always indexable
 
-    sns.histplot(data, kde=True, bins=n_bins, ax=axs[0])
+    # Histogram
+    sns.histplot(data, stat='density', kde=True, bins=n_bins, ax=axs[0])
     axs[0].set_title('Distribution of Reaction Counts')
-    axs[0].set_xlabel('Reaction Count' if not logscale_x else 'log(Reaction Count)')
-    axs[0].set_ylabel('Frequency')
+    axs[0].set_xlabel('Reaction Count' if not logscale_x else 'log(1 + Reaction Count)')
+    axs[0].set_ylabel('Density')
     axs[0].grid(True)
 
     if logscale_y:
         axs[0].set_yscale('log')
 
+    # Optional boxplot
     if boxplot:
         sns.boxplot(data, ax=axs[1], orient='h')
-        axs[1].set_xlabel('Reaction Count' if not logscale_x else 'log(Reaction Count)')
+        axs[1].set_xlabel('Reaction Count' if not logscale_x else 'log(1 + Reaction Count)')
         axs[1].grid(True)
 
+    # Save into folder
+    full_path = os.path.join(output_dir, outputname)
     plt.tight_layout()
-    plt.savefig(outputname)
+    plt.savefig(full_path)
     plt.close()
 
 # Function to print stats
@@ -83,4 +93,6 @@ reaction_count_filtered = df_filtered['reaction_count']
 
 plot_data(reaction_count_filtered, boxplot = True, outputname = "fig3.png")
 print_stats(reaction_count_filtered)
+
+# Non sarebbe male vedere che c'è dal 95esimo percentile in poi... 
 

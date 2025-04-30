@@ -26,3 +26,9 @@ for idx in df.index[:num_samples]:
 
 for idx in df.index[:100]:
     print(f"\nOriginal Notes:\n{df.at[idx, 'original_notes']}")
+
+# How many references per file 
+# How many unique references
+# References count among all the files 
+# How many references per reaction
+#
