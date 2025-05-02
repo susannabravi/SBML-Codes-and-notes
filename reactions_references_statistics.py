@@ -72,11 +72,10 @@ print(f"\nTotal number of unique references across all files: {sum(df_refs_per_f
 # INSPECT REACTIONS
 # While pathways (file_id) are all unique, the reactions inside them are not, so if I group for reaction_id
 # I get less reactions than the total length of the dataframe.
-
+df2 = df.drop(["file_id","parsed_references"], axis = 1)
 # Analyze the unique values in each column
-print(f"\nUnique values for each column:{df.nunique()}")
+print(f"\nUnique values for each column:\n{df.drop('parsed_references',axis=1).nunique()}")
 # Drop column file_id in order to remove the duplicates.
-df2 = df.drop("file_id", axis = 1)
 print(f"\nNumber of rows in the original data:{len(df)}")
 df2 = df2.drop_duplicates().reset_index(drop=True)
 print(f"\nNumber of rows after dropping duplicates:{len(df2)}")
