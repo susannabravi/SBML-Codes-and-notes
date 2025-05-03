@@ -1,6 +1,13 @@
+import os
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+import numpy as np
+from descriptive_stat_functions import plot_data, print_stats
 
 df = pd.read_parquet("./reactions.parquet")
+ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 
 # No references data -----------------------
 df_nocit = df[df['only_references'].isna()]
@@ -67,8 +74,33 @@ print(df_refs_per_file.head(10))
 print(f"\nTotal number of references in all files (with duplicates): {sum(df_refs_per_file.total_references.values)}")
 print(f"\nTotal number of unique references across all files: {sum(df_refs_per_file.unique_references.values)}")
 
-# References per reactions statistics -----------------------------
+plot_data(data = df_refs_per_file['total_references'],
+          outputname = "fig4.png",
+          title = "References per file (with duplicates)",
+          xlabel = "References",
+          color = ggplot_colors[1],
+          boxplot = True
+          )
+plot_data(data =  df_refs_per_file['total_references'],
+          outputname = "fig5.png",
+          title = "Referencese per reactions with log scale x",
+          xlabel = "log(References)",
+          color = ggplot_colors[1],
+          boxplot = True,
+          logscale_x = True
+          )
+plot_data(data =  df_refs_per_file['total_references'],
+          outputname = "fig6.png",
+          title = "Referencese per reactions cutted",
+          xlabel = "References",
+          color = ggplot_colors[1],
+          boxplot = True,
+          cut_percentile=(0,90)
+          )
 
+print_stats(df_refs_per_file['total_references'])
+
+# References per reactions statistics -----------------------------
 # INSPECT REACTIONS
 # While pathways (file_id) are all unique, the reactions inside them are not, so if I group for reaction_id
 # I get less reactions than the total length of the dataframe.
@@ -94,6 +126,31 @@ unique_refs_per_reactions = df.groupby('reaction_id')['parsed_references'].apply
 )
 
 # Results
-print(f"\nTotal number of references per reaction:{references_per_reaction.head(10)}") 
-print(f"\nUnique references per reaction:{unique_refs_per_reactions.head(10)}") 
+print(f"\nTotal number of references per reaction:\n{references_per_reaction.head(10)}") 
+print(f"\nUnique references per reaction:\n{unique_refs_per_reactions.head(10)}") 
 
+plot_data(data = references_per_reaction,
+          outputname = "fig7.png",
+          title = "Referencese per reactions",
+          xlabel = "References",
+          color = ggplot_colors[2],
+          boxplot = True
+          )
+plot_data(data = references_per_reaction,
+          outputname = "fig8.png",
+          title = "Referencese per reactions",
+          xlabel = "References",
+          color = ggplot_colors[2],
+          boxplot = True,
+          logscale_x = True
+          )
+plot_data(data = references_per_reaction,
+          outputname = "fig9.png",
+          title = "Referencese per reactions",
+          xlabel = "References",
+          color = ggplot_colors[2],
+          boxplot = True,
+          cut_percentile=(0,90)
+          )
+
+print_stats(references_per_reaction)
