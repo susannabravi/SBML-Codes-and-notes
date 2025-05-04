@@ -21,11 +21,12 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.10 1 &
 WORKDIR /app
 
 # Copy application files
-COPY requirements.txt /app/
+COPY new_requirements2.txt /app/
 
 # Install Python packages
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install packaging && \
+    pip install --no-cache-dir -r new_requirements2.txt
 
 # Install flash-attn 
 RUN pip install --no-cache-dir flash_attn --no-build-isolation
