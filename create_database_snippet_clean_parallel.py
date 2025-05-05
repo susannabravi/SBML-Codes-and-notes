@@ -54,19 +54,19 @@ def remove_citations(text):
 
     citations = []
 
-    # Pattern 1: Parenthetical citations (e.g., (Amin et al, 2016), (Lambert 2008))
+    # Pattern 1: (Amin et al, 2016), (Lambert 2008))
     paren_pattern = r'\(\s*(?:e\.g\.\s*)?[A-Z][^()]*?\d{4}[a-z]?\s*\)'
     paren_citations = re.findall(paren_pattern, text)
     citations.extend(paren_citations)
     text = re.sub(paren_pattern, '', text)
 
-    # Pattern 2: Inline citations (e.g., Amin et al, 2016 or Katayama et al 2014)
+    # Pattern 2: (Amin et al, 2016 or Katayama et al 2014)
     inline_pattern = r'\b[A-Z][a-z]+(?:\s(?:et al\.?|and\s[A-Z][a-z]+)?)?(?:,)?\s+et al\.?(?:,)?\s*\d{4}[a-z]?\b'
     inline_citations = re.findall(inline_pattern, text)
     citations.extend(inline_citations)
     text = re.sub(inline_pattern, '', text)
 
-    # Clean up stray colons or punctuation left behind
+    # Clean up 
     text = re.sub(r'\s*:\s*', ': ', text)  # fix spacing after colons
     text = re.sub(r'\s+([.,;:!?])', r'\1', text)  # remove space before punctuation
     text = " ".join(text.split())  # remove excessive whitespace

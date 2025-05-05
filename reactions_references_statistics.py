@@ -50,16 +50,15 @@ print(f"\nUnique values for each column:\n{df.nunique()}")
 
 # Function to extract the references ---> should I add it to the main dataset? 
 def extract_references(entry):
-    # Dealing with None references
     if not isinstance(entry, str):
         return []
     refs = []
     for group in entry.split(';'):
         group = group.strip().strip('()')
-        if group:
-            refs.append(group)
+        refs.extend([ref.strip() for ref in group.split(',')])
     return refs
 
+# Apply extraction
 df['parsed_references'] = df['only_references'].apply(extract_references)
 
 # How many unique references in general
