@@ -12,13 +12,17 @@ def plot_data(
     logscale_y=False,
     outputname="fig1.png",
     output_dir="plots",
-    n_bins=30,
+    n_bins='auto',
+    discrete = None,
     boxplot=False,
     title=None,
     xlabel=None,
     ylabel="Density",
     color=None,
-    cut_percentile=(0, 100)  
+    cut_percentile=(0, 100),
+    log_scale=None,
+    save = False,
+    show = True
 ):
     plt.style.use('ggplot')
     # Ensure output directory exists
@@ -33,7 +37,7 @@ def plot_data(
 
     # Log transform data if needed
     if logscale_x:
-        data = np.log1p(data)  # safer for zero values
+        data = np.log10(data)  
 
     # Default labels
     if title is None:
@@ -53,7 +57,7 @@ def plot_data(
         axs = [ax]
 
     # Histogram
-    sns.histplot(data, stat='density', kde=True, bins=n_bins, ax=axs[0], color=color)
+    sns.histplot(data, stat='density', kde=True, bins=n_bins, ax=axs[0], color=color, log_scale=log_scale, discrete=discrete)
     axs[0].set_title(title)
     axs[0].set_xlabel(xlabel)
     axs[0].set_ylabel(ylabel)
@@ -71,12 +75,15 @@ def plot_data(
     # Save figure
     full_path = os.path.join(output_dir, outputname)
     plt.tight_layout()
-    plt.savefig(full_path)
-    plt.close()
+    if save == True:
+        plt.savefig(full_path)
+        plt.close()
+    if show == True:
+        plt.show()
 
 def print_stats(data):
     print(f"\nDescriptive Statistics:")
-    print(f"Count: {data.count()}")
+    #print(f"Count: {data.count()}")
     print(f"Mean: {data.mean():.2f}")
     print(f"Median: {data.median():.2f}")
     print(f"Standard Deviation: {data.std():.2f}")

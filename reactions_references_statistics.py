@@ -95,7 +95,7 @@ plot_data(data = df_refs_per_file['total_references'],
           )
 plot_data(data =  df_refs_per_file['total_references'],
           outputname = "fig5.png",
-          title = "Referencese per file with log scale x",
+          title = "Referencese per file with log scale x (with duplicates)",
           xlabel = "log(References)",
           color = ggplot_colors[1],
           boxplot = True,
@@ -103,7 +103,7 @@ plot_data(data =  df_refs_per_file['total_references'],
           )
 plot_data(data =  df_refs_per_file['total_references'],
           outputname = "fig6.png",
-          title = "Referencese per file cutted",
+          title = "Referencese per file cutted (with duplicates)",
           xlabel = "References",
           color = ggplot_colors[1],
           boxplot = True,
@@ -111,6 +111,30 @@ plot_data(data =  df_refs_per_file['total_references'],
           )
 
 print_stats(df_refs_per_file['total_references'])
+
+plot_data(data = df_refs_per_file['unique_references'],
+          outputname = "fig7.png",
+          title = "References per file (without duplicates)",
+          xlabel = "References",
+          color = ggplot_colors[2],
+          boxplot = True
+          )
+plot_data(data =  df_refs_per_file['unique_references'],
+          outputname = "fig8.png",
+          title = "Referencese per file with log scale x (without duplicates)",
+          xlabel = "log(References)",
+          color = ggplot_colors[2],
+          boxplot = True,
+          logscale_x = True
+          )
+plot_data(data =  df_refs_per_file['unique_references'],
+          outputname = "fig9.png",
+          title = "Referencese per file cutted (without duplicates)",
+          xlabel = "References",
+          color = ggplot_colors[2],
+          boxplot = True,
+          cut_percentile=(0,90)
+          )
 
 # References per reactions statistics -----------------------------
 # INSPECT REACTIONS
@@ -152,27 +176,29 @@ print(f"\nTotal number of references per reaction:\n{references_per_reaction.hea
 print(f"\nUnique references per reaction:\n{unique_refs_per_reactions.head(10)}") 
 
 plot_data(data = references_per_reaction,
-          outputname = "fig7.png",
+          outputname = "fig10.png",
           title = "Referencese per reactions",
           xlabel = "References",
-          color = ggplot_colors[2],
+          color = ggplot_colors[3],
           boxplot = True
           )
 plot_data(data = references_per_reaction,
-          outputname = "fig8.png",
+          outputname = "fig11.png",
           title = "Referencese per reactions with log scale x",
           xlabel = "References",
-          color = ggplot_colors[2],
+          color = ggplot_colors[3],
           boxplot = True,
-          logscale_x = True
+          logscale_x = True,
+          n_bins = 15
           )
 plot_data(data = references_per_reaction,
-          outputname = "fig9.png",
+          outputname = "fig12.png",
           title = "Referencese per reactions cutted",
           xlabel = "References",
-          color = ggplot_colors[2],
+          color = ggplot_colors[3],
           boxplot = True,
-          cut_percentile=(0,90)
+          cut_percentile=(0,90),
+          n_bins = 15
           )
 
 print_stats(references_per_reaction)
