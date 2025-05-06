@@ -22,7 +22,8 @@ def plot_data(
     cut_percentile=(0, 100),
     log_scale=None,
     save = False,
-    show = True
+    show = True,
+    figsize = (6,4)
 ):
     plt.style.use('ggplot')
     # Ensure output directory exists
@@ -51,9 +52,9 @@ def plot_data(
 
     # Set up plot layout
     if boxplot:
-        fig, axs = plt.subplots(2, 1, figsize=(8, 6), gridspec_kw={'height_ratios': [3, 1]})
+        fig, axs = plt.subplots(2, 1, figsize = figsize, gridspec_kw={'height_ratios': [3, 1]})
     else:
-        fig, ax = plt.subplots(1, 1, figsize=(8, 4))
+        fig, ax = plt.subplots(1, 1, figsize = figsize)
         axs = [ax]
 
     # Histogram
@@ -92,3 +93,12 @@ def print_stats(data):
     print(f"25th percentile (Q1): {np.percentile(data, 25):.2f}")
     print(f"75th percentile (Q3): {np.percentile(data, 75):.2f}")
     print(f"IQR (Interquartile Range): {np.percentile(data, 75) - np.percentile(data, 25):.2f}")
+
+def extract_references(entry):
+    if not isinstance(entry, str):
+        return []
+    refs = []
+    for group in entry.split(';'):
+        group = group.strip().strip('()')
+        refs.extend([ref.strip() for ref in group.split(',')])
+    return refs

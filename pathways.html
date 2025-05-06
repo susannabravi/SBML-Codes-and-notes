@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Reactions per Pathways</title>
+<title>Pathways Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="pathways_files/libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="pathways_files/libs/clipboard/clipboard.min.js"></script>
 <script src="pathways_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="pathways_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="pathways_files/libs/quarto-html/popper.min.js"></script>
@@ -69,6 +69,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="pathways_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="pathways_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="pathways_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -81,7 +84,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Reactions per Pathways</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Pathways Analysis</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -98,32 +101,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="raw-data" class="level2">
-<h2 class="anchored" data-anchor-id="raw-data">Raw data</h2>
-<p>There are 2709 human pathways on Reactome, in this report I’ll explore the reactions distribution among the pathways.</p>
-<div id="517a9f0a" class="cell" data-execution_count="1">
+<p>How many unique vales among the variables?</p>
+<div id="90c2092c" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> descriptive_stat_functions <span class="im">import</span> plot_data, print_stats</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the Parquet file into a DataFrame</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reaction_counts.parquet"</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>reaction_count <span class="op">=</span> df[<span class="st">'reaction_count'</span>]</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>plot_data(reaction_count, boxplot <span class="op">=</span> <span class="va">True</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>print_stats(reaction_count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the big dataset </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reactions.parquet"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df.nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>file_id             2769
+reaction_id        15357
+original_notes     14802
+notes              14799
+only_references    10458
+snippet            70334
+dtype: int64</code></pre>
+</div>
+</div>
+<section id="reactions-per-pathways" class="level1">
+<h1>Reactions per pathways</h1>
+<section id="raw-data" class="level2">
+<h2 class="anchored" data-anchor-id="raw-data">Raw data</h2>
+<div id="c6587aa9" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read Reaction Count data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_count <span class="op">=</span> pd.read_parquet(<span class="st">"./reaction_counts.parquet"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>reaction_count <span class="op">=</span> df_count[<span class="st">'reaction_count'</span>]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plot_data(reaction_count, boxplot <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>print_stats(reaction_count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="pathways_files/figure-html/cell-2-output-1.png" width="759" height="566" class="figure-img"></p>
+<p><img src="pathways_files/figure-html/cell-4-output-1.png" width="558" height="374" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -140,63 +154,142 @@ Maximum: 2582
 IQR (Interquartile Range): 15.00</code></pre>
 </div>
 </div>
-<div id="a2e2070b" class="cell" data-execution_count="2">
+<div id="2277c165" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the row with the maximum reaction count</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>max_idx <span class="op">=</span> df[<span class="st">'reaction_count'</span>].idxmax()  </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>max_row <span class="op">=</span> df.loc[max_idx]   </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">File with Maximum Reaction Count:"</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"file_id: </span><span class="sc">{</span>max_row[<span class="st">'file_id'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reaction_count: </span><span class="sc">{</span>max_row[<span class="st">'reaction_count'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#R-HSA-162582.sbml</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the DataFrame by reaction_count in descending order</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>sorted_df <span class="op">=</span> df.sort_values(by<span class="op">=</span><span class="st">'reaction_count'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the top files</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Files sorted by reaction_count (descending):"</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sorted_df.head(<span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the row with the maximum reaction count</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>max_idx <span class="op">=</span> df_count[<span class="st">'reaction_count'</span>].idxmax()  </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>max_row <span class="op">=</span> df_count.loc[max_idx]   </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">File with Maximum Reaction Count: </span><span class="sc">{</span>max_row[<span class="st">'file_id'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reaction_count: </span><span class="sc">{</span>max_row[<span class="st">'reaction_count'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#R-HSA-162582.sbml</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the DataFrame by reaction_count in descending order</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>sorted_df <span class="op">=</span> df_count.sort_values(by<span class="op">=</span><span class="st">'reaction_count'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the top files</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Files sorted by reaction_count (descending):"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>sorted_df.head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-File with Maximum Reaction Count:
-file_id: R-HSA-162582.sbml
+File with Maximum Reaction Count: R-HSA-162582.sbml
 reaction_count: 2582
 
-Files sorted by reaction_count (descending):
-                 file_id  reaction_count
-2768   R-HSA-162582.sbml            2582
-2767  R-HSA-1430728.sbml            2355
-2761  R-HSA-1643685.sbml            1940
-2765   R-HSA-168256.sbml            1737
-2227    R-HSA-74160.sbml            1141
-2093  R-HSA-5663205.sbml             999
-2313   R-HSA-556833.sbml             994
-1608  R-HSA-1266738.sbml             956
-2760    R-HSA-73857.sbml             940
-2759   R-HSA-392499.sbml             891
-1770   R-HSA-212436.sbml             879
-1219  R-HSA-1280215.sbml             791
-2763  R-HSA-9006934.sbml             759
-2766  R-HSA-9824446.sbml             753
-2077   R-HSA-168249.sbml             744</code></pre>
+Files sorted by reaction_count (descending):</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">file_id</th>
+<th data-quarto-table-cell-role="th">reaction_count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2768</td>
+<td>R-HSA-162582.sbml</td>
+<td>2582</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2767</td>
+<td>R-HSA-1430728.sbml</td>
+<td>2355</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2761</td>
+<td>R-HSA-1643685.sbml</td>
+<td>1940</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2765</td>
+<td>R-HSA-168256.sbml</td>
+<td>1737</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2227</td>
+<td>R-HSA-74160.sbml</td>
+<td>1141</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2093</td>
+<td>R-HSA-5663205.sbml</td>
+<td>999</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2313</td>
+<td>R-HSA-556833.sbml</td>
+<td>994</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1608</td>
+<td>R-HSA-1266738.sbml</td>
+<td>956</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2760</td>
+<td>R-HSA-73857.sbml</td>
+<td>940</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2759</td>
+<td>R-HSA-392499.sbml</td>
+<td>891</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1770</td>
+<td>R-HSA-212436.sbml</td>
+<td>879</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1219</td>
+<td>R-HSA-1280215.sbml</td>
+<td>791</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2763</td>
+<td>R-HSA-9006934.sbml</td>
+<td>759</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2766</td>
+<td>R-HSA-9824446.sbml</td>
+<td>753</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2077</td>
+<td>R-HSA-168249.sbml</td>
+<td>744</td>
+</tr>
+</tbody>
+</table>
+
+</div>
 </div>
 </div>
 </section>
 <section id="log-scaled-data" class="level2">
 <h2 class="anchored" data-anchor-id="log-scaled-data">Log-scaled data</h2>
 <p>Log10 transformation of the data</p>
-<div id="665396c7" class="cell" data-execution_count="3">
+<div id="1703224f" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Log-scaled data ---------------------------------</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plot_data(reaction_count, logscale_x <span class="op">=</span> <span class="va">True</span>, outputname <span class="op">=</span> <span class="st">"fig2.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Log-scaled data ---------------------------------</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plot_data(reaction_count, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>          logscale_x <span class="op">=</span> <span class="va">True</span>, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig2.png"</span>, </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>, </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>          xlabel<span class="op">=</span> <span class="st">"Log10 Reactions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="pathways_files/figure-html/cell-4-output-1.png" width="759" height="374" class="figure-img"></p>
+<p><img src="pathways_files/figure-html/cell-6-output-1.png" width="574" height="374" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -204,20 +297,20 @@ Files sorted by reaction_count (descending):
 </section>
 <section id="filtered-data-90th-percentile" class="level2">
 <h2 class="anchored" data-anchor-id="filtered-data-90th-percentile">Filtered data 90th percentile</h2>
-<div id="034db281" class="cell" data-execution_count="4">
+<div id="2e08e216" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>perc <span class="op">=</span> np.percentile(df[<span class="st">'reaction_count'</span>], <span class="dv">90</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="op">=</span> df[df[<span class="st">'reaction_count'</span>] <span class="op">&lt;=</span> perc]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>reaction_count_filtered <span class="op">=</span> df_filtered[<span class="st">'reaction_count'</span>]</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plot_data(reaction_count_filtered, boxplot <span class="op">=</span> <span class="va">True</span>, outputname <span class="op">=</span> <span class="st">"fig3.png"</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>print_stats(reaction_count_filtered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>perc <span class="op">=</span> np.percentile(df_count[<span class="st">'reaction_count'</span>], <span class="dv">90</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="op">=</span> df_count[df_count[<span class="st">'reaction_count'</span>] <span class="op">&lt;=</span> perc]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>reaction_count_filtered <span class="op">=</span> df_filtered[<span class="st">'reaction_count'</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plot_data(reaction_count_filtered, boxplot <span class="op">=</span> <span class="va">True</span>, outputname <span class="op">=</span> <span class="st">"fig3.png"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>print_stats(reaction_count_filtered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="pathways_files/figure-html/cell-5-output-1.png" width="759" height="566" class="figure-img"></p>
+<p><img src="pathways_files/figure-html/cell-7-output-1.png" width="558" height="374" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -232,6 +325,161 @@ Maximum: 43
 25th percentile (Q1): 2.00
 75th percentile (Q3): 13.00
 IQR (Interquartile Range): 11.00</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="references-per-pathway-distribution" class="level1">
+<h1>References per Pathway distribution</h1>
+<div id="e9deff9d" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">'''(Duncan et al. 2002, Sundheim et al. 2006, Chen et al. 2010, Dango et al. 2011);</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"> (Duncan et al. 2002, Sundheim et al. 2006)'''</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply extraction</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'parsed_references'</span>] <span class="op">=</span> df[<span class="st">'only_references'</span>].<span class="bu">apply</span>(extract_references)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># How many unique references in general</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># How many references per file </span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># List of all ref</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>refs_list_per_file <span class="op">=</span> df.groupby(<span class="st">'file_id'</span>)[<span class="st">'parsed_references'</span>].<span class="bu">apply</span>(</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> lists: [ref <span class="cf">for</span> refs <span class="kw">in</span> lists <span class="cf">for</span> ref <span class="kw">in</span> refs]</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>refs_per_file <span class="op">=</span> refs_list_per_file.<span class="bu">apply</span>(<span class="kw">lambda</span> refs: <span class="bu">len</span>(refs))</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># How many unique references per file </span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>unique_refs_per_file <span class="op">=</span> refs_list_per_file.<span class="bu">apply</span>(<span class="kw">lambda</span> refs: <span class="bu">len</span>(<span class="bu">set</span>(refs)))</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>df_refs_per_file <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'file_id'</span>: refs_list_per_file.index,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'all_references'</span>: refs_list_per_file.values,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'total_references'</span>: refs_per_file.values,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'unique_references'</span>: unique_refs_per_file.values</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>df_refs_per_file.head(<span class="dv">10</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">First reference:</span><span class="ch">\n</span><span class="sc">{</span>df_refs_per_file[<span class="st">'all_references'</span>]<span class="sc">.</span>iloc[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Total number of references in all files (with duplicates): </span><span class="sc">{</span><span class="bu">sum</span>(df_refs_per_file.total_references.values)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total number of unique references across all files: </span><span class="sc">{</span><span class="bu">sum</span>(df_refs_per_file.unique_references.values)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> df_refs_per_file[<span class="st">'total_references'</span>],</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig4.png"</span>,</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"References per file (with duplicates)"</span>,</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">1</span>],</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span>  df_refs_per_file[<span class="st">'total_references'</span>],</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig5.png"</span>,</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per file with log scale x (with duplicates)"</span>,</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"log(References)"</span>,</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">1</span>],</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>          logscale_x <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span>  df_refs_per_file[<span class="st">'total_references'</span>],</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig6.png"</span>,</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per file cutted (with duplicates)"</span>,</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">1</span>],</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>          cut_percentile<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">90</span>)</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>print_stats(df_refs_per_file[<span class="st">'total_references'</span>])</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> df_refs_per_file[<span class="st">'unique_references'</span>],</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig7.png"</span>,</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"References per file (without duplicates)"</span>,</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">2</span>],</span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span>  df_refs_per_file[<span class="st">'unique_references'</span>],</span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig8.png"</span>,</span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per file with log scale x (without duplicates)"</span>,</span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"log(References)"</span>,</span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">2</span>],</span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>          logscale_x <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span>  df_refs_per_file[<span class="st">'unique_references'</span>],</span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig9.png"</span>,</span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per file cutted (without duplicates)"</span>,</span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">2</span>],</span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>          cut_percentile<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">90</span>)</span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+First reference:
+['Schmitz et al. 2000', 'Lehmann et al. 2003', 'Hilton et al. 1998', 'Narazaki et al. 1998', 'Yasukawa et al. 1999', 'Nicholson et al. 1999', 'Greenhalgh and Hilton 2001', 'Croker et al. 2003', 'Rose-John et al. 2006', 'Jostock et al. 2001', 'Gerhartz et al. 1996', 'Hemmann et al. 1996', 'Wen and Darnell 1997', 'Shen et al. 2004', 'Jain et al. 1999', 'Jain et al. 1999', 'Abe et al. 2001', 'Chung et al. 1997', 'Decker and Kovarik 2000', 'Reich 2009', 'Scheller and Rose-John 2006', 'Grotzinger et al. 1999', 'Boulanger et al. 2003', 'Boulanger et al. 2003', 'Skiniotis et al. 2005', 'Suthaus et al. 2010', 'Riech and Liu 2006', 'Schaper et al. 1998', 'Lehmann et al. 2003', 'Fischer', '2004', 'Schaper et al. 1998', 'Fukada et al. 1996', 'Kim and Baumann 1999', 'Dance et al. 2008', 'Takahashi-Tezuka et al. 1998', 'Eulenfeld and Schaper 2009', 'Zhang et al. 1995', 'Reich and Liu 2006', 'Wang and Fuller 1994', 'Reich and Liu 2006', 'Stahl et al. 1995', 'Gerhartz et al. 1996', 'Schaper et al. 1998', 'Lehmann et al. 2003', 'Fischer', '2004', 'Schaper et al', '1998', 'Lu et al. 2001', 'Symes et al. 1997', 'Kim and Baumann', '1999', 'Tanaka et al. 2008', 'Stahl et al. 1994', 'Narazaki et al. 1994', 'Haan et al. 2000', 'Heinrich et al. 2003', 'Haan et al. 2001', 'Hilkens et al. 2001', 'Guschin et al. 1995', 'Guschin et al. 1995', 'Rodig et al. 1998', 'Haan et al. 2008', 'Lindauer et al. 2001', 'Liu et al. 1997', 'Velazquez et al. 1995', 'Oakes et al. 1996', 'Haan et al. 2002', 'Rose-John et al. 2006', 'Akira et al. 1994', 'Zhong et al. 1994', 'Hemmann et al. 1996', 'Kaptein et al. 1996', 'Shuai et al. 1994', 'Zhong et al. 1994', 'Kaur et al. 2020', 'Choy et al. 2002', 'Heo 2020', 'Rosso et al. 2020', 'Duchow and Bellmann-Strobl 2021', 'Xu et al. 2020', 'Strand et al. 2020', 'Xu et al. 2020', 'Sarhan et al. 2021', 'Khan et al. 2021', 'Hornby et al. 2021', 'Luo et al. 2020', 'Zhang et al. 2020a']
+
+Total number of references in all files (with duplicates): 330135
+Total number of unique references across all files: 147741</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pathways_files/figure-html/cell-8-output-2.png" width="566" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/usr/local/lib/python3.10/dist-packages/pandas/core/arraylike.py:399: RuntimeWarning: divide by zero encountered in log10
+  result = getattr(ufunc, method)(*inputs, **kwargs)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pathways_files/figure-html/cell-8-output-4.png" width="576" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pathways_files/figure-html/cell-8-output-5.png" width="567" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Descriptive Statistics:
+Mean: 119.23
+Median: 20.00
+Standard Deviation: 547.74
+Minimum: 0
+Maximum: 15558
+25th percentile (Q1): 6.00
+75th percentile (Q3): 71.00
+IQR (Interquartile Range): 65.00</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pathways_files/figure-html/cell-8-output-7.png" width="567" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/usr/local/lib/python3.10/dist-packages/pandas/core/arraylike.py:399: RuntimeWarning: divide by zero encountered in log10
+  result = getattr(ufunc, method)(*inputs, **kwargs)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pathways_files/figure-html/cell-8-output-9.png" width="592" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pathways_files/figure-html/cell-8-output-10.png" width="567" height="374" class="figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <!-- -->
@@ -690,69 +938,172 @@ IQR (Interquartile Range): 11.00</code></pre>
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Reactions per Pathways"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">    html:</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">        code-fold: true</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">        code-tools: true</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="an">jupyter:</span><span class="co"> python3</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Raw data </span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>There are 2709 human pathways on Reactome, in this report I'll explore the reactions distribution among the pathways.</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> descriptive_stat_functions <span class="im">import</span> plot_data, print_stats</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the Parquet file into a DataFrame</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reaction_counts.parquet"</span>)</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>reaction_count <span class="op">=</span> df[<span class="st">'reaction_count'</span>]</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>plot_data(reaction_count, boxplot <span class="op">=</span> <span class="va">True</span>)</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>print_stats(reaction_count)</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the row with the maximum reaction count</span></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>max_idx <span class="op">=</span> df[<span class="st">'reaction_count'</span>].idxmax()  </span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>max_row <span class="op">=</span> df.loc[max_idx]   </span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">File with Maximum Reaction Count:"</span>)</span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"file_id: </span><span class="sc">{</span>max_row[<span class="st">'file_id'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reaction_count: </span><span class="sc">{</span>max_row[<span class="st">'reaction_count'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="co">#R-HSA-162582.sbml</span></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the DataFrame by reaction_count in descending order</span></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>sorted_df <span class="op">=</span> df.sort_values(by<span class="op">=</span><span class="st">'reaction_count'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the top files</span></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Files sorted by reaction_count (descending):"</span>)</span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sorted_df.head(<span class="dv">15</span>))</span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## Log-scaled data</span></span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>Log10 transformation of the data</span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Log-scaled data ---------------------------------</span></span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>plot_data(reaction_count, logscale_x <span class="op">=</span> <span class="va">True</span>, outputname <span class="op">=</span> <span class="st">"fig2.png"</span>)</span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a><span class="fu">## Filtered data 90th percentile </span></span>
-<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>perc <span class="op">=</span> np.percentile(df[<span class="st">'reaction_count'</span>], <span class="dv">90</span>)</span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="op">=</span> df[df[<span class="st">'reaction_count'</span>] <span class="op">&lt;=</span> perc]</span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>reaction_count_filtered <span class="op">=</span> df_filtered[<span class="st">'reaction_count'</span>]</span>
-<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>plot_data(reaction_count_filtered, boxplot <span class="op">=</span> <span class="va">True</span>, outputname <span class="op">=</span> <span class="st">"fig3.png"</span>)</span>
-<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>print_stats(reaction_count_filtered)</span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Pathways Analysis"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">    html:</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">        code-fold: true</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">        code-tools: true</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="an">jupyter:</span><span class="co"> python3</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> descriptive_stat_functions <span class="im">import</span> plot_data, print_stats, extract_references</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>ggplot_colors <span class="op">=</span> plt.rcParams[<span class="st">'axes.prop_cycle'</span>].by_key()[<span class="st">'color'</span>]</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>How many unique vales among the variables? </span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the big dataset </span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reactions.parquet"</span>)</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>df.nunique()</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reactions per pathways</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Raw data</span></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Read Reaction Count data</span></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>df_count <span class="op">=</span> pd.read_parquet(<span class="st">"./reaction_counts.parquet"</span>)</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>reaction_count <span class="op">=</span> df_count[<span class="st">'reaction_count'</span>]</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics</span></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>plot_data(reaction_count, boxplot <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>print_stats(reaction_count)</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the row with the maximum reaction count</span></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>max_idx <span class="op">=</span> df_count[<span class="st">'reaction_count'</span>].idxmax()  </span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>max_row <span class="op">=</span> df_count.loc[max_idx]   </span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">File with Maximum Reaction Count: </span><span class="sc">{</span>max_row[<span class="st">'file_id'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reaction_count: </span><span class="sc">{</span>max_row[<span class="st">'reaction_count'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="co">#R-HSA-162582.sbml</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the DataFrame by reaction_count in descending order</span></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>sorted_df <span class="op">=</span> df_count.sort_values(by<span class="op">=</span><span class="st">'reaction_count'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the top files</span></span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Files sorted by reaction_count (descending):"</span>)</span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>sorted_df.head(<span class="dv">15</span>)</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Log-scaled data</span></span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a>Log10 transformation of the data</span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Log-scaled data ---------------------------------</span></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>plot_data(reaction_count, </span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>          logscale_x <span class="op">=</span> <span class="va">True</span>, </span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig2.png"</span>, </span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>, </span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a>          xlabel<span class="op">=</span> <span class="st">"Log10 Reactions"</span>)</span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## Filtered data 90th percentile </span></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>perc <span class="op">=</span> np.percentile(df_count[<span class="st">'reaction_count'</span>], <span class="dv">90</span>)</span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="op">=</span> df_count[df_count[<span class="st">'reaction_count'</span>] <span class="op">&lt;=</span> perc]</span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>reaction_count_filtered <span class="op">=</span> df_filtered[<span class="st">'reaction_count'</span>]</span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a>plot_data(reaction_count_filtered, boxplot <span class="op">=</span> <span class="va">True</span>, outputname <span class="op">=</span> <span class="st">"fig3.png"</span>)</span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a>print_stats(reaction_count_filtered)</span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a><span class="fu"># References per Pathway distribution</span></span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: </span></span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a><span class="co">'''(Duncan et al. 2002, Sundheim et al. 2006, Chen et al. 2010, Dango et al. 2011);</span></span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a><span class="co"> (Duncan et al. 2002, Sundheim et al. 2006)'''</span></span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply extraction</span></span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'parsed_references'</span>] <span class="op">=</span> df[<span class="st">'only_references'</span>].<span class="bu">apply</span>(extract_references)</span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a><span class="co"># How many unique references in general</span></span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a><span class="co"># How many references per file </span></span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a><span class="co"># List of all ref</span></span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>refs_list_per_file <span class="op">=</span> df.groupby(<span class="st">'file_id'</span>)[<span class="st">'parsed_references'</span>].<span class="bu">apply</span>(</span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> lists: [ref <span class="cf">for</span> refs <span class="kw">in</span> lists <span class="cf">for</span> ref <span class="kw">in</span> refs]</span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>refs_per_file <span class="op">=</span> refs_list_per_file.<span class="bu">apply</span>(<span class="kw">lambda</span> refs: <span class="bu">len</span>(refs))</span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a><span class="co"># How many unique references per file </span></span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a>unique_refs_per_file <span class="op">=</span> refs_list_per_file.<span class="bu">apply</span>(<span class="kw">lambda</span> refs: <span class="bu">len</span>(<span class="bu">set</span>(refs)))</span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a>df_refs_per_file <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a>    <span class="st">'file_id'</span>: refs_list_per_file.index,</span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a>    <span class="st">'all_references'</span>: refs_list_per_file.values,</span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a>    <span class="st">'total_references'</span>: refs_per_file.values,</span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a>    <span class="st">'unique_references'</span>: unique_refs_per_file.values</span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a>df_refs_per_file.head(<span class="dv">10</span>)</span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">First reference:</span><span class="ch">\n</span><span class="sc">{</span>df_refs_per_file[<span class="st">'all_references'</span>]<span class="sc">.</span>iloc[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Total number of references in all files (with duplicates): </span><span class="sc">{</span><span class="bu">sum</span>(df_refs_per_file.total_references.values)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total number of unique references across all files: </span><span class="sc">{</span><span class="bu">sum</span>(df_refs_per_file.unique_references.values)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> df_refs_per_file[<span class="st">'total_references'</span>],</span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig4.png"</span>,</span>
+<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"References per file (with duplicates)"</span>,</span>
+<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">1</span>],</span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span>  df_refs_per_file[<span class="st">'total_references'</span>],</span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig5.png"</span>,</span>
+<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per file with log scale x (with duplicates)"</span>,</span>
+<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"log(References)"</span>,</span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">1</span>],</span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a>          logscale_x <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span>  df_refs_per_file[<span class="st">'total_references'</span>],</span>
+<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig6.png"</span>,</span>
+<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per file cutted (with duplicates)"</span>,</span>
+<span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">1</span>],</span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a>          cut_percentile<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">90</span>)</span>
+<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a>print_stats(df_refs_per_file[<span class="st">'total_references'</span>])</span>
+<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> df_refs_per_file[<span class="st">'unique_references'</span>],</span>
+<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig7.png"</span>,</span>
+<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"References per file (without duplicates)"</span>,</span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">2</span>],</span>
+<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span>  df_refs_per_file[<span class="st">'unique_references'</span>],</span>
+<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig8.png"</span>,</span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per file with log scale x (without duplicates)"</span>,</span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"log(References)"</span>,</span>
+<span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">2</span>],</span>
+<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a>          logscale_x <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span>  df_refs_per_file[<span class="st">'unique_references'</span>],</span>
+<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig9.png"</span>,</span>
+<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per file cutted (without duplicates)"</span>,</span>
+<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">2</span>],</span>
+<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a>          cut_percentile<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">90</span>)</span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
 import numpy as np
-from descriptive_stat_functions import plot_data, print_stats
+from descriptive_stat_functions import plot_data, print_stats, extract_references
 
 df = pd.read_parquet("./reactions.parquet")
 ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
@@ -49,14 +49,6 @@ print(f"\nUnique values for each column:\n{df.nunique()}")
  (Duncan et al. 2002, Sundheim et al. 2006)'''
 
 # Function to extract the references ---> should I add it to the main dataset? 
-def extract_references(entry):
-    if not isinstance(entry, str):
-        return []
-    refs = []
-    for group in entry.split(';'):
-        group = group.strip().strip('()')
-        refs.extend([ref.strip() for ref in group.split(',')])
-    return refs
 
 # Apply extraction
 df['parsed_references'] = df['only_references'].apply(extract_references)
