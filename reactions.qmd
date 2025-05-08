@@ -40,7 +40,7 @@ first_len = len(df2)
 print(f"\nNumber of rows without file_id data:{len(df2)}")
 df2 = df2.drop_duplicates().reset_index(drop=True)
 print(f"Number of rows after dropping duplicates:{len(df2)}")
-print(f"So there are {first_len - len(df2)} rows where all the columns are the same, also the meta_id of the snippet.")
+print(f"So there are {first_len - len(df2)} rows where all the columns are the same.")
 ```
 Looking at the sorted dataframe it's possible to see that the only thing that change is the _meta-id_ of the snippet column.
 ```{python}
@@ -58,6 +58,7 @@ print(f"Snippet at index 0:\n{df2.sort_values(by='reaction_id')['snippet'].iloc[
 print(f"Snippet at index 1:\n{df2.sort_values(by='reaction_id')['snippet'].iloc[1]}")
 print(f"Snippet at index 2:\n{df2.sort_values(by='reaction_id')['snippet'].iloc[2]}")
 ```
+# Reaction_id and notes combined unique values
 Each reaction_id is associated with only one notes while the same note can be associated to different reactions.
 Grouping by reaction_id and counting the number of unique notes for it: 
 ```{python}
@@ -67,7 +68,7 @@ different_notes = df.groupby('reaction_id')['notes'].nunique()
 # Filter to keep only reaction_ids with more than 1 unique note
 reaction_ids_with_different_notes = different_notes[different_notes > 1]
 
-print(f"Rows: {len(different_notes)}")
+print(f"Number of unique reaction_ids: {len(different_notes)}")
 print(f"Number of reaction with more than one note associated: {len(reaction_ids_with_different_notes)}")
 ```
 Grouping by note and counting the number of unique reaction_id for it: 
@@ -79,17 +80,18 @@ multiple_reactions_per_note = df.groupby('notes')['reaction_id'].nunique()
 notes_with_multiple_reactions = multiple_reactions_per_note[multiple_reactions_per_note > 1]
 
 # Display the notes (and how many reaction_ids they are linked to)
-print(f"Rows: {len(multiple_reactions_per_note)}")
+print(f"Number of unique notes: {len(multiple_reactions_per_note)}")
 print(f"Number of notes with more than one reaction associated: {len(notes_with_multiple_reactions)}")
 ```
 ```{python}
 # Filter the original DataFrame to only include those notes
 conflicting_notes_rows = df[df['notes'].isin(notes_with_multiple_reactions.index)]
-conflicting_notes_rows.sort_values(by='notes').head(15)
+print(f"Number of rows of the dataset composed by duplicated notes: {len(conflicting_notes_rows)}")
+conflicting_notes_rows[["reaction_id","notes"]].sort_values(by='notes').head(15)
 ```
 
 ```{python}
-conflicting_notes_rows.nunique()
+print(f"Number of unique values of the dataset composed by duplicated notes:\n{conflicting_notes_rows.nunique()}")
 ```
 
 # References per reaction distribution
@@ -135,17 +137,4 @@ plot_data(data = references_per_reaction,
           )
 
 print_stats(references_per_reaction)
-```
-
-
-```{python}
-unique_per_value = df2.groupby("reaction_id")["notes"].nunique()
-sorted_counts = unique_per_value.sort_values()
-print(sorted_counts.head(10))
-```
-
-```{python}
-```
-
-```{python}
 ```

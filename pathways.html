@@ -102,20 +102,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>How many unique vales among the variables?</p>
-<div id="f35c4102" class="cell" data-execution_count="2">
+<div id="7b3158fd" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the big dataset </span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reactions.parquet"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df.nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="26">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>file_id             2769
 reaction_id        15357
 original_notes     14802
 notes              14799
 only_references    10458
-snippet            70334
+snippet            23855
 dtype: int64</code></pre>
 </div>
 </div>
@@ -123,7 +123,7 @@ dtype: int64</code></pre>
 <h1>Reactions per pathways</h1>
 <section id="raw-data" class="level2">
 <h2 class="anchored" data-anchor-id="raw-data">Raw data</h2>
-<div id="d2686a2f" class="cell" data-execution_count="3">
+<div id="17034059" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read Reaction Count data</span></span>
@@ -154,7 +154,7 @@ Maximum: 2582
 IQR (Interquartile Range): 15.00</code></pre>
 </div>
 </div>
-<div id="8eee3795" class="cell" data-execution_count="4">
+<div id="1fff6979" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the row with the maximum reaction count</span></span>
@@ -178,7 +178,7 @@ reaction_count: 2582
 
 Files sorted by reaction_count (descending):</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="28">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 
 
@@ -202,7 +202,7 @@ Files sorted by reaction_count (descending):</code></pre>
 <td>2355</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2761</td>
+<td data-quarto-table-cell-role="th">2764</td>
 <td>R-HSA-1643685.sbml</td>
 <td>1940</td>
 </tr>
@@ -212,47 +212,47 @@ Files sorted by reaction_count (descending):</code></pre>
 <td>1737</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2227</td>
+<td data-quarto-table-cell-role="th">2051</td>
 <td>R-HSA-74160.sbml</td>
 <td>1141</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2093</td>
+<td data-quarto-table-cell-role="th">2374</td>
 <td>R-HSA-5663205.sbml</td>
 <td>999</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2313</td>
+<td data-quarto-table-cell-role="th">2406</td>
 <td>R-HSA-556833.sbml</td>
 <td>994</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1608</td>
+<td data-quarto-table-cell-role="th">1610</td>
 <td>R-HSA-1266738.sbml</td>
 <td>956</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2760</td>
+<td data-quarto-table-cell-role="th">2762</td>
 <td>R-HSA-73857.sbml</td>
 <td>940</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2759</td>
+<td data-quarto-table-cell-role="th">2399</td>
 <td>R-HSA-392499.sbml</td>
 <td>891</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1770</td>
+<td data-quarto-table-cell-role="th">1636</td>
 <td>R-HSA-212436.sbml</td>
 <td>879</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1219</td>
+<td data-quarto-table-cell-role="th">1263</td>
 <td>R-HSA-1280215.sbml</td>
 <td>791</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2763</td>
+<td data-quarto-table-cell-role="th">2760</td>
 <td>R-HSA-9006934.sbml</td>
 <td>759</td>
 </tr>
@@ -262,7 +262,7 @@ Files sorted by reaction_count (descending):</code></pre>
 <td>753</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2077</td>
+<td data-quarto-table-cell-role="th">2165</td>
 <td>R-HSA-168249.sbml</td>
 <td>744</td>
 </tr>
@@ -276,7 +276,7 @@ Files sorted by reaction_count (descending):</code></pre>
 <section id="log-scaled-data" class="level2">
 <h2 class="anchored" data-anchor-id="log-scaled-data">Log-scaled data</h2>
 <p>Log10 transformation of the data</p>
-<div id="bfc2ff8b" class="cell" data-execution_count="5">
+<div id="e74e5788" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Log-scaled data ---------------------------------</span></span>
@@ -297,7 +297,7 @@ Files sorted by reaction_count (descending):</code></pre>
 </section>
 <section id="filtered-data-90th-percentile" class="level2">
 <h2 class="anchored" data-anchor-id="filtered-data-90th-percentile">Filtered data 90th percentile</h2>
-<div id="427e17b5" class="cell" data-execution_count="6">
+<div id="bbc0af9d" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>perc <span class="op">=</span> np.percentile(df_count[<span class="st">'reaction_count'</span>], <span class="dv">90</span>)</span>
@@ -331,7 +331,7 @@ IQR (Interquartile Range): 11.00</code></pre>
 </section>
 <section id="references-per-pathway-distribution" class="level1">
 <h1>References per Pathway distribution</h1>
-<div id="724c37ee" class="cell" data-execution_count="7">
+<div id="e13575db" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: </span></span>
@@ -358,7 +358,7 @@ IQR (Interquartile Range): 11.00</code></pre>
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>df_refs_per_file.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="31">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
@@ -449,7 +449,7 @@ IQR (Interquartile Range): 11.00</code></pre>
 </div>
 </div>
 </div>
-<div id="9081c9eb" class="cell" data-execution_count="8">
+<div id="badbf6f5" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">First reference:</span><span class="ch">\n</span><span class="sc">{</span>df_refs_per_file[<span class="st">'all_references'</span>]<span class="sc">.</span>iloc[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -521,21 +521,17 @@ Total number of unique references across all files: 147741</code></pre>
 </figure>
 </div>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/usr/local/lib/python3.10/dist-packages/pandas/core/arraylike.py:399: RuntimeWarning: divide by zero encountered in log10
-  result = getattr(ufunc, method)(*inputs, **kwargs)</code></pre>
-</div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="pathways_files/figure-html/cell-9-output-4.png" width="576" height="374" class="figure-img"></p>
+<p><img src="pathways_files/figure-html/cell-9-output-3.png" width="576" height="374" class="figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="pathways_files/figure-html/cell-9-output-5.png" width="567" height="374" class="figure-img"></p>
+<p><img src="pathways_files/figure-html/cell-9-output-4.png" width="567" height="374" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -554,121 +550,196 @@ IQR (Interquartile Range): 65.00</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="pathways_files/figure-html/cell-9-output-7.png" width="567" height="374" class="figure-img"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/usr/local/lib/python3.10/dist-packages/pandas/core/arraylike.py:399: RuntimeWarning: divide by zero encountered in log10
-  result = getattr(ufunc, method)(*inputs, **kwargs)</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="pathways_files/figure-html/cell-9-output-9.png" width="592" height="374" class="figure-img"></p>
+<p><img src="pathways_files/figure-html/cell-9-output-6.png" width="567" height="374" class="figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="pathways_files/figure-html/cell-9-output-10.png" width="567" height="374" class="figure-img"></p>
+<p><img src="pathways_files/figure-html/cell-9-output-7.png" width="592" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pathways_files/figure-html/cell-9-output-8.png" width="567" height="374" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <section id="filtered-data-without-any-reference" class="level2">
 <h2 class="anchored" data-anchor-id="filtered-data-without-any-reference">Filtered data without any reference</h2>
-<div id="b57f2ecd" class="cell" data-execution_count="9">
+<div id="2bc976d7" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># No references data -----------------------</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_nocit <span class="op">=</span> df[df[<span class="st">'only_references'</span>].isna()]</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic info</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Dataset length:"</span>, <span class="bu">len</span>(df_nocit))</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Columns in dataset:"</span>, df_nocit.columns.tolist())</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># First rows </span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">First 5 rows:"</span>)</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>df_nocit.head(<span class="dv">5</span>)</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Display a sample of the dataset.</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>num_samples <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over the first num_samples rows and print full content without extra spaces.</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- Displaying full content for sample rows ---"</span>)</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> df_nocit.index[:num_samples]:</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">--- Full content for sample row at index </span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss"> ---"</span>)</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"Snippet:\n{df_nocit.at[idx, 'snippet']}")</span></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Original Notes:</span><span class="ch">\n</span><span class="sc">{</span>df_nocit<span class="sc">.</span>at[idx, <span class="st">'original_notes'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Cleaned Notes (without citations):</span><span class="ch">\n</span><span class="sc">{</span>df_nocit<span class="sc">.</span>at[idx, <span class="st">'notes'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Extracted Citations:</span><span class="ch">\n</span><span class="sc">{</span>df_nocit<span class="sc">.</span>at[idx, <span class="st">'only_references'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-"</span> <span class="op">*</span> <span class="dv">40</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># No references data -----------------------</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_nocit <span class="op">=</span> df[df[<span class="st">'only_references'</span>].isna()]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic info</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Dataset length:"</span>, <span class="bu">len</span>(df_nocit))</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Columns in dataset:"</span>, df_nocit.columns.tolist())</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># First rows </span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">First 5 rows:"</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>df_nocit.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Dataset length: 13309
 Columns in dataset: ['file_id', 'reaction_id', 'original_notes', 'notes', 'only_references', 'snippet', 'parsed_references']
 
-First 5 rows:
+First 5 rows:</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
 
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">file_id</th>
+<th data-quarto-table-cell-role="th">reaction_id</th>
+<th data-quarto-table-cell-role="th">original_notes</th>
+<th data-quarto-table-cell-role="th">notes</th>
+<th data-quarto-table-cell-role="th">only_references</th>
+<th data-quarto-table-cell-role="th">snippet</th>
+<th data-quarto-table-cell-role="th">parsed_references</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">9</td>
+<td>R-HSA-418592.sbml</td>
+<td>reaction_418579</td>
+<td>The G-protein alpha subunit exchanges GDP for GTP</td>
+<td>The G-protein alpha subunit exchanges GDP for GTP</td>
+<td>None</td>
+<td>&lt;reaction compartment="compartment_70101" fast...</td>
+<td>[]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">10</td>
+<td>R-HSA-418592.sbml</td>
+<td>reaction_418581</td>
+<td>P2Y1 is coupled to the Gq family of G protein ...</td>
+<td>P2Y1 is coupled to the Gq family of G protein ...</td>
+<td>None</td>
+<td>&lt;reaction compartment="compartment_876" fast="...</td>
+<td>[]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">15</td>
+<td>R-HSA-418592.sbml</td>
+<td>reaction_418662</td>
+<td>Activation of Src lies selectively downstream ...</td>
+<td>Activation of Src lies selectively downstream ...</td>
+<td>None</td>
+<td>&lt;reaction compartment="compartment_70101" fast...</td>
+<td>[]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">16</td>
+<td>R-HSA-180689.sbml</td>
+<td>reaction_180630</td>
+<td>APOBEC3G is incorporated into virus particles ...</td>
+<td>APOBEC3G is incorporated into virus particles ...</td>
+<td>None</td>
+<td>&lt;reaction compartment="compartment_70101" fast...</td>
+<td>[]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>R-HSA-180689.sbml</td>
+<td>reaction_180634</td>
+<td>In the target cell, HIV-1-associated APOBEC3G ...</td>
+<td>In the target cell, HIV-1-associated APOBEC3G ...</td>
+<td>None</td>
+<td>&lt;reaction compartment="compartment_70101" fast...</td>
+<td>[]</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="f86af1ac" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display a sample of the dataset.</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>num_samples <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over the first num_samples rows and print full content without extra spaces.</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- Displaying full content for sample rows ---"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> df_nocit.index[:num_samples]:</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">--- Full content for sample row at index </span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss"> ---"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"Snippet:\n{df_nocit.at[idx, 'snippet']}")</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Original Notes:</span><span class="ch">\n</span><span class="sc">{</span>df_nocit<span class="sc">.</span>at[idx, <span class="st">'original_notes'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Cleaned Notes (without citations):</span><span class="ch">\n</span><span class="sc">{</span>df_nocit<span class="sc">.</span>at[idx, <span class="st">'notes'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Extracted Citations:</span><span class="ch">\n</span><span class="sc">{</span>df_nocit<span class="sc">.</span>at[idx, <span class="st">'only_references'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-"</span> <span class="op">*</span> <span class="dv">40</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
 --- Displaying full content for sample rows ---
+
+--- Full content for sample row at index 9 ---
+
+Original Notes:
+The G-protein alpha subunit exchanges GDP for GTP
+
+Cleaned Notes (without citations):
+The G-protein alpha subunit exchanges GDP for GTP
+
+Extracted Citations:
+None
+----------------------------------------
+
+--- Full content for sample row at index 10 ---
+
+Original Notes:
+P2Y1 is coupled to the Gq family of G protein alpha subunits, causing increases in intracellular calcium concentration through stimulation of PLC.
+
+Cleaned Notes (without citations):
+P2Y1 is coupled to the Gq family of G protein alpha subunits, causing increases in intracellular calcium concentration through stimulation of PLC.
+
+Extracted Citations:
+None
+----------------------------------------
+
+--- Full content for sample row at index 15 ---
+
+Original Notes:
+Activation of Src lies selectively downstream of P2Y1, but not P2Y12. The precise mechanism is not known, but Src regulation of the PI3K component of the intracellular calcium response downstream of P2Y12 represents a point of reciprocal cross-talk between P2Y1 and P2Y12 receptors.
+
+Cleaned Notes (without citations):
+Activation of Src lies selectively downstream of P2Y1, but not P2Y12. The precise mechanism is not known, but Src regulation of the PI3K component of the intracellular calcium response downstream of P2Y12 represents a point of reciprocal cross-talk between P2Y1 and P2Y12 receptors.
+
+Extracted Citations:
+None
+----------------------------------------
+
+--- Full content for sample row at index 16 ---
+
+Original Notes:
+APOBEC3G is incorporated into virus particles through its association with components of the viral RNA packaging machinery. It binds to the nucleocapsid portion of Gag (NC), a region of the polyprotein that associates with genomic RNA and functions in RNA encapsidation.
+
+Cleaned Notes (without citations):
+APOBEC3G is incorporated into virus particles through its association with components of the viral RNA packaging machinery. It binds to the nucleocapsid portion of Gag (NC), a region of the polyprotein that associates with genomic RNA and functions in RNA encapsidation.
+
+Extracted Citations:
+None
+----------------------------------------
 
 --- Full content for sample row at index 18 ---
 
 Original Notes:
-The Calreticulin gene is transcribed to yield mRNA and the mRNA is translated to yield protein.
+In the target cell, HIV-1-associated APOBEC3G binds to the HIV-1 reverse transcript minus strand and catalyzes the deamination of cytidines in a specific dinucleotide context (e.g., dCC). In contrast, APOBEC3F and APOBEC3B display a preference for dTC.
 
 Cleaned Notes (without citations):
-The Calreticulin gene is transcribed to yield mRNA and the mRNA is translated to yield protein.
-
-Extracted Citations:
-None
-----------------------------------------
-
---- Full content for sample row at index 19 ---
-
-Original Notes:
-The Endoplasmin (HSP90B1) gene is transcribed to yield mRNA and the mRNA is translated to yield protein.
-
-Cleaned Notes (without citations):
-The Endoplasmin (HSP90B1) gene is transcribed to yield mRNA and the mRNA is translated to yield protein.
-
-Extracted Citations:
-None
-----------------------------------------
-
---- Full content for sample row at index 20 ---
-
-Original Notes:
-The BIP (HSPA5) gene is transcribed to yield mRNA and the mRNA is translated to yield protein.
-
-Cleaned Notes (without citations):
-The BIP (HSPA5) gene is transcribed to yield mRNA and the mRNA is translated to yield protein.
-
-Extracted Citations:
-None
-----------------------------------------
-
---- Full content for sample row at index 21 ---
-
-Original Notes:
-The XBP1 gene is transcribed to yield mRNA, the mRNA is spliced to yield Xbp(s) mRNA, and the mRNA is translated to yield protein. The N-terminal fragment of ATF6-alpha contains a bZIP domain and binds the sequence CCACG in ER Stress Response Elements (ERSEs). ATF6-alpha binds ERSEs together with the heterotrimeric transcription factor NF-Y, which binds the sequence CCAAT in the ERSEs, and together the two factors activate transcription of ER stress-responsive genes. Evidence from overexpression and knockdowns indicates that ATF6-alpha is a potent activator but its homolog ATF6-beta is not and ATF6-beta may actually reduce expression of ER stress proteins.
-
-Cleaned Notes (without citations):
-The XBP1 gene is transcribed to yield mRNA, the mRNA is spliced to yield Xbp(s) mRNA, and the mRNA is translated to yield protein. The N-terminal fragment of ATF6-alpha contains a bZIP domain and binds the sequence CCACG in ER Stress Response Elements (ERSEs). ATF6-alpha binds ERSEs together with the heterotrimeric transcription factor NF-Y, which binds the sequence CCAAT in the ERSEs, and together the two factors activate transcription of ER stress-responsive genes. Evidence from overexpression and knockdowns indicates that ATF6-alpha is a potent activator but its homolog ATF6-beta is not and ATF6-beta may actually reduce expression of ER stress proteins.
-
-Extracted Citations:
-None
-----------------------------------------
-
---- Full content for sample row at index 26 ---
-
-Original Notes:
-XRCC4 and DNA ligase 4 are recruited to the complex containing viral DNA.
-
-Cleaned Notes (without citations):
-XRCC4 and DNA ligase 4 are recruited to the complex containing viral DNA.
+In the target cell, HIV-1-associated APOBEC3G binds to the HIV-1 reverse transcript minus strand and catalyzes the deamination of cytidines in a specific dinucleotide context (e.g., dCC). In contrast, APOBEC3F and APOBEC3B display a preference for dTC.
 
 Extracted Citations:
 None
@@ -1304,26 +1375,21 @@ None
 <span id="cb18-188"><a href="#cb18-188" aria-hidden="true" tabindex="-1"></a><span class="co"># First rows </span></span>
 <span id="cb18-189"><a href="#cb18-189" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">First 5 rows:"</span>)</span>
 <span id="cb18-190"><a href="#cb18-190" aria-hidden="true" tabindex="-1"></a>df_nocit.head(<span class="dv">5</span>)</span>
-<span id="cb18-191"><a href="#cb18-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-192"><a href="#cb18-192" aria-hidden="true" tabindex="-1"></a><span class="co"># Display a sample of the dataset.</span></span>
-<span id="cb18-193"><a href="#cb18-193" aria-hidden="true" tabindex="-1"></a>num_samples <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb18-194"><a href="#cb18-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-195"><a href="#cb18-195" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over the first num_samples rows and print full content without extra spaces.</span></span>
-<span id="cb18-196"><a href="#cb18-196" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- Displaying full content for sample rows ---"</span>)</span>
-<span id="cb18-197"><a href="#cb18-197" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> df_nocit.index[:num_samples]:</span>
-<span id="cb18-198"><a href="#cb18-198" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">--- Full content for sample row at index </span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss"> ---"</span>)</span>
-<span id="cb18-199"><a href="#cb18-199" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"Snippet:\n{df_nocit.at[idx, 'snippet']}")</span></span>
-<span id="cb18-200"><a href="#cb18-200" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Original Notes:</span><span class="ch">\n</span><span class="sc">{</span>df_nocit<span class="sc">.</span>at[idx, <span class="st">'original_notes'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb18-201"><a href="#cb18-201" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Cleaned Notes (without citations):</span><span class="ch">\n</span><span class="sc">{</span>df_nocit<span class="sc">.</span>at[idx, <span class="st">'notes'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb18-202"><a href="#cb18-202" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Extracted Citations:</span><span class="ch">\n</span><span class="sc">{</span>df_nocit<span class="sc">.</span>at[idx, <span class="st">'only_references'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb18-203"><a href="#cb18-203" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-"</span> <span class="op">*</span> <span class="dv">40</span>)</span>
-<span id="cb18-204"><a href="#cb18-204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-205"><a href="#cb18-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-208"><a href="#cb18-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb18-209"><a href="#cb18-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-210"><a href="#cb18-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-213"><a href="#cb18-213" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb18-214"><a href="#cb18-214" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-191"><a href="#cb18-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-194"><a href="#cb18-194" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb18-195"><a href="#cb18-195" aria-hidden="true" tabindex="-1"></a><span class="co"># Display a sample of the dataset.</span></span>
+<span id="cb18-196"><a href="#cb18-196" aria-hidden="true" tabindex="-1"></a>num_samples <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb18-197"><a href="#cb18-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-198"><a href="#cb18-198" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over the first num_samples rows and print full content without extra spaces.</span></span>
+<span id="cb18-199"><a href="#cb18-199" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- Displaying full content for sample rows ---"</span>)</span>
+<span id="cb18-200"><a href="#cb18-200" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> df_nocit.index[:num_samples]:</span>
+<span id="cb18-201"><a href="#cb18-201" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">--- Full content for sample row at index </span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss"> ---"</span>)</span>
+<span id="cb18-202"><a href="#cb18-202" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(f"Snippet:\n{df_nocit.at[idx, 'snippet']}")</span></span>
+<span id="cb18-203"><a href="#cb18-203" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Original Notes:</span><span class="ch">\n</span><span class="sc">{</span>df_nocit<span class="sc">.</span>at[idx, <span class="st">'original_notes'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-204"><a href="#cb18-204" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Cleaned Notes (without citations):</span><span class="ch">\n</span><span class="sc">{</span>df_nocit<span class="sc">.</span>at[idx, <span class="st">'notes'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-205"><a href="#cb18-205" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Extracted Citations:</span><span class="ch">\n</span><span class="sc">{</span>df_nocit<span class="sc">.</span>at[idx, <span class="st">'only_references'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-206"><a href="#cb18-206" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-"</span> <span class="op">*</span> <span class="dv">40</span>)</span>
+<span id="cb18-207"><a href="#cb18-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

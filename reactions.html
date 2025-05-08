@@ -102,24 +102,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>While pathways (file_id) are all unique, the reactions inside them are not, so if I group for reaction_id I get less reactions than the total length of the dataframe.</p>
-<div id="afea4880" class="cell" data-execution_count="2">
+<div id="bd958f1f" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the big dataset </span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reactions.parquet"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df.nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="30">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>file_id             2769
 reaction_id        15357
 original_notes     14802
 notes              14799
 only_references    10458
-snippet            70334
+snippet            23855
 dtype: int64</code></pre>
 </div>
 </div>
-<div id="c2abe67b" class="cell" data-execution_count="3">
+<div id="64bb0926" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Number of rows in the original data:</span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -134,7 +134,7 @@ Number of rows after dropping duplicates:70904</code></pre>
 </div>
 </div>
 <p>Drop the column file_id in order to see the duplicates.</p>
-<div id="77f934bf" class="cell" data-execution_count="4">
+<div id="bc400326" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the data and display the first rows</span></span>
@@ -143,17 +143,17 @@ Number of rows after dropping duplicates:70904</code></pre>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Number of rows without file_id data:</span><span class="sc">{</span><span class="bu">len</span>(df2)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df2.drop_duplicates().reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of rows after dropping duplicates:</span><span class="sc">{</span><span class="bu">len</span>(df2)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"So there are </span><span class="sc">{</span>first_len <span class="op">-</span> <span class="bu">len</span>(df2)<span class="sc">}</span><span class="ss"> rows where all the columns are the same, also the meta_id of the snippet."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"So there are </span><span class="sc">{</span>first_len <span class="op">-</span> <span class="bu">len</span>(df2)<span class="sc">}</span><span class="ss"> rows where all the columns are the same."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Number of rows without file_id data:70904
-Number of rows after dropping duplicates:70334
-So there are 570 rows where all the columns are the same, also the meta_id of the snippet.</code></pre>
+Number of rows after dropping duplicates:23855
+So there are 47049 rows where all the columns are the same.</code></pre>
 </div>
 </div>
 <p>Looking at the sorted dataframe it’s possible to see that the only thing that change is the <em>meta-id</em> of the snippet column.</p>
-<div id="7ee030f8" class="cell" data-execution_count="5">
+<div id="a6152bb1" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"First rows of sorted dataset by reaction_id:"</span>)</span>
@@ -162,7 +162,7 @@ So there are 570 rows where all the columns are the same, also the meta_id of th
 <div class="cell-output cell-output-stdout">
 <pre><code>First rows of sorted dataset by reaction_id:</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="33">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 
 
@@ -179,7 +179,7 @@ So there are 570 rows where all the columns are the same, also the meta_id of th
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">7125</td>
+<td data-quarto-table-cell-role="th">5380</td>
 <td>reaction_1006143</td>
 <td>Membrane cofactor protein (MCP; CD46) is a wid...</td>
 <td>Membrane cofactor protein (MCP; CD46) is a wid...</td>
@@ -187,31 +187,15 @@ So there are 570 rows where all the columns are the same, also the meta_id of th
 <td>&lt;reaction compartment="compartment_876" fast="...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">38965</td>
-<td>reaction_1006143</td>
-<td>Membrane cofactor protein (MCP; CD46) is a wid...</td>
-<td>Membrane cofactor protein (MCP; CD46) is a wid...</td>
-<td>None</td>
+<td data-quarto-table-cell-role="th">5362</td>
+<td>reaction_1006169</td>
+<td>Factor H (CFH) preferentially binds to host ce...</td>
+<td>Factor H (CFH) preferentially binds to host ce...</td>
+<td>(Kazatchkine et al. 1979, Meri and Pangburn 1990)</td>
 <td>&lt;reaction compartment="compartment_876" fast="...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">63204</td>
-<td>reaction_1006143</td>
-<td>Membrane cofactor protein (MCP; CD46) is a wid...</td>
-<td>Membrane cofactor protein (MCP; CD46) is a wid...</td>
-<td>None</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">37739</td>
-<td>reaction_1006143</td>
-<td>Membrane cofactor protein (MCP; CD46) is a wid...</td>
-<td>Membrane cofactor protein (MCP; CD46) is a wid...</td>
-<td>None</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">7106</td>
+<td data-quarto-table-cell-role="th">19446</td>
 <td>reaction_1006169</td>
 <td>Factor H (CFH) preferentially binds to host ce...</td>
 <td>Factor H (CFH) preferentially binds to host ce...</td>
@@ -219,31 +203,15 @@ So there are 570 rows where all the columns are the same, also the meta_id of th
 <td>&lt;reaction compartment="compartment_876" fast="...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">38506</td>
-<td>reaction_1006169</td>
-<td>Factor H (CFH) preferentially binds to host ce...</td>
-<td>Factor H (CFH) preferentially binds to host ce...</td>
-<td>(Kazatchkine et al. 1979, Meri and Pangburn 1990)</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
+<td data-quarto-table-cell-role="th">9121</td>
+<td>reaction_1008200</td>
+<td>The human beta-globin locus control region (LC...</td>
+<td>The human beta-globin locus control region (LC...</td>
+<td>None</td>
+<td>&lt;reaction compartment="compartment_7660" fast=...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">64274</td>
-<td>reaction_1006169</td>
-<td>Factor H (CFH) preferentially binds to host ce...</td>
-<td>Factor H (CFH) preferentially binds to host ce...</td>
-<td>(Kazatchkine et al. 1979, Meri and Pangburn 1990)</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">37738</td>
-<td>reaction_1006169</td>
-<td>Factor H (CFH) preferentially binds to host ce...</td>
-<td>Factor H (CFH) preferentially binds to host ce...</td>
-<td>(Kazatchkine et al. 1979, Meri and Pangburn 1990)</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12844</td>
+<td data-quarto-table-cell-role="th">14415</td>
 <td>reaction_1008200</td>
 <td>The human beta-globin locus control region (LC...</td>
 <td>The human beta-globin locus control region (LC...</td>
@@ -251,12 +219,44 @@ So there are 570 rows where all the columns are the same, also the meta_id of th
 <td>&lt;reaction compartment="compartment_7660" fast=...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">24897</td>
-<td>reaction_1008200</td>
-<td>The human beta-globin locus control region (LC...</td>
-<td>The human beta-globin locus control region (LC...</td>
+<td data-quarto-table-cell-role="th">9095</td>
+<td>reaction_1008220</td>
+<td>The human beta-globin locus consists of five g...</td>
+<td>The human beta-globin locus consists of five g...</td>
 <td>None</td>
+<td>&lt;reaction compartment="compartment_70101" fast...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">9105</td>
+<td>reaction_1008240</td>
+<td>NF-E2 is a heterodimer consisting of a hematop...</td>
+<td>NF-E2 is a heterodimer consisting of a hematop...</td>
+<td>(Motohashi et al. 1997); (Shavit et al. 1998);...</td>
 <td>&lt;reaction compartment="compartment_7660" fast=...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9086</td>
+<td>reaction_1008248</td>
+<td>GTP-AMP phosphotransferase, also called Adenyl...</td>
+<td>GTP-AMP phosphotransferase, also called Adenyl...</td>
+<td>(Choe et al. 2005)</td>
+<td>&lt;reaction compartment="compartment_5460" fast=...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">9079</td>
+<td>reaction_1011576</td>
+<td>The four human EH domain-containing proteins (...</td>
+<td>The four human EH domain-containing proteins (...</td>
+<td>(Naslavsky and Caplan 2005); (Salcini et al. 1...</td>
+<td>&lt;reaction compartment="compartment_74700" fast...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9084</td>
+<td>reaction_1011598</td>
+<td>Members of the Dedicator of cytokinesis (DOCK)...</td>
+<td>Members of the Dedicator of cytokinesis (DOCK)...</td>
+<td>(Cote and Vuori 2002); (Cote and Vuori 2007); ...</td>
+<td>&lt;reaction compartment="compartment_70101" fast...</td>
 </tr>
 </tbody>
 </table>
@@ -264,7 +264,7 @@ So there are 570 rows where all the columns are the same, also the meta_id of th
 </div>
 </div>
 </div>
-<div id="c467d0c1" class="cell" data-execution_count="6">
+<div id="32f85ba7" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Total number of reactions: 15357</span></span>
@@ -281,13 +281,13 @@ So there are 570 rows where all the columns are the same, also the meta_id of th
 <pre><code>Original notes at index 0:
 Membrane cofactor protein (MCP; CD46) is a widely distributed C3b/C4b-binding cell surface glycoprotein which is a cofactor for Complement factor I.
 Original notes at index 1:
-Membrane cofactor protein (MCP; CD46) is a widely distributed C3b/C4b-binding cell surface glycoprotein which is a cofactor for Complement factor I.
+Factor H (CFH) preferentially binds to host cells and surfaces that have negatively charged cell surface polyanions such as heparin and sialic acid commonly found on host cells (Kazatchkine et al. 1979, Meri and Pangburn 1990). This mediates protection of plasma-exposed host structures.
 Original notes at index 2:
-Membrane cofactor protein (MCP; CD46) is a widely distributed C3b/C4b-binding cell surface glycoprotein which is a cofactor for Complement factor I.
+Factor H (CFH) preferentially binds to host cells and surfaces that have negatively charged cell surface polyanions such as heparin and sialic acid commonly found on host cells (Kazatchkine et al. 1979, Meri and Pangburn 1990). This mediates protection of plasma-exposed host structures.
 
 
 Snippet at index 0:
-&lt;reaction compartment="compartment_876" fast="false" id="reaction_1006143" metaid="metaid_213" name="CD46 binds C3b" reversible="false"&gt;
+&lt;reaction compartment="compartment_876" fast="false" id="reaction_1006143" name="CD46 binds C3b" reversible="false"&gt;
         &lt;listOfReactants&gt;
           &lt;speciesReference constant="true" id="speciesreference_1006143_input_977362" sboTerm="SBO:0000010" species="species_977362" stoichiometry="1" /&gt;
           &lt;speciesReference constant="true" id="speciesreference_1006143_input_981542" sboTerm="SBO:0000010" species="species_981542" stoichiometry="1" /&gt;
@@ -298,31 +298,33 @@ Snippet at index 0:
       &lt;/reaction&gt;
       
 Snippet at index 1:
-&lt;reaction compartment="compartment_876" fast="false" id="reaction_1006143" metaid="metaid_1983" name="CD46 binds C3b" reversible="false"&gt;
+&lt;reaction compartment="compartment_876" fast="false" id="reaction_1006169" name="Factor H binds host cell surface markers" reversible="false"&gt;
         &lt;listOfReactants&gt;
-          &lt;speciesReference constant="true" id="speciesreference_1006143_input_977362" sboTerm="SBO:0000010" species="species_977362" stoichiometry="1" /&gt;
-          &lt;speciesReference constant="true" id="speciesreference_1006143_input_981542" sboTerm="SBO:0000010" species="species_981542" stoichiometry="1" /&gt;
+          &lt;speciesReference constant="true" id="speciesreference_1006169_input_976788" sboTerm="SBO:0000010" species="species_976788" stoichiometry="1" /&gt;
+          &lt;speciesReference constant="true" id="speciesreference_1006169_input_1006146" sboTerm="SBO:0000010" species="species_1006146" stoichiometry="1" /&gt;
         &lt;/listOfReactants&gt;
         &lt;listOfProducts&gt;
-          &lt;speciesReference constant="true" id="speciesreference_1006143_output_981623" sboTerm="SBO:0000011" species="species_981623" stoichiometry="1" /&gt;
+          &lt;speciesReference constant="true" id="speciesreference_1006169_output_1006173" sboTerm="SBO:0000011" species="species_1006173" stoichiometry="1" /&gt;
         &lt;/listOfProducts&gt;
       &lt;/reaction&gt;
       
 Snippet at index 2:
-&lt;reaction compartment="compartment_876" fast="false" id="reaction_1006143" metaid="metaid_3419" name="CD46 binds C3b" reversible="false"&gt;
+&lt;reaction compartment="compartment_876" fast="false" id="reaction_1006169" name="Factor H binds host cell surface markers" reversible="false"&gt;
         &lt;listOfReactants&gt;
-          &lt;speciesReference constant="true" id="speciesreference_1006143_input_977362" sboTerm="SBO:0000010" species="species_977362" stoichiometry="1" /&gt;
-          &lt;speciesReference constant="true" id="speciesreference_1006143_input_981542" sboTerm="SBO:0000010" species="species_981542" stoichiometry="1" /&gt;
+          &lt;speciesReference constant="true" id="speciesreference_1006169_input_1006146" sboTerm="SBO:0000010" species="species_1006146" stoichiometry="1" /&gt;
+          &lt;speciesReference constant="true" id="speciesreference_1006169_input_976788" sboTerm="SBO:0000010" species="species_976788" stoichiometry="1" /&gt;
         &lt;/listOfReactants&gt;
         &lt;listOfProducts&gt;
-          &lt;speciesReference constant="true" id="speciesreference_1006143_output_981623" sboTerm="SBO:0000011" species="species_981623" stoichiometry="1" /&gt;
+          &lt;speciesReference constant="true" id="speciesreference_1006169_output_1006173" sboTerm="SBO:0000011" species="species_1006173" stoichiometry="1" /&gt;
         &lt;/listOfProducts&gt;
       &lt;/reaction&gt;
       </code></pre>
 </div>
 </div>
+<section id="reaction_id-and-notes-combined-unique-values" class="level1">
+<h1>Reaction_id and notes combined unique values</h1>
 <p>Each reaction_id is associated with only one notes while the same note can be associated to different reactions. Grouping by reaction_id and counting the number of unique notes for it:</p>
-<div id="bd29c8a1" class="cell" data-execution_count="7">
+<div id="ba59e7ad" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by reaction_id and count the number of unique notes for each</span></span>
@@ -331,16 +333,16 @@ Snippet at index 2:
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to keep only reaction_ids with more than 1 unique note</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>reaction_ids_with_different_notes <span class="op">=</span> different_notes[different_notes <span class="op">&gt;</span> <span class="dv">1</span>]</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Rows: </span><span class="sc">{</span><span class="bu">len</span>(different_notes)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of unique reaction_ids: </span><span class="sc">{</span><span class="bu">len</span>(different_notes)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of reaction with more than one note associated: </span><span class="sc">{</span><span class="bu">len</span>(reaction_ids_with_different_notes)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 15357
+<pre><code>Number of unique reaction_ids: 15357
 Number of reaction with more than one note associated: 0</code></pre>
 </div>
 </div>
 <p>Grouping by note and counting the number of unique reaction_id for it:</p>
-<div id="e74f61b0" class="cell" data-execution_count="8">
+<div id="db27baf7" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by 'notes' and count the number of unique reaction_id values</span></span>
@@ -350,22 +352,26 @@ Number of reaction with more than one note associated: 0</code></pre>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>notes_with_multiple_reactions <span class="op">=</span> multiple_reactions_per_note[multiple_reactions_per_note <span class="op">&gt;</span> <span class="dv">1</span>]</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the notes (and how many reaction_ids they are linked to)</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Rows: </span><span class="sc">{</span><span class="bu">len</span>(multiple_reactions_per_note)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of reaction with more than one note associated: </span><span class="sc">{</span><span class="bu">len</span>(notes_with_multiple_reactions)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of unique notes: </span><span class="sc">{</span><span class="bu">len</span>(multiple_reactions_per_note)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of notes with more than one reaction associated: </span><span class="sc">{</span><span class="bu">len</span>(notes_with_multiple_reactions)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 14799
-Number of reaction with more than one note associated: 386</code></pre>
+<pre><code>Number of unique notes: 14799
+Number of notes with more than one reaction associated: 386</code></pre>
 </div>
 </div>
-<div id="69d5ef50" class="cell" data-execution_count="9">
+<div id="dbf497e6" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the original DataFrame to only include those notes</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>conflicting_notes_rows <span class="op">=</span> df[df[<span class="st">'notes'</span>].isin(notes_with_multiple_reactions.index)]</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>conflicting_notes_rows.sort_values(by<span class="op">=</span><span class="st">'notes'</span>).head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of rows of the dataset composed by duplicated notes: </span><span class="sc">{</span><span class="bu">len</span>(conflicting_notes_rows)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>conflicting_notes_rows[[<span class="st">"reaction_id"</span>,<span class="st">"notes"</span>]].sort_values(by<span class="op">=</span><span class="st">'notes'</span>).head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="37">
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of rows of the dataset composed by duplicated notes: 4769</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
 
@@ -373,149 +379,85 @@ Number of reaction with more than one note associated: 386</code></pre>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">file_id</th>
 <th data-quarto-table-cell-role="th">reaction_id</th>
-<th data-quarto-table-cell-role="th">original_notes</th>
 <th data-quarto-table-cell-role="th">notes</th>
-<th data-quarto-table-cell-role="th">only_references</th>
-<th data-quarto-table-cell-role="th">snippet</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">65999</td>
-<td>R-HSA-1430728.sbml</td>
+<td data-quarto-table-cell-role="th">4126</td>
 <td>reaction_1971491</td>
 <td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>(Kitagawa et al. 2001, Yada et al. 2003, Yada ...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">30452</td>
-<td>R-HSA-71387.sbml</td>
-<td>reaction_9632034</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>(Kitagawa et al. 2001, Yada et al. 2003, Yada ...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">18473</td>
-<td>R-HSA-1630316.sbml</td>
-<td>reaction_9632034</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>(Kitagawa et al. 2001, Yada et al. 2003, Yada ...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3750</td>
-<td>R-HSA-2022870.sbml</td>
-<td>reaction_1971491</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>(Kitagawa et al. 2001, Yada et al. 2003, Yada ...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">30266</td>
-<td>R-HSA-71387.sbml</td>
-<td>reaction_1971491</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>(Kitagawa et al. 2001, Yada et al. 2003, Yada ...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">18459</td>
-<td>R-HSA-1630316.sbml</td>
-<td>reaction_1971491</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>(Kitagawa et al. 2001, Yada et al. 2003, Yada ...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4260</td>
-<td>R-HSA-1793185.sbml</td>
-<td>reaction_9632034</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>(Kitagawa et al. 2001, Yada et al. 2003, Yada ...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">4257</td>
-<td>R-HSA-1793185.sbml</td>
-<td>reaction_1971491</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>(Kitagawa et al. 2001, Yada et al. 2003, Yada ...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
-</tr>
-<tr class="odd">
 <td data-quarto-table-cell-role="th">68305</td>
-<td>R-HSA-1430728.sbml</td>
 <td>reaction_9632034</td>
 <td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>(Kitagawa et al. 2001, Yada et al. 2003, Yada ...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3748</td>
-<td>R-HSA-2022870.sbml</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30535</td>
 <td>reaction_9632034</td>
 <td>A glucuronate (GlcA) moiety is added to the ch...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">65999</td>
+<td>reaction_1971491</td>
 <td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>(Kitagawa et al. 2001, Yada et al. 2003, Yada ...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">19507</td>
-<td>R-HSA-198933.sbml</td>
-<td>reaction_199583</td>
-<td>A hallmark of human NK cells is the expression...</td>
-<td>A hallmark of human NK cells is the expression...</td>
-<td>None</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
+<td data-quarto-table-cell-role="th">18131</td>
+<td>reaction_9632034</td>
+<td>A glucuronate (GlcA) moiety is added to the ch...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">64631</td>
-<td>R-HSA-168256.sbml</td>
-<td>reaction_199587</td>
-<td>A hallmark of human NK cells is the expression...</td>
-<td>A hallmark of human NK cells is the expression...</td>
-<td>None</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
+<td data-quarto-table-cell-role="th">18117</td>
+<td>reaction_1971491</td>
+<td>A glucuronate (GlcA) moiety is added to the ch...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">19479</td>
-<td>R-HSA-198933.sbml</td>
-<td>reaction_199587</td>
-<td>A hallmark of human NK cells is the expression...</td>
-<td>A hallmark of human NK cells is the expression...</td>
-<td>None</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
+<td data-quarto-table-cell-role="th">4124</td>
+<td>reaction_9632034</td>
+<td>A glucuronate (GlcA) moiety is added to the ch...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">63944</td>
-<td>R-HSA-168256.sbml</td>
-<td>reaction_199579</td>
-<td>A hallmark of human NK cells is the expression...</td>
-<td>A hallmark of human NK cells is the expression...</td>
-<td>None</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
+<td data-quarto-table-cell-role="th">4586</td>
+<td>reaction_1971491</td>
+<td>A glucuronate (GlcA) moiety is added to the ch...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">64634</td>
-<td>R-HSA-168256.sbml</td>
+<td data-quarto-table-cell-role="th">30349</td>
+<td>reaction_1971491</td>
+<td>A glucuronate (GlcA) moiety is added to the ch...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4589</td>
+<td>reaction_9632034</td>
+<td>A glucuronate (GlcA) moiety is added to the ch...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6865</td>
+<td>reaction_198958</td>
+<td>A hallmark of human NK cells is the expression...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6835</td>
+<td>reaction_199587</td>
+<td>A hallmark of human NK cells is the expression...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20019</td>
+<td>reaction_199566</td>
+<td>A hallmark of human NK cells is the expression...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6839</td>
 <td>reaction_199576</td>
 <td>A hallmark of human NK cells is the expression...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20010</td>
+<td>reaction_199587</td>
 <td>A hallmark of human NK cells is the expression...</td>
-<td>None</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
 </tr>
 </tbody>
 </table>
@@ -523,67 +465,69 @@ Number of reaction with more than one note associated: 386</code></pre>
 </div>
 </div>
 </div>
-<div id="8542cb74" class="cell" data-execution_count="10">
+<div id="f8068483" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>conflicting_notes_rows.nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of unique values of the dataset composed by duplicated notes:</span><span class="ch">\n</span><span class="sc">{</span>conflicting_notes_rows<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="38">
-<pre><code>file_id             667
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of unique values of the dataset composed by duplicated notes:
+file_id             667
 reaction_id         944
 original_notes      389
 notes               386
 only_references     259
-snippet            4690
+snippet            1509
 dtype: int64</code></pre>
 </div>
 </div>
+</section>
 <section id="references-per-reaction-distribution" class="level1">
 <h1>References per reaction distribution</h1>
-<div id="6de4111e" class="cell" data-execution_count="11">
+<div id="212526c2" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'parsed_references'</span>] <span class="op">=</span> df[<span class="st">'only_references'</span>].<span class="bu">apply</span>(extract_references)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># How many references per reaction</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>references_per_reaction <span class="op">=</span> df.groupby(<span class="st">'reaction_id'</span>)[<span class="st">'parsed_references'</span>].<span class="bu">apply</span>(</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> lists: <span class="bu">sum</span>(<span class="bu">len</span>(ref) <span class="cf">for</span> ref <span class="kw">in</span> lists)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># How many unique references per file </span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>unique_refs_per_reactions <span class="op">=</span> df.groupby(<span class="st">'reaction_id'</span>)[<span class="st">'parsed_references'</span>].<span class="bu">apply</span>(</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> ref_lists: <span class="bu">len</span>(<span class="bu">set</span>(ref <span class="cf">for</span> refs <span class="kw">in</span> ref_lists <span class="cf">for</span> ref <span class="kw">in</span> refs))</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Results</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Total number of references per reaction:</span><span class="ch">\n</span><span class="sc">{</span>references_per_reaction<span class="sc">.</span>head(<span class="dv">10</span>)<span class="sc">}</span><span class="ss">"</span>) </span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Unique references per reaction:</span><span class="ch">\n</span><span class="sc">{</span>unique_refs_per_reactions<span class="sc">.</span>head(<span class="dv">10</span>)<span class="sc">}</span><span class="ss">"</span>) </span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> references_per_reaction,</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig10.png"</span>,</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per reactions"</span>,</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">3</span>],</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>          )</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> references_per_reaction,</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig11.png"</span>,</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per reactions with log scale x"</span>,</span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">3</span>],</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>          logscale_x <span class="op">=</span> <span class="va">True</span>,</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>          n_bins <span class="op">=</span> <span class="dv">15</span></span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>          )</span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> references_per_reaction,</span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig12.png"</span>,</span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per reactions cutted"</span>,</span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
-<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">3</span>],</span>
-<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
-<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>          cut_percentile<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">90</span>),</span>
-<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>          n_bins <span class="op">=</span> <span class="dv">15</span></span>
-<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>          )</span>
-<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>print_stats(references_per_reaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'parsed_references'</span>] <span class="op">=</span> df[<span class="st">'only_references'</span>].<span class="bu">apply</span>(extract_references)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># How many references per reaction</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>references_per_reaction <span class="op">=</span> df.groupby(<span class="st">'reaction_id'</span>)[<span class="st">'parsed_references'</span>].<span class="bu">apply</span>(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> lists: <span class="bu">sum</span>(<span class="bu">len</span>(ref) <span class="cf">for</span> ref <span class="kw">in</span> lists)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># How many unique references per file </span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>unique_refs_per_reactions <span class="op">=</span> df.groupby(<span class="st">'reaction_id'</span>)[<span class="st">'parsed_references'</span>].<span class="bu">apply</span>(</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> ref_lists: <span class="bu">len</span>(<span class="bu">set</span>(ref <span class="cf">for</span> refs <span class="kw">in</span> ref_lists <span class="cf">for</span> ref <span class="kw">in</span> refs))</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Results</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Total number of references per reaction:</span><span class="ch">\n</span><span class="sc">{</span>references_per_reaction<span class="sc">.</span>head(<span class="dv">10</span>)<span class="sc">}</span><span class="ss">"</span>) </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Unique references per reaction:</span><span class="ch">\n</span><span class="sc">{</span>unique_refs_per_reactions<span class="sc">.</span>head(<span class="dv">10</span>)<span class="sc">}</span><span class="ss">"</span>) </span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> references_per_reaction,</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig10.png"</span>,</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per reactions"</span>,</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">3</span>],</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> references_per_reaction,</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig11.png"</span>,</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per reactions with log scale x"</span>,</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">3</span>],</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>          logscale_x <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>          n_bins <span class="op">=</span> <span class="dv">15</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> references_per_reaction,</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig12.png"</span>,</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per reactions cutted"</span>,</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">3</span>],</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>          cut_percentile<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">90</span>),</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>          n_bins <span class="op">=</span> <span class="dv">15</span></span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>print_stats(references_per_reaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -647,28 +591,6 @@ Maximum: 1472
 25th percentile (Q1): 4.00
 75th percentile (Q3): 24.00
 IQR (Interquartile Range): 20.00</code></pre>
-</div>
-</div>
-<div id="60a06e46" class="cell" data-execution_count="12">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>unique_per_value <span class="op">=</span> df2.groupby(<span class="st">"reaction_id"</span>)[<span class="st">"notes"</span>].nunique()</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>sorted_counts <span class="op">=</span> unique_per_value.sort_values()</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sorted_counts.head(<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>reaction_id
-reaction_9934763    1
-reaction_9934780    1
-reaction_9934884    1
-reaction_9934887    1
-reaction_9934893    1
-reaction_9935265    1
-reaction_9935282    1
-reaction_9935290    1
-reaction_9934021    1
-reaction_9934022    1
-Name: notes, dtype: int64</code></pre>
 </div>
 </div>
 <!-- -->
@@ -1127,157 +1049,146 @@ Name: notes, dtype: int64</code></pre>
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb23" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Reactions Analysis"</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">    html:</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">        code-fold: true</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">        code-tools: true</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="an">jupyter:</span><span class="co"> python3</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> descriptive_stat_functions <span class="im">import</span> plot_data, print_stats, extract_references</span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>ggplot_colors <span class="op">=</span> plt.rcParams[<span class="st">'axes.prop_cycle'</span>].by_key()[<span class="st">'color'</span>]</span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>While pathways (file_id) are all unique, the reactions inside them are not, so if I group for reaction_id I get less reactions than the total length of the dataframe.</span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the big dataset </span></span>
-<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reactions.parquet"</span>)</span>
-<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>df.nunique()</span>
-<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Number of rows in the original data:</span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop_duplicates().reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Number of rows after dropping duplicates:</span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>Drop the column file_id in order to see the duplicates.</span>
-<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the data and display the first rows</span></span>
-<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df.drop([<span class="st">"file_id"</span>], axis <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>first_len <span class="op">=</span> <span class="bu">len</span>(df2)</span>
-<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Number of rows without file_id data:</span><span class="sc">{</span><span class="bu">len</span>(df2)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df2.drop_duplicates().reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of rows after dropping duplicates:</span><span class="sc">{</span><span class="bu">len</span>(df2)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"So there are </span><span class="sc">{</span>first_len <span class="op">-</span> <span class="bu">len</span>(df2)<span class="sc">}</span><span class="ss"> rows where all the columns are the same, also the meta_id of the snippet."</span>)</span>
-<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>Looking at the sorted dataframe it's possible to see that the only thing that change is the _meta-id_ of the snippet column.</span>
-<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"First rows of sorted dataset by reaction_id:"</span>)</span>
-<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a>df2.sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>).head(<span class="dv">10</span>)</span>
-<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a><span class="co">#Total number of reactions: 15357</span></span>
-<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Looking at the first 4 rows</span></span>
-<span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Original notes at index 0:</span><span class="ch">\n</span><span class="sc">{</span>df2<span class="sc">.</span>sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>)[<span class="st">'original_notes'</span>]<span class="sc">.</span>iloc[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-66"><a href="#cb23-66" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Original notes at index 1:</span><span class="ch">\n</span><span class="sc">{</span>df2<span class="sc">.</span>sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>)[<span class="st">'original_notes'</span>]<span class="sc">.</span>iloc[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-67"><a href="#cb23-67" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Original notes at index 2:</span><span class="ch">\n</span><span class="sc">{</span>df2<span class="sc">.</span>sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>)[<span class="st">'original_notes'</span>]<span class="sc">.</span>iloc[<span class="dv">2</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-68"><a href="#cb23-68" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb23-69"><a href="#cb23-69" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Snippet at index 0:</span><span class="ch">\n</span><span class="sc">{</span>df2<span class="sc">.</span>sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>)[<span class="st">'snippet'</span>]<span class="sc">.</span>iloc[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-70"><a href="#cb23-70" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Snippet at index 1:</span><span class="ch">\n</span><span class="sc">{</span>df2<span class="sc">.</span>sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>)[<span class="st">'snippet'</span>]<span class="sc">.</span>iloc[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-71"><a href="#cb23-71" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Snippet at index 2:</span><span class="ch">\n</span><span class="sc">{</span>df2<span class="sc">.</span>sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>)[<span class="st">'snippet'</span>]<span class="sc">.</span>iloc[<span class="dv">2</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-72"><a href="#cb23-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-73"><a href="#cb23-73" aria-hidden="true" tabindex="-1"></a>Each reaction_id is associated with only one notes while the same note can be associated to different reactions.</span>
-<span id="cb23-74"><a href="#cb23-74" aria-hidden="true" tabindex="-1"></a>Grouping by reaction_id and counting the number of unique notes for it: </span>
-<span id="cb23-77"><a href="#cb23-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-78"><a href="#cb23-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by reaction_id and count the number of unique notes for each</span></span>
-<span id="cb23-79"><a href="#cb23-79" aria-hidden="true" tabindex="-1"></a>different_notes <span class="op">=</span> df.groupby(<span class="st">'reaction_id'</span>)[<span class="st">'notes'</span>].nunique()</span>
-<span id="cb23-80"><a href="#cb23-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-81"><a href="#cb23-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to keep only reaction_ids with more than 1 unique note</span></span>
-<span id="cb23-82"><a href="#cb23-82" aria-hidden="true" tabindex="-1"></a>reaction_ids_with_different_notes <span class="op">=</span> different_notes[different_notes <span class="op">&gt;</span> <span class="dv">1</span>]</span>
-<span id="cb23-83"><a href="#cb23-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-84"><a href="#cb23-84" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Rows: </span><span class="sc">{</span><span class="bu">len</span>(different_notes)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-85"><a href="#cb23-85" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of reaction with more than one note associated: </span><span class="sc">{</span><span class="bu">len</span>(reaction_ids_with_different_notes)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-86"><a href="#cb23-86" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-87"><a href="#cb23-87" aria-hidden="true" tabindex="-1"></a>Grouping by note and counting the number of unique reaction_id for it: </span>
-<span id="cb23-90"><a href="#cb23-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-91"><a href="#cb23-91" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by 'notes' and count the number of unique reaction_id values</span></span>
-<span id="cb23-92"><a href="#cb23-92" aria-hidden="true" tabindex="-1"></a>multiple_reactions_per_note <span class="op">=</span> df.groupby(<span class="st">'notes'</span>)[<span class="st">'reaction_id'</span>].nunique()</span>
-<span id="cb23-93"><a href="#cb23-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-94"><a href="#cb23-94" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to keep only notes linked to more than one reaction_id</span></span>
-<span id="cb23-95"><a href="#cb23-95" aria-hidden="true" tabindex="-1"></a>notes_with_multiple_reactions <span class="op">=</span> multiple_reactions_per_note[multiple_reactions_per_note <span class="op">&gt;</span> <span class="dv">1</span>]</span>
-<span id="cb23-96"><a href="#cb23-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-97"><a href="#cb23-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the notes (and how many reaction_ids they are linked to)</span></span>
-<span id="cb23-98"><a href="#cb23-98" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Rows: </span><span class="sc">{</span><span class="bu">len</span>(multiple_reactions_per_note)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-99"><a href="#cb23-99" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of reaction with more than one note associated: </span><span class="sc">{</span><span class="bu">len</span>(notes_with_multiple_reactions)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-100"><a href="#cb23-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-103"><a href="#cb23-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-104"><a href="#cb23-104" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the original DataFrame to only include those notes</span></span>
-<span id="cb23-105"><a href="#cb23-105" aria-hidden="true" tabindex="-1"></a>conflicting_notes_rows <span class="op">=</span> df[df[<span class="st">'notes'</span>].isin(notes_with_multiple_reactions.index)]</span>
-<span id="cb23-106"><a href="#cb23-106" aria-hidden="true" tabindex="-1"></a>conflicting_notes_rows.sort_values(by<span class="op">=</span><span class="st">'notes'</span>).head(<span class="dv">15</span>)</span>
-<span id="cb23-107"><a href="#cb23-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-108"><a href="#cb23-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-111"><a href="#cb23-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-112"><a href="#cb23-112" aria-hidden="true" tabindex="-1"></a>conflicting_notes_rows.nunique()</span>
-<span id="cb23-113"><a href="#cb23-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-114"><a href="#cb23-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-115"><a href="#cb23-115" aria-hidden="true" tabindex="-1"></a><span class="fu"># References per reaction distribution</span></span>
-<span id="cb23-118"><a href="#cb23-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-119"><a href="#cb23-119" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'parsed_references'</span>] <span class="op">=</span> df[<span class="st">'only_references'</span>].<span class="bu">apply</span>(extract_references)</span>
-<span id="cb23-120"><a href="#cb23-120" aria-hidden="true" tabindex="-1"></a><span class="co"># How many references per reaction</span></span>
-<span id="cb23-121"><a href="#cb23-121" aria-hidden="true" tabindex="-1"></a>references_per_reaction <span class="op">=</span> df.groupby(<span class="st">'reaction_id'</span>)[<span class="st">'parsed_references'</span>].<span class="bu">apply</span>(</span>
-<span id="cb23-122"><a href="#cb23-122" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> lists: <span class="bu">sum</span>(<span class="bu">len</span>(ref) <span class="cf">for</span> ref <span class="kw">in</span> lists)</span>
-<span id="cb23-123"><a href="#cb23-123" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb23-124"><a href="#cb23-124" aria-hidden="true" tabindex="-1"></a><span class="co"># How many unique references per file </span></span>
-<span id="cb23-125"><a href="#cb23-125" aria-hidden="true" tabindex="-1"></a>unique_refs_per_reactions <span class="op">=</span> df.groupby(<span class="st">'reaction_id'</span>)[<span class="st">'parsed_references'</span>].<span class="bu">apply</span>(</span>
-<span id="cb23-126"><a href="#cb23-126" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> ref_lists: <span class="bu">len</span>(<span class="bu">set</span>(ref <span class="cf">for</span> refs <span class="kw">in</span> ref_lists <span class="cf">for</span> ref <span class="kw">in</span> refs))</span>
-<span id="cb23-127"><a href="#cb23-127" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb23-128"><a href="#cb23-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-129"><a href="#cb23-129" aria-hidden="true" tabindex="-1"></a><span class="co"># Results</span></span>
-<span id="cb23-130"><a href="#cb23-130" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Total number of references per reaction:</span><span class="ch">\n</span><span class="sc">{</span>references_per_reaction<span class="sc">.</span>head(<span class="dv">10</span>)<span class="sc">}</span><span class="ss">"</span>) </span>
-<span id="cb23-131"><a href="#cb23-131" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Unique references per reaction:</span><span class="ch">\n</span><span class="sc">{</span>unique_refs_per_reactions<span class="sc">.</span>head(<span class="dv">10</span>)<span class="sc">}</span><span class="ss">"</span>) </span>
-<span id="cb23-132"><a href="#cb23-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-133"><a href="#cb23-133" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> references_per_reaction,</span>
-<span id="cb23-134"><a href="#cb23-134" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig10.png"</span>,</span>
-<span id="cb23-135"><a href="#cb23-135" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per reactions"</span>,</span>
-<span id="cb23-136"><a href="#cb23-136" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
-<span id="cb23-137"><a href="#cb23-137" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">3</span>],</span>
-<span id="cb23-138"><a href="#cb23-138" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb23-139"><a href="#cb23-139" aria-hidden="true" tabindex="-1"></a>          )</span>
-<span id="cb23-140"><a href="#cb23-140" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> references_per_reaction,</span>
-<span id="cb23-141"><a href="#cb23-141" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig11.png"</span>,</span>
-<span id="cb23-142"><a href="#cb23-142" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per reactions with log scale x"</span>,</span>
-<span id="cb23-143"><a href="#cb23-143" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
-<span id="cb23-144"><a href="#cb23-144" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">3</span>],</span>
-<span id="cb23-145"><a href="#cb23-145" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
-<span id="cb23-146"><a href="#cb23-146" aria-hidden="true" tabindex="-1"></a>          logscale_x <span class="op">=</span> <span class="va">True</span>,</span>
-<span id="cb23-147"><a href="#cb23-147" aria-hidden="true" tabindex="-1"></a>          n_bins <span class="op">=</span> <span class="dv">15</span></span>
-<span id="cb23-148"><a href="#cb23-148" aria-hidden="true" tabindex="-1"></a>          )</span>
-<span id="cb23-149"><a href="#cb23-149" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> references_per_reaction,</span>
-<span id="cb23-150"><a href="#cb23-150" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig12.png"</span>,</span>
-<span id="cb23-151"><a href="#cb23-151" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per reactions cutted"</span>,</span>
-<span id="cb23-152"><a href="#cb23-152" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
-<span id="cb23-153"><a href="#cb23-153" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">3</span>],</span>
-<span id="cb23-154"><a href="#cb23-154" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
-<span id="cb23-155"><a href="#cb23-155" aria-hidden="true" tabindex="-1"></a>          cut_percentile<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">90</span>),</span>
-<span id="cb23-156"><a href="#cb23-156" aria-hidden="true" tabindex="-1"></a>          n_bins <span class="op">=</span> <span class="dv">15</span></span>
-<span id="cb23-157"><a href="#cb23-157" aria-hidden="true" tabindex="-1"></a>          )</span>
-<span id="cb23-158"><a href="#cb23-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-159"><a href="#cb23-159" aria-hidden="true" tabindex="-1"></a>print_stats(references_per_reaction)</span>
-<span id="cb23-160"><a href="#cb23-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-161"><a href="#cb23-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-162"><a href="#cb23-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-165"><a href="#cb23-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-166"><a href="#cb23-166" aria-hidden="true" tabindex="-1"></a>unique_per_value <span class="op">=</span> df2.groupby(<span class="st">"reaction_id"</span>)[<span class="st">"notes"</span>].nunique()</span>
-<span id="cb23-167"><a href="#cb23-167" aria-hidden="true" tabindex="-1"></a>sorted_counts <span class="op">=</span> unique_per_value.sort_values()</span>
-<span id="cb23-168"><a href="#cb23-168" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sorted_counts.head(<span class="dv">10</span>))</span>
-<span id="cb23-169"><a href="#cb23-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-170"><a href="#cb23-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-173"><a href="#cb23-173" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-174"><a href="#cb23-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb23-175"><a href="#cb23-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-178"><a href="#cb23-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb23-179"><a href="#cb23-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb22" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Reactions Analysis"</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">    html:</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">        code-fold: true</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">        code-tools: true</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="an">jupyter:</span><span class="co"> python3</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> descriptive_stat_functions <span class="im">import</span> plot_data, print_stats, extract_references</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>ggplot_colors <span class="op">=</span> plt.rcParams[<span class="st">'axes.prop_cycle'</span>].by_key()[<span class="st">'color'</span>]</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>While pathways (file_id) are all unique, the reactions inside them are not, so if I group for reaction_id I get less reactions than the total length of the dataframe.</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the big dataset </span></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reactions.parquet"</span>)</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>df.nunique()</span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Number of rows in the original data:</span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop_duplicates().reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Number of rows after dropping duplicates:</span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>Drop the column file_id in order to see the duplicates.</span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the data and display the first rows</span></span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df.drop([<span class="st">"file_id"</span>], axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a>first_len <span class="op">=</span> <span class="bu">len</span>(df2)</span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Number of rows without file_id data:</span><span class="sc">{</span><span class="bu">len</span>(df2)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df2.drop_duplicates().reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of rows after dropping duplicates:</span><span class="sc">{</span><span class="bu">len</span>(df2)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"So there are </span><span class="sc">{</span>first_len <span class="op">-</span> <span class="bu">len</span>(df2)<span class="sc">}</span><span class="ss"> rows where all the columns are the same."</span>)</span>
+<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a>Looking at the sorted dataframe it's possible to see that the only thing that change is the _meta-id_ of the snippet column.</span>
+<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"First rows of sorted dataset by reaction_id:"</span>)</span>
+<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a>df2.sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>).head(<span class="dv">10</span>)</span>
+<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a><span class="co">#Total number of reactions: 15357</span></span>
+<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Looking at the first 4 rows</span></span>
+<span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Original notes at index 0:</span><span class="ch">\n</span><span class="sc">{</span>df2<span class="sc">.</span>sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>)[<span class="st">'original_notes'</span>]<span class="sc">.</span>iloc[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Original notes at index 1:</span><span class="ch">\n</span><span class="sc">{</span>df2<span class="sc">.</span>sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>)[<span class="st">'original_notes'</span>]<span class="sc">.</span>iloc[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Original notes at index 2:</span><span class="ch">\n</span><span class="sc">{</span>df2<span class="sc">.</span>sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>)[<span class="st">'original_notes'</span>]<span class="sc">.</span>iloc[<span class="dv">2</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Snippet at index 0:</span><span class="ch">\n</span><span class="sc">{</span>df2<span class="sc">.</span>sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>)[<span class="st">'snippet'</span>]<span class="sc">.</span>iloc[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Snippet at index 1:</span><span class="ch">\n</span><span class="sc">{</span>df2<span class="sc">.</span>sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>)[<span class="st">'snippet'</span>]<span class="sc">.</span>iloc[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Snippet at index 2:</span><span class="ch">\n</span><span class="sc">{</span>df2<span class="sc">.</span>sort_values(by<span class="op">=</span><span class="st">'reaction_id'</span>)[<span class="st">'snippet'</span>]<span class="sc">.</span>iloc[<span class="dv">2</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-73"><a href="#cb22-73" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reaction_id and notes combined unique values</span></span>
+<span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a>Each reaction_id is associated with only one notes while the same note can be associated to different reactions.</span>
+<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a>Grouping by reaction_id and counting the number of unique notes for it: </span>
+<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by reaction_id and count the number of unique notes for each</span></span>
+<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a>different_notes <span class="op">=</span> df.groupby(<span class="st">'reaction_id'</span>)[<span class="st">'notes'</span>].nunique()</span>
+<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to keep only reaction_ids with more than 1 unique note</span></span>
+<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a>reaction_ids_with_different_notes <span class="op">=</span> different_notes[different_notes <span class="op">&gt;</span> <span class="dv">1</span>]</span>
+<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of unique reaction_ids: </span><span class="sc">{</span><span class="bu">len</span>(different_notes)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of reaction with more than one note associated: </span><span class="sc">{</span><span class="bu">len</span>(reaction_ids_with_different_notes)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a>Grouping by note and counting the number of unique reaction_id for it: </span>
+<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by 'notes' and count the number of unique reaction_id values</span></span>
+<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a>multiple_reactions_per_note <span class="op">=</span> df.groupby(<span class="st">'notes'</span>)[<span class="st">'reaction_id'</span>].nunique()</span>
+<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to keep only notes linked to more than one reaction_id</span></span>
+<span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a>notes_with_multiple_reactions <span class="op">=</span> multiple_reactions_per_note[multiple_reactions_per_note <span class="op">&gt;</span> <span class="dv">1</span>]</span>
+<span id="cb22-97"><a href="#cb22-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-98"><a href="#cb22-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the notes (and how many reaction_ids they are linked to)</span></span>
+<span id="cb22-99"><a href="#cb22-99" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of unique notes: </span><span class="sc">{</span><span class="bu">len</span>(multiple_reactions_per_note)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-100"><a href="#cb22-100" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of notes with more than one reaction associated: </span><span class="sc">{</span><span class="bu">len</span>(notes_with_multiple_reactions)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-101"><a href="#cb22-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-104"><a href="#cb22-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-105"><a href="#cb22-105" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the original DataFrame to only include those notes</span></span>
+<span id="cb22-106"><a href="#cb22-106" aria-hidden="true" tabindex="-1"></a>conflicting_notes_rows <span class="op">=</span> df[df[<span class="st">'notes'</span>].isin(notes_with_multiple_reactions.index)]</span>
+<span id="cb22-107"><a href="#cb22-107" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of rows of the dataset composed by duplicated notes: </span><span class="sc">{</span><span class="bu">len</span>(conflicting_notes_rows)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-108"><a href="#cb22-108" aria-hidden="true" tabindex="-1"></a>conflicting_notes_rows[[<span class="st">"reaction_id"</span>,<span class="st">"notes"</span>]].sort_values(by<span class="op">=</span><span class="st">'notes'</span>).head(<span class="dv">15</span>)</span>
+<span id="cb22-109"><a href="#cb22-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-110"><a href="#cb22-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-113"><a href="#cb22-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-114"><a href="#cb22-114" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of unique values of the dataset composed by duplicated notes:</span><span class="ch">\n</span><span class="sc">{</span>conflicting_notes_rows<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-115"><a href="#cb22-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-116"><a href="#cb22-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-117"><a href="#cb22-117" aria-hidden="true" tabindex="-1"></a><span class="fu"># References per reaction distribution</span></span>
+<span id="cb22-120"><a href="#cb22-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb22-121"><a href="#cb22-121" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'parsed_references'</span>] <span class="op">=</span> df[<span class="st">'only_references'</span>].<span class="bu">apply</span>(extract_references)</span>
+<span id="cb22-122"><a href="#cb22-122" aria-hidden="true" tabindex="-1"></a><span class="co"># How many references per reaction</span></span>
+<span id="cb22-123"><a href="#cb22-123" aria-hidden="true" tabindex="-1"></a>references_per_reaction <span class="op">=</span> df.groupby(<span class="st">'reaction_id'</span>)[<span class="st">'parsed_references'</span>].<span class="bu">apply</span>(</span>
+<span id="cb22-124"><a href="#cb22-124" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> lists: <span class="bu">sum</span>(<span class="bu">len</span>(ref) <span class="cf">for</span> ref <span class="kw">in</span> lists)</span>
+<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a><span class="co"># How many unique references per file </span></span>
+<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a>unique_refs_per_reactions <span class="op">=</span> df.groupby(<span class="st">'reaction_id'</span>)[<span class="st">'parsed_references'</span>].<span class="bu">apply</span>(</span>
+<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> ref_lists: <span class="bu">len</span>(<span class="bu">set</span>(ref <span class="cf">for</span> refs <span class="kw">in</span> ref_lists <span class="cf">for</span> ref <span class="kw">in</span> refs))</span>
+<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a><span class="co"># Results</span></span>
+<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Total number of references per reaction:</span><span class="ch">\n</span><span class="sc">{</span>references_per_reaction<span class="sc">.</span>head(<span class="dv">10</span>)<span class="sc">}</span><span class="ss">"</span>) </span>
+<span id="cb22-133"><a href="#cb22-133" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Unique references per reaction:</span><span class="ch">\n</span><span class="sc">{</span>unique_refs_per_reactions<span class="sc">.</span>head(<span class="dv">10</span>)<span class="sc">}</span><span class="ss">"</span>) </span>
+<span id="cb22-134"><a href="#cb22-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-135"><a href="#cb22-135" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> references_per_reaction,</span>
+<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig10.png"</span>,</span>
+<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per reactions"</span>,</span>
+<span id="cb22-138"><a href="#cb22-138" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb22-139"><a href="#cb22-139" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">3</span>],</span>
+<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> references_per_reaction,</span>
+<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig11.png"</span>,</span>
+<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per reactions with log scale x"</span>,</span>
+<span id="cb22-145"><a href="#cb22-145" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb22-146"><a href="#cb22-146" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">3</span>],</span>
+<span id="cb22-147"><a href="#cb22-147" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a>          logscale_x <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb22-149"><a href="#cb22-149" aria-hidden="true" tabindex="-1"></a>          n_bins <span class="op">=</span> <span class="dv">15</span></span>
+<span id="cb22-150"><a href="#cb22-150" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> references_per_reaction,</span>
+<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a>          outputname <span class="op">=</span> <span class="st">"fig12.png"</span>,</span>
+<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a>          title <span class="op">=</span> <span class="st">"Referencese per reactions cutted"</span>,</span>
+<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a>          xlabel <span class="op">=</span> <span class="st">"References"</span>,</span>
+<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a>          color <span class="op">=</span> ggplot_colors[<span class="dv">3</span>],</span>
+<span id="cb22-156"><a href="#cb22-156" aria-hidden="true" tabindex="-1"></a>          boxplot <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb22-157"><a href="#cb22-157" aria-hidden="true" tabindex="-1"></a>          cut_percentile<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">90</span>),</span>
+<span id="cb22-158"><a href="#cb22-158" aria-hidden="true" tabindex="-1"></a>          n_bins <span class="op">=</span> <span class="dv">15</span></span>
+<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb22-160"><a href="#cb22-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-161"><a href="#cb22-161" aria-hidden="true" tabindex="-1"></a>print_stats(references_per_reaction)</span>
+<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

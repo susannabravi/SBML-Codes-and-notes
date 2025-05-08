@@ -31,6 +31,8 @@ def remove_namespaces_and_elements(elem):
     # Copy attributes without namespace prefixes.
     for attr, value in elem.attrib.items():
         local_attr = attr.split('}')[-1] if '}' in attr else attr
+        if local_attr == 'metaid':
+            continue 
         new_elem.set(local_attr, value)
 
     # Copy text and tail.
@@ -43,10 +45,6 @@ def remove_namespaces_and_elements(elem):
         if new_child is not None:
             new_elem.append(new_child)
     return new_elem
-
-import re
-
-import re
 
 def remove_citations(text):
     if not text:
