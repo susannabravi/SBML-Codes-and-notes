@@ -38,7 +38,9 @@ def plot_data(
 
     # Log transform data if needed
     if logscale_x:
-        data = np.log10(data)  
+        # For integers with zeros, simply filter out zeros before applying log10
+        data = np.array([x for x in data if x > 0])
+        data = np.log10(data)
 
     # Default labels
     if title is None:

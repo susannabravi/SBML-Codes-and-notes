@@ -1,0 +1,151 @@
+---
+title: "Reactions Analysis"
+format: 
+    html:
+        code-fold: true
+        code-tools: true
+jupyter: python3
+---
+
+```{python}
+#| echo: false
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+import numpy as np
+from descriptive_stat_functions import plot_data, print_stats, extract_references
+ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
+```
+
+While pathways (file_id) are all unique, the reactions inside them are not, so if I group for reaction_id I get less reactions than the total length of the dataframe.
+
+```{python}
+# Read the big dataset 
+df = pd.read_parquet("./reactions.parquet")
+df.nunique()
+```
+
+```{python}
+print(f"\nNumber of rows in the original data:{len(df)}")
+df = df.drop_duplicates().reset_index(drop=True)
+print(f"\nNumber of rows after dropping duplicates:{len(df)}")
+```
+Drop the column file_id in order to see the duplicates.
+```{python}
+# Sort the data and display the first rows
+df2 = df.drop(["file_id"], axis = 1)
+first_len = len(df2)
+print(f"\nNumber of rows without file_id data:{len(df2)}")
+df2 = df2.drop_duplicates().reset_index(drop=True)
+print(f"Number of rows after dropping duplicates:{len(df2)}")
+print(f"So there are {first_len - len(df2)} rows where all the columns are the same, also the meta_id of the snippet.")
+```
+Looking at the sorted dataframe it's possible to see that the only thing that change is the _meta-id_ of the snippet column.
+```{python}
+print("First rows of sorted dataset by reaction_id:")
+df2.sort_values(by='reaction_id').head(10)
+```
+```{python}
+#Total number of reactions: 15357
+# Looking at the first 4 rows
+print(f"Original notes at index 0:\n{df2.sort_values(by='reaction_id')['original_notes'].iloc[0]}")
+print(f"Original notes at index 1:\n{df2.sort_values(by='reaction_id')['original_notes'].iloc[1]}")
+print(f"Original notes at index 2:\n{df2.sort_values(by='reaction_id')['original_notes'].iloc[2]}")
+print("\n")
+print(f"Snippet at index 0:\n{df2.sort_values(by='reaction_id')['snippet'].iloc[0]}")
+print(f"Snippet at index 1:\n{df2.sort_values(by='reaction_id')['snippet'].iloc[1]}")
+print(f"Snippet at index 2:\n{df2.sort_values(by='reaction_id')['snippet'].iloc[2]}")
+```
+Each reaction_id is associated with only one notes while the same note can be associated to different reactions.
+Grouping by reaction_id and counting the number of unique notes for it: 
+```{python}
+# Group by reaction_id and count the number of unique notes for each
+different_notes = df.groupby('reaction_id')['notes'].nunique()
+
+# Filter to keep only reaction_ids with more than 1 unique note
+reaction_ids_with_different_notes = different_notes[different_notes > 1]
+
+print(f"Rows: {len(different_notes)}")
+print(f"Number of reaction with more than one note associated: {len(reaction_ids_with_different_notes)}")
+```
+Grouping by note and counting the number of unique reaction_id for it: 
+```{python}
+# Group by 'notes' and count the number of unique reaction_id values
+multiple_reactions_per_note = df.groupby('notes')['reaction_id'].nunique()
+
+# Filter to keep only notes linked to more than one reaction_id
+notes_with_multiple_reactions = multiple_reactions_per_note[multiple_reactions_per_note > 1]
+
+# Display the notes (and how many reaction_ids they are linked to)
+print(f"Rows: {len(multiple_reactions_per_note)}")
+print(f"Number of notes with more than one reaction associated: {len(notes_with_multiple_reactions)}")
+```
+```{python}
+# Filter the original DataFrame to only include those notes
+conflicting_notes_rows = df[df['notes'].isin(notes_with_multiple_reactions.index)]
+conflicting_notes_rows.sort_values(by='notes').head(15)
+```
+
+```{python}
+conflicting_notes_rows.nunique()
+```
+
+# References per reaction distribution
+```{python}
+df['parsed_references'] = df['only_references'].apply(extract_references)
+# How many references per reaction
+references_per_reaction = df.groupby('reaction_id')['parsed_references'].apply(
+    lambda lists: sum(len(ref) for ref in lists)
+)
+# How many unique references per file 
+unique_refs_per_reactions = df.groupby('reaction_id')['parsed_references'].apply(
+    lambda ref_lists: len(set(ref for refs in ref_lists for ref in refs))
+)
+
+# Results
+print(f"\nTotal number of references per reaction:\n{references_per_reaction.head(10)}") 
+print(f"\nUnique references per reaction:\n{unique_refs_per_reactions.head(10)}") 
+
+plot_data(data = references_per_reaction,
+          outputname = "fig10.png",
+          title = "Referencese per reactions",
+          xlabel = "References",
+          color = ggplot_colors[3],
+          boxplot = True
+          )
+plot_data(data = references_per_reaction,
+          outputname = "fig11.png",
+          title = "Referencese per reactions with log scale x",
+          xlabel = "References",
+          color = ggplot_colors[3],
+          boxplot = True,
+          logscale_x = True,
+          n_bins = 15
+          )
+plot_data(data = references_per_reaction,
+          outputname = "fig12.png",
+          title = "Referencese per reactions cutted",
+          xlabel = "References",
+          color = ggplot_colors[3],
+          boxplot = True,
+          cut_percentile=(0,90),
+          n_bins = 15
+          )
+
+print_stats(references_per_reaction)
+```
+
+
+```{python}
+unique_per_value = df2.groupby("reaction_id")["notes"].nunique()
+sorted_counts = unique_per_value.sort_values()
+print(sorted_counts.head(10))
+```
+
+```{python}
+```
+
+```{python}
+```

@@ -101,6 +101,8 @@ df_refs_per_file = pd.DataFrame({
     'unique_references': unique_refs_per_file.values
 })
 df_refs_per_file.head(10)
+```
+```{python}
 print(f"\nFirst reference:\n{df_refs_per_file['all_references'].iloc[0]}")
 print(f"\nTotal number of references in all files (with duplicates): {sum(df_refs_per_file.total_references.values)}")
 print(f"Total number of unique references across all files: {sum(df_refs_per_file.unique_references.values)}")
@@ -156,11 +158,30 @@ plot_data(data =  df_refs_per_file['unique_references'],
           )
 ```
 
+## Filtered data without any reference
 ```{python}
-```
+# No references data -----------------------
+df_nocit = df[df['only_references'].isna()]
 
-```{python}
-```
+# Basic info
+print("Dataset length:", len(df_nocit))
+print("Columns in dataset:", df_nocit.columns.tolist())
 
+# First rows 
+print("\nFirst 5 rows:")
+df_nocit.head(5)
+```
 ```{python}
+# Display a sample of the dataset.
+num_samples = 5
+
+# Iterate over the first num_samples rows and print full content without extra spaces.
+print("\n--- Displaying full content for sample rows ---")
+for idx in df_nocit.index[:num_samples]:
+    print(f"\n--- Full content for sample row at index {idx} ---")
+    #print(f"Snippet:\n{df_nocit.at[idx, 'snippet']}")
+    print(f"\nOriginal Notes:\n{df_nocit.at[idx, 'original_notes']}")
+    print(f"\nCleaned Notes (without citations):\n{df_nocit.at[idx, 'notes']}")
+    print(f"\nExtracted Citations:\n{df_nocit.at[idx, 'only_references']}")
+    print("-" * 40)
 ```
