@@ -6,3 +6,69 @@ format:
         code-tools: true
 jupyter: python3
 ---
+
+```{python}
+#| echo: false
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+import numpy as np
+from descriptive_stat_functions import plot_data, print_stats, extract_references
+ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
+```
+
+```{python}
+# Read the big dataset 
+df = pd.read_parquet("./reaction_sentences.parquet")
+df_sentences = pd.read_parquet("./sentences.parquet")
+
+# Drop file_id and the duplicates
+max = 5
+for idx in range(0,max):
+  print(f"Original notes:\n{df['original_notes'].iloc[idx]}")
+  print(f"Sentences:\n{df['sentences'].iloc[idx]}")
+```
+
+```{python}
+df.sort_values(by="num_sentences", ascending=False).head(10)
+```
+
+```{python}
+df['original_notes'].iloc[df['num_sentences'].idxmax()]
+```
+
+```{python}
+idx = df['num_sentences'].idxmax()
+target_note = df['original_notes'].iloc[idx]
+df[df['original_notes'] == target_note]
+```
+
+```{python}
+print_stats(df['num_sentences'])
+```
+
+```{python}
+df_sentences.head(15)
+```
+
+```{python}
+sentence_counts = df_sentences['sentence'].value_counts().reset_index()
+sentence_counts.columns = ['sentence', 'count']
+repeated_sentences = sentence_counts[sentence_counts['count'] > 1]
+repeated_sentences
+```
+
+```{python}
+sentence_to_check = repeated_sentences.iloc[0]['sentence']
+notes_with_sentence = df_sentences[df_sentences['sentence'] == sentence_to_check]
+print(notes_with_sentence['original_notes'].iloc[0])
+print(notes_with_sentence['original_notes'].iloc[1])
+print(notes_with_sentence['original_notes'].iloc[2])
+print(notes_with_sentence['original_notes'].iloc[3])
+```
+
+```{python}
+
+```
