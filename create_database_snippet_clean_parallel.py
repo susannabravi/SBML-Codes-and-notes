@@ -182,8 +182,8 @@ def main():
         'file_id': [r['file_id'] for r in reaction_counts],
         'reaction_count': [r['reaction_count'] for r in reaction_counts]
     })
-    pq.write_table(reaction_count_table, './reaction_counts.parquet')
-    print("Parquet file 'reactions_per_file.parquet' has been created.")
+    pq.write_table(reaction_count_table, './pathways.parquet')
+    print("Parquet file 'pathways.parquet' has been created.")
 
 # Necessary for using ProcessPoolExecutor
 if __name__ == "__main__":
