@@ -16,42 +16,59 @@ import seaborn as sns
 from scipy import stats
 import numpy as np
 from descriptive_stat_functions import plot_data, print_stats, extract_references
+from IPython.display import display, Markdown
 ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 ```
 
 ```{python}
-# Read the big dataset 
 df = pd.read_parquet("./reaction_sentences.parquet")
 df_sentences = pd.read_parquet("./sentences.parquet")
+```
 
-# Drop file_id and the duplicates
+Reaction Sentences dataframe
+```{python}
+df.head(10)
+```
+```{python}
+print(f"Number of rows:{len(df)}")
+```
+
+Sentences dataframe
+```{python}
+df_sentences.head(10)
+```
+
+```{python}
+print(f"Number of rows:{len(df_sentences)}")
+```
+
+```{python}
+#| output: asis
 max = 5
 for idx in range(0,max):
-  print(f"Original notes:\n{df['original_notes'].iloc[idx]}")
-  print(f"Sentences:\n{df['sentences'].iloc[idx]}")
+  display(Markdown(f"\n **Original notes at index {idx}:**  \n{df['original_notes'].iloc[idx]} \n"))
+  sentences = "  \n".join([f"**-** {s}" for s in df['sentences'].iloc[idx]])
+  display(Markdown(f"**Sentences of note at index {idx}:**  \n{sentences}"))
 ```
+
 
 ```{python}
 df.sort_values(by="num_sentences", ascending=False).head(10)
 ```
 
 ```{python}
-df['original_notes'].iloc[df['num_sentences'].idxmax()]
+#| output: asis
+display(Markdown(f"**Note with max value of sentences**\n{df['original_notes'].iloc[df['num_sentences'].idxmax()]}\n"))
 ```
 
-```{python}
-idx = df['num_sentences'].idxmax()
-target_note = df['original_notes'].iloc[idx]
-df[df['original_notes'] == target_note]
-```
+
 
 ```{python}
+print("Statistics of variable num_sentences:")
 print_stats(df['num_sentences'])
 ```
 
-```{python}
-df_sentences.head(15)
-```
+# Repeated sentences 
 
 ```{python}
 sentence_counts = df_sentences['sentence'].value_counts().reset_index()
@@ -63,10 +80,9 @@ repeated_sentences
 ```{python}
 sentence_to_check = repeated_sentences.iloc[0]['sentence']
 notes_with_sentence = df_sentences[df_sentences['sentence'] == sentence_to_check]
-print(notes_with_sentence['original_notes'].iloc[0])
-print(notes_with_sentence['original_notes'].iloc[1])
-print(notes_with_sentence['original_notes'].iloc[2])
-print(notes_with_sentence['original_notes'].iloc[3])
+for i in range(4):
+    note = notes_with_sentence['original_notes'].iloc[i]
+    display(Markdown(f"**Original notes at index {i}:**  \n{note}\n"))
 ```
 
 ```{python}

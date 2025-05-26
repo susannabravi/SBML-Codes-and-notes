@@ -20,42 +20,55 @@ from descriptive_stat_functions import plot_data, print_stats, extract_reference
 ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 ```
 
-How many unique vales among the variables? 
+Analysis at Pathway level.
 ```{python}
 # Read the big dataset 
-df = pd.read_parquet("./reactions.parquet")
-df.nunique()
+df = pd.read_parquet("./pathways.parquet")
+print(f"Number of rows in the original data:{len(df)}")
+df = df.drop_duplicates(subset=[
+    'file_id', 'reaction_count', 'notes_count',
+    'total_references', 'unique_references'
+]).reset_index(drop=True)
+print(f"Number of rows after dropping duplicates:{len(df)}")
+print(f"Columns:{df.columns}")
+df.head(15)
 ```
 
 # Reactions per pathways
-## Raw data
+Counting how many reactions there are per each pathway and analyzing its distibution.
+
+### Raw data
 ```{python}
 # Read Reaction Count data
-df_count = pd.read_parquet("./reaction_counts.parquet")
-reaction_count = df_count['reaction_count']
-
-# Summary statistics
-plot_data(reaction_count, boxplot = True)
-print_stats(reaction_count)
-```
-
-```{python}
+reaction_count = df['reaction_count']
 # Find the row with the maximum reaction count
-max_idx = df_count['reaction_count'].idxmax()  
-max_row = df_count.loc[max_idx]   
+max_idx = df['reaction_count'].idxmax()  
+max_row = df.loc[max_idx]   
 
 print(f"\nFile with Maximum Reaction Count: {max_row['file_id']}")
 print(f"reaction_count: {max_row['reaction_count']}")
 #R-HSA-162582.sbml
+```
+
+[R-HSA-162582](https://reactome.org/content/detail/R-HSA-162582)
+
+```{python}
 # Sort the DataFrame by reaction_count in descending order
-sorted_df = df_count.sort_values(by='reaction_count', ascending=False)
+sorted_df = df.sort_values(by='reaction_count', ascending=False)
 
 # Print the top files
 print("\nFiles sorted by reaction_count (descending):")
 sorted_df.head(15)
 ```
 
-## Log-scaled data
+
+```{python}
+# Summary statistics
+plot_data(reaction_count, boxplot = True)
+print_stats(reaction_count)
+```
+
+### Log-scaled data
 Log10 transformation of the data
 ```{python}
 # Log-scaled data ---------------------------------
@@ -66,55 +79,33 @@ plot_data(reaction_count,
           xlabel= "Log10 Reactions")
 ```
 
-## Filtered data 90th percentile 
+### Filtered data 90th percentile 
 ```{python}
-perc = np.percentile(df_count['reaction_count'], 90)
-df_filtered = df_count[df_count['reaction_count'] <= perc]
-reaction_count_filtered = df_filtered['reaction_count']
+plot_data(data =  df['reaction_count'],
+          outputname = "fig6.png",
+          title = "Reactions per file cutted",
+          xlabel = "References",
+          cut_percentile=(0,90),
+          boxplot = True
+          )
 
-plot_data(reaction_count_filtered, boxplot = True, outputname = "fig3.png")
-print_stats(reaction_count_filtered)
 ```
 
 # References per Pathway distribution
+
 ```{python}
-# Example: 
-'''(Duncan et al. 2002, Sundheim et al. 2006, Chen et al. 2010, Dango et al. 2011);
- (Duncan et al. 2002, Sundheim et al. 2006)'''
+print(f"\nFirst reference:\n{df['all_references'].iloc[0]}")
+print(f"\nTotal number of references in all files (with duplicates): {sum(df.total_references.values)}")
+print(f"Total number of unique references across all files: {sum(df.unique_references.values)}")
 
-# Apply extraction
-df['parsed_references'] = df['only_references'].apply(extract_references)
-
-# How many unique references in general
-# How many references per file 
-# List of all ref
-refs_list_per_file = df.groupby('file_id')['parsed_references'].apply(
-    lambda lists: [ref for refs in lists for ref in refs]
-)
-refs_per_file = refs_list_per_file.apply(lambda refs: len(refs))
-# How many unique references per file 
-unique_refs_per_file = refs_list_per_file.apply(lambda refs: len(set(refs)))
-df_refs_per_file = pd.DataFrame({
-    'file_id': refs_list_per_file.index,
-    'all_references': refs_list_per_file.values,
-    'total_references': refs_per_file.values,
-    'unique_references': unique_refs_per_file.values
-})
-df_refs_per_file.head(10)
-```
-```{python}
-print(f"\nFirst reference:\n{df_refs_per_file['all_references'].iloc[0]}")
-print(f"\nTotal number of references in all files (with duplicates): {sum(df_refs_per_file.total_references.values)}")
-print(f"Total number of unique references across all files: {sum(df_refs_per_file.unique_references.values)}")
-
-plot_data(data = df_refs_per_file['total_references'],
+plot_data(data = df['total_references'],
           outputname = "fig4.png",
           title = "References per file (with duplicates)",
           xlabel = "References",
           color = ggplot_colors[1],
           boxplot = True
           )
-plot_data(data =  df_refs_per_file['total_references'],
+plot_data(data =  df['total_references'],
           outputname = "fig5.png",
           title = "Referencese per file with log scale x (with duplicates)",
           xlabel = "log(References)",
@@ -122,25 +113,28 @@ plot_data(data =  df_refs_per_file['total_references'],
           boxplot = True,
           logscale_x = True
           )
-plot_data(data =  df_refs_per_file['total_references'],
+plot_data(data =  df['total_references'],
           outputname = "fig6.png",
           title = "Referencese per file cutted (with duplicates)",
           xlabel = "References",
           color = ggplot_colors[1],
-          boxplot = True,
-          cut_percentile=(0,90)
+          cut_percentile=(0,90),
+          boxplot = True
           )
 
-print_stats(df_refs_per_file['total_references'])
+print("Summary statistic of references per file with duplicates, raw data: \n")
+print_stats(df['total_references'])
+```
 
-plot_data(data = df_refs_per_file['unique_references'],
+```{python}
+plot_data(data = df['unique_references'],
           outputname = "fig7.png",
           title = "References per file (without duplicates)",
           xlabel = "References",
           color = ggplot_colors[2],
           boxplot = True
           )
-plot_data(data =  df_refs_per_file['unique_references'],
+plot_data(data =  df['unique_references'],
           outputname = "fig8.png",
           title = "Referencese per file with log scale x (without duplicates)",
           xlabel = "log(References)",
@@ -148,7 +142,7 @@ plot_data(data =  df_refs_per_file['unique_references'],
           boxplot = True,
           logscale_x = True
           )
-plot_data(data =  df_refs_per_file['unique_references'],
+plot_data(data =  df['unique_references'],
           outputname = "fig9.png",
           title = "Referencese per file cutted (without duplicates)",
           xlabel = "References",
@@ -158,30 +152,10 @@ plot_data(data =  df_refs_per_file['unique_references'],
           )
 ```
 
-## Filtered data without any reference
+## Pathways without any reference
 ```{python}
-# No references data -----------------------
-df_nocit = df[df['only_references'].isna()]
-
-# Basic info
-print("Dataset length:", len(df_nocit))
-print("Columns in dataset:", df_nocit.columns.tolist())
-
-# First rows 
-print("\nFirst 5 rows:")
-df_nocit.head(5)
-```
-```{python}
-# Display a sample of the dataset.
-num_samples = 5
-
-# Iterate over the first num_samples rows and print full content without extra spaces.
-print("\n--- Displaying full content for sample rows ---")
-for idx in df_nocit.index[:num_samples]:
-    print(f"\n--- Full content for sample row at index {idx} ---")
-    #print(f"Snippet:\n{df_nocit.at[idx, 'snippet']}")
-    print(f"\nOriginal Notes:\n{df_nocit.at[idx, 'original_notes']}")
-    print(f"\nCleaned Notes (without citations):\n{df_nocit.at[idx, 'notes']}")
-    print(f"\nExtracted Citations:\n{df_nocit.at[idx, 'only_references']}")
-    print("-" * 40)
+zero_references_count = (df['total_references'] == 0).sum()
+print(f"Number of file_id with total_references equal to zero: {zero_references_count}")
+print("Sorted data by ascending unique_references and descending reaction_count")
+df.sort_values(by=['unique_references','reaction_count'], ascending=[True, False]).head(15)
 ```

@@ -3,9 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Apply ggplot style globally
-
-
 def plot_data(
     data,
     logscale_x=False,

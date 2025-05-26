@@ -7,6 +7,8 @@ format:
 jupyter: python3
 ---
 
+
+
 ```{python}
 #| echo: false
 import os
@@ -16,6 +18,7 @@ import seaborn as sns
 from scipy import stats
 import numpy as np
 from descriptive_stat_functions import plot_data, print_stats, extract_references
+from IPython.display import display, Markdown
 ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 ```
 
@@ -24,40 +27,82 @@ While pathways (file_id) are all unique, the reactions inside them are not, so i
 ```{python}
 # Read the big dataset 
 df = pd.read_parquet("./reactions.parquet")
-df.nunique()
+print(f"\nUnique values for each variable:\n{df.nunique()}")
 ```
 
+In the original data there are no duplicates because the cobination of file_id and reaction_id are all uniques.
 ```{python}
 print(f"\nNumber of rows in the original data:{len(df)}")
 df = df.drop_duplicates().reset_index(drop=True)
 print(f"\nNumber of rows after dropping duplicates:{len(df)}")
 ```
-Drop the column file_id in order to see the duplicates.
+Do not consider the column file_id in order to see the duplicates.
 ```{python}
 # Sort the data and display the first rows
-df2 = df.drop(["file_id"], axis = 1)
-first_len = len(df2)
-print(f"\nNumber of rows without file_id data:{len(df2)}")
-df2 = df2.drop_duplicates().reset_index(drop=True)
-print(f"Number of rows after dropping duplicates:{len(df2)}")
-print(f"So there are {first_len - len(df2)} rows where all the columns are the same.")
+# Temporarily drop file_id to check for true duplicates
+df_dedup = df.drop_duplicates(subset=[col for col in df.columns if col != 'file_id']).reset_index(drop=True)
+
+print(f"\nOriginal number of rows: {len(df)}")
+print(f"Number of rows after deduplication (excluding file_id): {len(df_dedup)}")
+print(f"Removed {len(df) - len(df_dedup)} duplicate rows.")
+
 ```
-Looking at the sorted dataframe it's possible to see that the only thing that change is the _meta-id_ of the snippet column.
+
+Looking at the sorted dataframe it's possible to see that the only thing that change is the _meta-id_ of the snippet column. (Already deleted).
 ```{python}
 print("First rows of sorted dataset by reaction_id:")
-df2.sort_values(by='reaction_id').head(10)
+df_dedup.sort_values(by='reaction_id').head(10)
 ```
+
+It's possible to see that there are still duplicate reaction ids and the reason in that the snippet is the same but with the rows in different order.
+
 ```{python}
-#Total number of reactions: 15357
-# Looking at the first 4 rows
-print(f"Original notes at index 0:\n{df2.sort_values(by='reaction_id')['original_notes'].iloc[0]}")
-print(f"Original notes at index 1:\n{df2.sort_values(by='reaction_id')['original_notes'].iloc[1]}")
-print(f"Original notes at index 2:\n{df2.sort_values(by='reaction_id')['original_notes'].iloc[2]}")
-print("\n")
-print(f"Snippet at index 0:\n{df2.sort_values(by='reaction_id')['snippet'].iloc[0]}")
-print(f"Snippet at index 1:\n{df2.sort_values(by='reaction_id')['snippet'].iloc[1]}")
-print(f"Snippet at index 2:\n{df2.sort_values(by='reaction_id')['snippet'].iloc[2]}")
+#| output: asis
+sorted_df = df_dedup.sort_values(by='reaction_id')
+
+# Show original notes (formatted as text)
+for i in range(1,3):
+    display(Markdown(f"**Original notes at index {i}:**  \n{sorted_df['original_notes'].iloc[i]} \n"))
+
+# Show snippet (formatted as code block)
+for i in range(1,3):
+    snippet = sorted_df['snippet'].iloc[i]
+    display(Markdown(f"**Snippet at index {i}:**\n```xml\n{snippet}\n```"))
 ```
+
+```{python}
+# Show original notes (formatted as text)
+for i in range(10,12):
+    display(Markdown(f"**Original notes at index {i}:**  \n{sorted_df['original_notes'].iloc[i]} \n"))
+
+# Show snippet (formatted as code block)
+for i in range(10,12):
+    snippet = sorted_df['snippet'].iloc[i]
+    display(Markdown(f"**Snippet at index {i}:**\n```xml\n{snippet}\n```"))
+```
+
+```{python}
+# Show original notes (formatted as text)
+for i in range(16,18):
+    display(Markdown(f"**Original notes at index {i}:**  \n{sorted_df['original_notes'].iloc[i]} \n"))
+
+# Show snippet (formatted as code block)
+for i in range(16,18):
+    snippet = sorted_df['snippet'].iloc[i]
+    display(Markdown(f"**Snippet at index {i}:**\n```xml\n{snippet}\n```"))
+```
+
+```{python}
+# Show original notes (formatted as text)
+for i in range(18,20):
+    display(Markdown(f"**Original notes at index {i}:**  \n{sorted_df['original_notes'].iloc[i]} \n"))
+
+# Show snippet (formatted as code block)
+for i in range(18,20):
+    snippet = sorted_df['snippet'].iloc[i]
+    display(Markdown(f"**Snippet at index {i}:**\n```xml\n{snippet}\n```"))
+```
+
 # Reaction_id and notes combined unique values
 Each reaction_id is associated with only one notes while the same note can be associated to different reactions.
 Grouping by reaction_id and counting the number of unique notes for it: 
@@ -71,10 +116,11 @@ reaction_ids_with_different_notes = different_notes[different_notes > 1]
 print(f"Number of unique reaction_ids: {len(different_notes)}")
 print(f"Number of reaction with more than one note associated: {len(reaction_ids_with_different_notes)}")
 ```
+
 Grouping by note and counting the number of unique reaction_id for it: 
 ```{python}
 # Group by 'notes' and count the number of unique reaction_id values
-multiple_reactions_per_note = df.groupby('notes')['reaction_id'].nunique()
+multiple_reactions_per_note = df_dedup.groupby('notes')['reaction_id'].nunique()
 
 # Filter to keep only notes linked to more than one reaction_id
 notes_with_multiple_reactions = multiple_reactions_per_note[multiple_reactions_per_note > 1]
@@ -85,43 +131,71 @@ print(f"Number of notes with more than one reaction associated: {len(notes_with_
 ```
 ```{python}
 # Filter the original DataFrame to only include those notes
-conflicting_notes_rows = df[df['notes'].isin(notes_with_multiple_reactions.index)]
+conflicting_notes_rows = df_dedup[df_dedup['notes'].isin(notes_with_multiple_reactions.index)]
 print(f"Number of rows of the dataset composed by duplicated notes: {len(conflicting_notes_rows)}")
-conflicting_notes_rows[["reaction_id","notes"]].sort_values(by='notes').head(15)
+print(f"Number of unique values of the dataset composed by duplicated notes:\n{conflicting_notes_rows.nunique()}")
 ```
 
 ```{python}
-print(f"Number of unique values of the dataset composed by duplicated notes:\n{conflicting_notes_rows.nunique()}")
+conflicting_notes_rows_sorted = conflicting_notes_rows[["file_id","reaction_id","original_notes","snippet"]].sort_values(by='original_notes')
+conflicting_notes_rows_sorted.head(20)
+```
+
+```{python}
+# Show original notes (formatted as text)
+for i in range(0,4):
+    display(Markdown(f"**Original notes at index {i}:**  \n{conflicting_notes_rows_sorted['original_notes'].iloc[i]} \n"))
+
+# Show snippet (formatted as code block)
+for i in range(0,4):
+    snippet = conflicting_notes_rows_sorted['snippet'].iloc[i]
+    display(Markdown(f"**Snippet at index {i}:**\n```xml\n{snippet}\n```"))
+```
+
+```{python}
+# Show original notes (formatted as text)
+for i in range(4,11):
+    display(Markdown(f"**Original notes at index {i}:**  \n{conflicting_notes_rows_sorted['original_notes'].iloc[i]} \n"))
+
+# Show snippet (formatted as code block)
+for i in range(4,11):
+    snippet = conflicting_notes_rows_sorted['snippet'].iloc[i]
+    display(Markdown(f"**Snippet at index {i}:**\n```xml\n{snippet}\n```"))
 ```
 
 # References per reaction distribution
 ```{python}
-df['parsed_references'] = df['only_references'].apply(extract_references)
+df_dedup['parsed_references'] = df_dedup['only_references'].apply(extract_references)
 # How many references per reaction
-references_per_reaction = df.groupby('reaction_id')['parsed_references'].apply(
+references_per_reaction = df_dedup.groupby('reaction_id')['parsed_references'].apply(
     lambda lists: sum(len(ref) for ref in lists)
 )
 # How many unique references per file 
-unique_refs_per_reactions = df.groupby('reaction_id')['parsed_references'].apply(
+unique_refs_per_reactions = df_dedup.groupby('reaction_id')['parsed_references'].apply(
     lambda ref_lists: len(set(ref for refs in ref_lists for ref in refs))
 )
 
 # Results
-print(f"\nTotal number of references per reaction:\n{references_per_reaction.head(10)}") 
-print(f"\nUnique references per reaction:\n{unique_refs_per_reactions.head(10)}") 
+print("Total number of references per reaction:") 
+references_per_reaction.head(10)
+```
 
+```{python}
+print("Unique references per reaction:") 
+unique_refs_per_reactions.head(10)
+```
+
+```{python}
 plot_data(data = references_per_reaction,
           outputname = "fig10.png",
           title = "Referencese per reactions",
           xlabel = "References",
-          color = ggplot_colors[3],
           boxplot = True
           )
 plot_data(data = references_per_reaction,
           outputname = "fig11.png",
           title = "Referencese per reactions with log scale x",
           xlabel = "References",
-          color = ggplot_colors[3],
           boxplot = True,
           logscale_x = True,
           n_bins = 15
@@ -130,11 +204,11 @@ plot_data(data = references_per_reaction,
           outputname = "fig12.png",
           title = "Referencese per reactions cutted",
           xlabel = "References",
-          color = ggplot_colors[3],
           boxplot = True,
           cut_percentile=(0,90),
           n_bins = 15
           )
 
+print("Raw data statistics")
 print_stats(references_per_reaction)
 ```

@@ -101,64 +101,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="320d489c" class="cell" data-execution_count="2">
+<div id="89ec534f" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the big dataset </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reaction_sentences.parquet"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df_sentences <span class="op">=</span> pd.read_parquet(<span class="st">"./sentences.parquet"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop file_id and the duplicates</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">max</span> <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="bu">max</span>):</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"Original notes:</span><span class="ch">\n</span><span class="sc">{</span>df[<span class="st">'original_notes'</span>]<span class="sc">.</span>iloc[idx]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"Sentences:</span><span class="ch">\n</span><span class="sc">{</span>df[<span class="st">'sentences'</span>]<span class="sc">.</span>iloc[idx]<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reaction_sentences.parquet"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df_sentences <span class="op">=</span> pd.read_parquet(<span class="st">"./sentences.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Original notes:
-The following mutations in MCCC1 have been identified in patients with MCCC deficiency I. They have been shown to have compromised activity in vitro and are classified as either "likely pathological" or "pathological" in ClinVar despite variable clinical presentations:M325R: appears to abolish the ability of the protein to be biotinylated, possibly affecting protein stability (Gallardo et al, 2001).R385S: appears to affect protein activity without affecting stability. May act as a dominant negative (Steen et al, 1999; Gallardo et al, 2001; Baumgartner et al, 2001; Baumgartner et al, 2004; Fonseca et al, 2016; Dantas et al, 2005; Morscher et al, 2012).L437P: abolishes enzyme activity (Baumgartner et al, 2001)I460M: reduces enzyme activity to D532H: This mutation arises as a result of a nucleotide change causing an alteration of a splice site, and results in a truncated protein (Baumgartner et al, 2001)V694*: This mutation leads to premature truncation and removes the essential biotinylation site (Holzinger et al, 2001)The following mutations in MCCC2 have been identified in patients with MCCC deficiency II, have been shown to have compromised activity in vitro and are classified as either "likely pathological" or "pathological" in ClinVar, despite variable clinical presentations:E99Q: this mutation shows no detectable MCCC activity in expression studies and variable clinical outcome (Baumgartner et al, 2001; Grünert et al, 2012).S173L: no detectable MCCC activity in expression studies (Baumgartner et al, 2001).H190Y: mutation of a highly conserved residue, severely decreased MCCC activity (Dantas et al, 2005)V339M: ~4% residual MCCC activity with severe clinical outcome in two Turkish patients (Baumgartner et al, 2001).G352R: mutation of a highly conserved residue, severely decreased MCCC activity (Dantas et al, 2005; Grünert et al, 2012)A456V: mutation of a highly conserved residue, virtually no detectable MCCC activity (Dantas et al, 2005; Grünert et al, 2012).
-Sentences:
-['The following mutations in MCCC1 have been identified in patients with MCCC deficiency I.'
- 'They have been shown to have compromised activity in vitro and are classified as either "likely pathological" or "pathological" in ClinVar despite variable clinical presentations:M325R: appears to abolish the ability of the protein to be biotinylated, possibly affecting protein stability (Gallardo et al, 2001).'
- 'R385S: appears to affect protein activity without affecting stability.'
- 'May act as a dominant negative (Steen et al, 1999; Gallardo et al, 2001; Baumgartner et al, 2001; Baumgartner et al, 2004; Fonseca et al, 2016; Dantas et al, 2005; Morscher et al, 2012).'
- 'L437P: abolishes enzyme activity (Baumgartner et al, 2001)I460M: reduces enzyme activity to D532H: This mutation arises as a result of a nucleotide change causing an alteration of a splice site, and results in a truncated protein (Baumgartner et al, 2001)V694*: This mutation leads to premature truncation and removes the essential biotinylation site (Holzinger et al, 2001)The following mutations in MCCC2 have been identified in patients with MCCC deficiency II, have been shown to have compromised activity in vitro and are classified as either "likely pathological" or "pathological" in ClinVar, despite variable clinical presentations:E99Q: this mutation shows no detectable MCCC activity in expression studies and variable clinical outcome (Baumgartner et al, 2001; Grünert et al, 2012).'
- 'S173L: no detectable MCCC activity in expression studies (Baumgartner et al, 2001).'
- 'H190Y: mutation of a highly conserved residue, severely decreased MCCC activity (Dantas et al, 2005)V339M: ~4% residual MCCC activity with severe clinical outcome in two Turkish patients (Baumgartner et al, 2001).'
- 'G352R: mutation of a highly conserved residue, severely decreased MCCC activity (Dantas et al, 2005; Grünert et al, 2012)A456V: mutation of a highly conserved residue, virtually no detectable MCCC activity (Dantas et al, 2005; Grünert et al, 2012).']
-Original notes:
-The following ALK mutants are resistant to inhibition by ASP-3026:ALK T1551M: Amin et al 2016ALK I1171S: Amin et al 2016ALK I1171T: Katayama et al, 2014ALK F1174L: Amin et al, 2016 (moderate)ALKR 1192P: Amin et al, 2016ALK G1269A: Amin et al, 2016 (moderate)
-Sentences:
-['The following ALK mutants are resistant to inhibition by ASP-3026:ALK T1551M: Amin et al 2016ALK I1171S: Amin et al 2016ALK I1171T: Katayama et al, 2014ALK F1174L: Amin et al, 2016 (moderate)ALKR 1192P: Amin et al, 2016ALK G1269A: Amin et al, 2016 (moderate)']
-Original notes:
-Beta-1,3-galactosyltransferase 6 (B3GALT6) transfers a second galactose to the tetrasaccharide linker. Although it can act on substrates with a terminal beta-linked galactose residue, it prefers the sequence galactose-beta-1,4-xylose (Bai et al. 2001). B3GALT6 requires manganese as a cofactor (Zhou et al. 1999).
-Sentences:
-['Beta-1,3-galactosyltransferase 6 (B3GALT6) transfers a second galactose to the tetrasaccharide linker.'
- 'Although it can act on substrates with a terminal beta-linked galactose residue, it prefers the sequence galactose-beta-1,4-xylose (Bai et al. 2001).'
- 'B3GALT6 requires manganese as a cofactor (Zhou et al. 1999).']
-Original notes:
-Xylosyltransferases (XYLT1, XYLT2) catalyse the initial step in the tetrasaccharide linkage required for glycosaminoglycan biosynthesis. This reaction can take place in the Golgi apparatus and endoplasmic reticulum (not shown here). XYLTs mediates the transfer of xylose from the active nucleotide sugar UDP-xylose to specific serine hydroxy groups in the core protein. A C-terminal DxD motif on the enzyme is thought to be critical for activity (Muller et al. 2005, Goetting et al. 2004, Voglmeir et al. 2007).
-Sentences:
-['Xylosyltransferases (XYLT1, XYLT2) catalyse the initial step in the tetrasaccharide linkage required for glycosaminoglycan biosynthesis.'
- 'This reaction can take place in the Golgi apparatus and endoplasmic reticulum (not shown here).'
- 'XYLTs mediates the transfer of xylose from the active nucleotide sugar UDP-xylose to specific serine hydroxy groups in the core protein.'
- 'A C-terminal DxD motif on the enzyme is thought to be critical for activity (Muller et al. 2005, Goetting et al. 2004, Voglmeir et al. 2007).']
-Original notes:
-UDP-glucuronic acid decarboxylase 1 (UXS1) decarboxylates UDP-alpha-D-glucuronate (UDP-GlcA) to form UDP-alpha-D-xylose (UDP-Xyl). The reaction is localized to the Golgi apparatus (inferred from studies of the homologous rat enzyme (Moriarity et al. 2002). UXS1 is associated with NAD+ (Eixelberger et al. 2012; Walsh et al. 2015 ). The active form of the enzyme is a tetramer of four UXS1:NAD+ subunits (Polizzi et al 2013). UDP-xylose is then used to initiate glycosaminoglycan biosynthesis on the core protein of proteoglycans.
-Sentences:
-['UDP-glucuronic acid decarboxylase 1 (UXS1) decarboxylates UDP-alpha-D-glucuronate (UDP-GlcA) to form UDP-alpha-D-xylose (UDP-Xyl).'
- 'The reaction is localized to the Golgi apparatus (inferred from studies of the homologous rat enzyme (Moriarity et al. 2002).'
- 'UXS1 is associated with NAD+ (Eixelberger et al. 2012; Walsh et al. 2015 ).'
- 'The active form of the enzyme is a tetramer of four UXS1:NAD+ subunits (Polizzi et al 2013).'
- 'UDP-xylose is then used to initiate glycosaminoglycan biosynthesis on the core protein of proteoglycans.']</code></pre>
 </div>
-</div>
-<div id="0e2b079c" class="cell" data-execution_count="3">
+<p>Reaction Sentences dataframe</p>
+<div id="f5c1e522" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.sort_values(by<span class="op">=</span><span class="st">"num_sentences"</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="18">
 <div>
 
 
@@ -173,64 +129,64 @@ Sentences:
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">6012</td>
-<td>During differentiation of stratum granulosum k...</td>
-<td>[During differentiation of stratum granulosum ...</td>
-<td>128</td>
+<td data-quarto-table-cell-role="th">0</td>
+<td>The following mutations in MCCC1 have been ide...</td>
+<td>[The following mutations in MCCC1 have been id...</td>
+<td>8</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">5988</td>
-<td>Trunk bipotent pancreatic progenitor cells (bi...</td>
-<td>[Trunk bipotent pancreatic progenitor cells (b...</td>
-<td>105</td>
+<td data-quarto-table-cell-role="th">1</td>
+<td>The following ALK mutants are resistant to inh...</td>
+<td>[The following ALK mutants are resistant to in...</td>
+<td>1</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">5986</td>
-<td>Pancreatic pro-acinar cells mature into pancre...</td>
-<td>[Pancreatic pro-acinar cells mature into pancr...</td>
-<td>91</td>
+<td data-quarto-table-cell-role="th">2</td>
+<td>Beta-1,3-galactosyltransferase 6 (B3GALT6) tra...</td>
+<td>[Beta-1,3-galactosyltransferase 6 (B3GALT6) tr...</td>
+<td>3</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">6016</td>
-<td>The formation of foregut endoderm cells from d...</td>
-<td>[The formation of foregut endoderm cells from ...</td>
-<td>67</td>
+<td data-quarto-table-cell-role="th">3</td>
+<td>Xylosyltransferases (XYLT1, XYLT2) catalyse th...</td>
+<td>[Xylosyltransferases (XYLT1, XYLT2) catalyse t...</td>
+<td>4</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">6020</td>
-<td>The formation of foregut endoderm cells from d...</td>
-<td>[The formation of foregut endoderm cells from ...</td>
-<td>61</td>
+<td data-quarto-table-cell-role="th">4</td>
+<td>UDP-glucuronic acid decarboxylase 1 (UXS1) dec...</td>
+<td>[UDP-glucuronic acid decarboxylase 1 (UXS1) de...</td>
+<td>5</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">7151</td>
-<td>Transcriptional coactivators recruited to the ...</td>
-<td>[Transcriptional coactivators recruited to the...</td>
-<td>59</td>
+<td data-quarto-table-cell-role="th">5</td>
+<td>B3GAT1 (Kitagawa et al. 1998) and B3GAT2 (Marc...</td>
+<td>[B3GAT1 (Kitagawa et al. 1998) and B3GAT2 (Mar...</td>
+<td>4</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">5593</td>
-<td>Optineurin (OPTN, also called FIP2 and NRP), i...</td>
-<td>[Optineurin (OPTN, also called FIP2 and NRP), ...</td>
-<td>42</td>
+<td data-quarto-table-cell-role="th">6</td>
+<td>Galactosylgalactosylxylosylprotein 3-beta-gluc...</td>
+<td>[Galactosylgalactosylxylosylprotein 3-beta-glu...</td>
+<td>4</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">10976</td>
-<td>Angiotensin-converting enzyme (ACE) is a centr...</td>
-<td>[Angiotensin-converting enzyme (ACE) is a cent...</td>
-<td>42</td>
+<td data-quarto-table-cell-role="th">7</td>
+<td>Beta-1,4-galactosyltransferase 7 (B4GALT7) add...</td>
+<td>[Beta-1,4-galactosyltransferase 7 (B4GALT7) ad...</td>
+<td>2</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">423</td>
-<td>β-adrenergic receptor antagonists ("β-blockers...</td>
-<td>[β-adrenergic receptor antagonists ("β-blocker...</td>
-<td>41</td>
+<td data-quarto-table-cell-role="th">8</td>
+<td>APC is K63 polyubiquitinated in the absence of...</td>
+<td>[APC is K63 polyubiquitinated in the absence o...</td>
+<td>6</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">11857</td>
-<td>Acetylcholinesterase (ACHE) is involved in the...</td>
-<td>[Acetylcholinesterase (ACHE) is involved in th...</td>
-<td>41</td>
+<td data-quarto-table-cell-role="th">9</td>
+<td>The G-protein alpha subunit exchanges GDP for GTP</td>
+<td>[The G-protein alpha subunit exchanges GDP for...</td>
+<td>1</td>
 </tr>
 </tbody>
 </table>
@@ -238,72 +194,22 @@ Sentences:
 </div>
 </div>
 </div>
-<div id="46c2cb86" class="cell" data-execution_count="4">
+<div id="4911efc1" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'original_notes'</span>].iloc[df[<span class="st">'num_sentences'</span>].idxmax()]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>'During differentiation of stratum granulosum keratinocytes into corneocytes, lytic enzymes are activated by the influx of Ca2+ and all metabolic activity ceases. Corneocytes, in the form of flattened squames, represent cellular skeletons filled with keratin filaments and sealed together by lipids. Corneocytes form an impermeable and insoluble barrier that protects against the invasion of microorganisms and loss of bodily fluids (reviewed by Fuchs 1990).Markers of granular keratinocytes are summarized in the "Table of granular keratinocytes in interfollicular epidermis". Some of the markers, in particular AQP3, LGLAS7, and FABP5, are described in more detail in the sections "Keratinocyte stem cell differentiates into transit amplifying cell in the basal layer of interfollicular epidermis" and "Keratinocyte of spinosum layer differentiates into keratinocyte of granulosum layer in interfollicular epidermis".CALML5 (Calmodulin-like protein 5, also known as Calmodulin-like skin protein or CLSP) is expressed in keratinocytes of stratum granulosum and lower layers of stratum corneum and is a marker of late keratinocyte differentiation (Mehul et al. 2001). CALML5 is proteolytically degraded in upper layers of normal but not psoriatic stratum corneum, which is prevented by Ca2+ (Mehul et al. 2006). CALML5 is implicated in regulation of function of Ca2+-dependent proteins involved in skin barrier formation (Donovan et al. 2015). By RNA sequencing, CALML5 is the most enriched gene in differentiating outer epidermis. CALML5 gene transcription is upregulated by ZNF750 transcription factor and CALML5 mRNA is stabilized by noncoding RNA TINCR; CALML5 knockdown interferes with terminal differentiation of keratinocytes, formation of keratohyalin granules, and the skin barrier function. SFN is a binding partner of CALML5 (Sun et al. 2015).Table of markers of granular keratinocytes in interfollicular epidermis. Please note that keratinocytes in CellMarker database and PanglaoDB correspond to granular keratinocytes in Reactome.Marker (protein/RNA)Literature ReferenceCellMarker database – RNA/Protein (Hu et al. 2022)PanglaoDB – RNA (Franzén et al. 2019)AQP3 (protein)Sugiyama et al. 2001Ma et al. 2002 Sougrat et al. 2002NoYesCALML5 (protein)Mehul et al. 2001Mehul et al. 2006Donovan et al. 2015Sun et al. 2015NoYesDMKN (protein)Matsui et al. 2004Higashi et al. 2012Leclerc et al. 2014NoYesFAPB5 (protein)Let et al. 1998NoFLG (protein)Smoller et al. 1990Steven et al. 1990Juhlin et al. 1992Girbal Neuhauser et al. 1997Yoneda et al. 2012Sakabe et al. 2013Wong et al. 2015reviewed in McLean 2016reviewed in Ishida Yamamoto et al. 2018NoYesGJB3 (protein)Butterweck et al. 1994Di et al. 2001NoYesHOPX (protein)Obarzanek Fojt et al. 2011NoNoIVL (protein)Bernard et al. 1985Smoller et al. 1990van Duijnhoven et al. 1992Ishida Yamamoto et al. 1996Crish et al. 2002Chen et al. 2013NoYes&gt;KLK5 (protein)Ishida Yamamoto et al. 2005Sakabe et al. 2013Miyai et al. 2014NoNoKLK7 (protein)Ishida Yamamoto et al. 2005Miyai et al. 2014NoNoKPRP (protein)Lee et al. 2005Suga et al. 2019Jeriha et al. 2020NoYesKRT1 (protein)reviewed in Fuchs 1990Totsuka et al. 2017NoYesKRT10 (protein)Yoneda et al. 2012Totsuka et al. 2017NoYesKRTDAP (protein)Matsui et al. 2004Tsuchida et al. 2004NoNoLGALS7 (protein)Magnaldo et al. 1995Umayahara et al. 2020NoYesLORICRIN (protein, RNA)Steven et al. 1990Juhlin et al. 1992Magnaldo et al. 1992Ishida Yamamoto et al. 1996reviewed in Ishida Yamamoto et al. 1998Yoneda et al. 2012reviewed in Ishida Yamamoto et al. 2018NoNoPRSS3 (protein)Nakanishi et al. 2010Miyai et al. 2014NoNoSBSN (protein)Matsui et al. 2004Bazzi et al. 2007Aoshima et al. 2019NoYesSPINK5, also known as LEKTI (protein)Bitoun et al. 2003Ishida Yamamoto et al. 2005Galliano et al. 2005reviewed in Ishida Yamamoto et al. 2018NoNoSPRR2A (protein)Hohl et al. 1995Sark et al. 1998Cabral et al. 2003YesNoDMKN (dermokine)-endcoding gene is part of the keratinocyte related locus on human chromosome 19q13.1 that also includes SBSN and KRTDAP genes. Coordinated transcription of these genes is detectable in stratum spinosum, but proteins are the most prominent in the granular layer keratinocytes, from which they are secreted. DMKN has several splicing isoforms, of which alpha, beta, and gamma are known to be expressed in the epidermis (Matsui et al. 2004). DMKN beta splicing isoform was shown to inhibit activating phosphorylation of MAPK1/MAPK3, which depends on the interaction of DMKN with GRP78 (Higashi et al. 2012). The pups of mice deficient in Dmkn beta have smaller keratohyalin granules and their cornified envelopes are more sensitive to mechanical stress (Leclerc et al. 2014).In human skin biopsies, FLG (filaggrin) is expressed in all keratinocytes above the stratum spinosum (Smoller et al. 1990), including keratinocytes of the granular layer of epidermis (Juhlin et al. 1992). In newborn mouse skin, FLG is first detected in large, irregular shaped keratohyalin granules in the keratinocytes of stratum granulosum, and then distributed throughout the cytoplasm of the corneocytes of the innermost layer of stratum corneum (Steven et al. 1990). Anti-(pro)filaggrin autoantibodies derived from patients with rheumatoid arthritis produce granular staining of stratum granulosum (Girbal Neuhauser et al. 1997). FLG is detectable in the cytosol and nucleus of stratum granulosum cells formed by cultured human keratinocytes. As FLG undergoes proteolytic cleavage upon terminal differentiation of granular keratinocytes, FLG cleavage products are detectable (Yoneda et al. 2012). Profilaggrin is expressed in the stratum granulosum of human epidermis by immunochemistry (Sakabe et al. 2013). Hypoxia leads to HIF1A- and EPAS1 (HIF2A)-mediated stimulation of FLG transcription in a Ca2+-independent and cell confluency-independent manner, and stimulates expression of SPINK5, an inhibitor of epidermal serine proteases that regulates conversion of profilaggrin into monomeric filaggrin. Three putative hypoxia response elements (HREs) are found in the promoter region of the human FLG gene, of which two HREs are functional. One of the two functional HREs is evolutionarily conserved. Direct binding of HIF1A/EPAS1 to these HREs has not been demonstrated. Simultaneous HIF1A and EPAS1 deficiency inhibits terminal differentiation of keratinocytes and formation of stratum granulosum and cornified envelope. ARNT Aryl hydrocarbon receptor nuclear translocator involved in ceramide synthesis also positively regulates FLG expression (Wong et al. 2015). Profilaggrin, a protein of &gt;400 kDa that is the major protein constituent of keratohyalin granules in keratinocytes of stratum granulosum, consists of 10 to 12 near identical repeats of FLG monomers connected by short cleavable linkers. When granular keratinocytes commit to differentiation into corneocytes, profilaggrin is cleaved and 37 kDa FLG monomers are release. FLG monomers bind to and condense keratin cytoskeleton, facilitating cellular compression. In the stratum corneum, FLG monomers are further broken down to form natural moisturizing factor - NMF - a pool of hygroscopic amino acids and derivatives. Loss-of-function mutations in the FLG gene, present in ~10% of human population, are the cause of ichthyosis vulgaris, dry flaky skin phenotype. Ichthyosis vulgaris is mild in heterozygous carriers, and the phenotype severity also depends on environmental and lifestyle factors, being more pronounced in cold, dry climates, and ameliorated by the use of skin moisturizers. A naturally occurring Flg mutation in mice results in the "flaky tail" phenotype. Loss-of-function FLG mutations as well as subtle size variations in the FLG gene predispose carriers to atopic conditions such as eczema and allergy, by compromising the skin barrier and allowing allergens to cross the skin epidermis, triggering Th-2 allergic immunity (reviewed in McLean 2016). Profilaggrin, synthesized in granular keratinocytes, is proteolyzed into FLG monomers in cornified keratinocytes, concurrent with disappearance of nucleus and cell organelles and FLG mediated aggregation of keratin filaments into a tight matrix (reviewed in Ishida Yamamoto et al. 2018).GJB3 (Gap junction beta 3 protein, also known as Connexin 31 or CX31), is expressed in stratum granulosum of mouse epidermis (Butterweck et al. 1994). In normal human epidermis, GJB3 is predominantly expressed in stratum granulosum, with a punctate staining at the plasma membrane, consistent with its involvement in formation of gap junctions. Mutations in GJB3 gene are associated with erythrokeratoderma variabilis (Di et al. 2001).HOPX is an atypical homeodomain protein unable to bind to DNA, expressed in keratinocytes of stratum granulosum of human epidermis, and induced during Ca2+-mediated differentiation of cultured primary human keratinocytes. Overexpression of HOPX leads to upregulation of FLG and LORICRIN, while HOPX knockdown interferes with Ca2+-mediated induction of FLG and LORICRIN expression. Flg and Loricrin mRNA levels are downregulated in the epidermis of Hopx knockout mice (Obarzanek Fojt et al. 2011).IVL is detected in stratum granulosum in normal epidermis and all layers except the basal layer in psoriatic epidermis (Bernard et al. 1985). In human skin biopsies, involucrin is expressed in all keratinocytes above the stratum spinosum (Smoller et al. 1990). Human IVL is expressed in keratinocytes of stratum granulosum, with expression increasing as the cells reach confluence (van Duijnhoven et al. 1992). In the keratinocytes of stratum granulosum, IVL is detected along the plasma membrane. In the corneocytes, involucrin labeling is reduced, but it is very intense in the psoriatic epidermis. Formation of the cornified envelope likely first involves the deposition of IVL, followed by incorporation of LORICRIN. In psoriatic epidermis, IVL deposition at the cornified envelope occurs precociously, without further maturation of the cornified envelope (Ishida Yamamoto et al. 1996). The distal regulatory region of the human IVL gene promoter, located at 2 2.5 kb upstream of the transcription start site, is needed to recapitulate the normal pattern of IVL expression in the epidermis of transgenic mice. The distal regulatory region contains two distinct, spatially separate regulatory elements that likely bind AP1 transcription factors (Crish et al. 2002). In the normal skin, IVL is detectable in the stratum granulosum and upper layers of stratum spinosum. IVL expression may be upregulated by IL13, IL17A, EDN1, TNF, IFNG, and MAPK1/MAPK3 and GSK3B signaling (Chen et al. 2013).In normal epidermis, KLK5 (Kallikrein-5) and KLK7 (Kallikrein-7) are found in lamellar granules in stratum granulosum, localized separately from SPINK5, which is also found in lamellar granules (Ishida Yamamoto et al. 2005). KLK5 is expressed in stratum granulosum of human epidermis by immunochemistry. KLK5 co localizes with profilaggrin and is responsible for profilaggrin cleavage at the linker domain and release of FLG monomers (Sakabe et al. 2013). KLK5 and KLK7 co-localize with PRSS3 in the upper layers of stratum granulosum and can be activated by PRSS3 mediated proteolytic cleavage. KLK5 is thought to be the initiator of the kallikrein proteolytic cascade that leads to activation of kallikrein-related peptidases - KLKs - and degradation of corneodesmosomes, leading to desquamation - shedding of the outermost layer of corneocytes (Miyai et al. 2014).Expression of KPRP gene, encoding human keratinocyte proline rich protein, is induced by Ca2+ in cultured normal human epidermal keratinocytes. KPRP is predominantly expressed in upper layers of stratum granulosum. In psoriatic epidermis, KPRP levels are increased compared to normal epidermis (Lee et al. 2005). KPRP is expressed in upper layers of stratum granulosum of human epidermis and is significantly decreased in atopic dermatitis compared to normal skin. KPRP co localizes with LORICRIN and is mainly detected in the cytoskeleton fraction of human keratinocytes (Suga et al. 2019). In an in vitro model of Ca2+ induced differentiation of human keratinocytes, KPRP is a marker of stratum granulosum, consistent with its in vivo expression pattern (Jeriha et al. 2020).While keratinocytes in stratum granulosum stop transcribing keratin genes, keratin proteins, including KRT1, are still detectable (Totsuka et al. 2017, reviewed in Fuchs 1990).KRT10 protein is detectable in stratum granulosum keratinocytes (Totsuka et al. 2017). In stratum granulosum formed by cultured human keratinocytes, KRT10 protein is detectable in the cytosol and nucleus, and co-localizes with the N-terminal cleavage product of profilaggrin (Yoneda et al. 2012).KRTDAP gene, encoding keratinocyte differentiation-associated protein (also known as KDAP), is part of the keratinocyte related locus on human chromosome 19q13.1 that also includes SBSN and DKMN genes. Coordinated transcription of these genes is detectable in stratum spinosum, but proteins are the most prominent in the granular layer keratinocytes, from which they are secreted (Matsui et al. 2004). In normal human skin, KRTDAP protein is found exclusively in lamellar granules of keratinocytes in stratum granulosum and in the intercellular space in stratum corneum. In psoriatic skin, KRTDAP is expressed more widely and detected in all suprabasal keratinocytes (Tsuchida et al. 2004).In newborn mouse skin, LORICRIN is first detected in small, round, keratohyalin granules in keratinocytes of stratum granulosum, and then at the periphery of corneocytes throughout the stratum corneum (Steven et al. 1990). LORICRIN is expressed in keratinocytes of granular layer of human epidermis. In skin disorders characterized by incomplete differentiation, e.g. psoriasis, LORICRIN is not detected but FLG is still expressed (Juhlin et al. 1992). LORICRIN mRNA and protein are present in stratum granulosum and both transcript and protein are diminished upon treatment of human epidermis culture with retinoic acid (Magnaldo et al. 1992). LORICRIN is distributed diffusely in keratinocytes of stratum granulosum, occasionally in granular aggregates in the cytoplasm and nucleus, and concentrated on the desmosomal attachment plaques where it co-localizes with desmoglein. LORICRIN is diminished in psoriatic epidermis (Ishida Yamamoto et al. 1996). LORICRIN, diffusely distributed in granular keratinocytes, is associated with the cornified envelope in corneocytes, a tough structure beneath the corneocyte plasma membrane. Mutations in LORICRIN gene are implicated in two hereditary skin disorders, Vohwinkel\'s syndrome and progressive symmetric erythrokeratoderma (reviewed in Ishida Yamamoto et al. 1998). LORICRIN is detectable in the cytosol and nucleus of cultured human keratinocytes in stratum granulosum, where it co-localizes with the N-terminal cleavage product of FLG (Yoneda et al. 2012). As granular keratinocytes differentiate into corneocytes, cornified envelope is formed by covalent crosslinking through transglutamination of various proteins, including LORICRIN, which is one of the main constituents of the cornified envelope (reviewed in Ishida Yamamoto et al. 2018).PRSS3, also known as mesotrypsin, is expressed only in the granular layer of epidermis. In cultured keratinocytes, PRSS3 mRNA is expressed at the confluent stage and is strongly upregulated after air exposure (Nakanishi et al. 2010). PRSS3 is expressed in the upper granular layer of epidermis, where KLKs and SPINK5 are also found. PRSS3 is able to proteolytically activate KLK5 and KLK7, and hydrolyze SPINK5 fragments bound to KLKs, thus contributing to the desquamation process. PRSS3 expression level in epidermis decreases after the age of 60 (Miyai et al. 2014).SBSN gene, encoding Suprabasin, is part of the keratinocyte related locus on human chromosome 19q13.1 that also includes KRTDAP and DKMN genes. Coordinated transcription of these genes is detectable in stratum spinosum, but proteins are the most prominent in the granular layer keratinocytes, from which they are secreted (Matsui et al. 2004). The cluster of Sbsn, Krtdap, and Dkmn genes is conserved on mouse chromosome 7, and these genes are coordinately expressed during epidermal differentiation (Bazzi et al. 2007). SBSN deficient human skin three dimensional model has compact stratum corneum, immature stratum granulosum, and increased keratinocyte apoptosis (Aoshima et al. 2019).SPINK5, also known as serine protease inhibitor LEKTI, is strongly expressed in keratinocytes of stratum granulosum and uppermost layers of keratinocytes of stratum spinosum. Two isoforms of SPINK5, of 145 kDa and 125 kDa, are detectable in keratinocytes. Both isoforms are glycosylated ad processed by a FURIN-like enzyme in the post-endoplasmic reticulum compartment, yielding fragments of 42 kDa, 65 kDa, and 68 kDa. SPINK5 genetic defects lead to Netherthon syndrome, a severe autosomal recessive ichtyosis (Bitoun et al. 2003). In normal epidermis, SPINK5 is found in lamellar granules, membrane-bound organelles of stratum granulosum and uppermost layers of stratum spinosum, that fuse with the plasma membrane and secrete their contents into the extracellular space. SPINK5 localizes separately from KLK5 and KLK7, which are also found in lamellar granules, and is likely secreted before KLK5 and KLK7 (Ishida Yamamoto et al. 2005). SPINK5 is expressed in keratinocytes of stratum granulosum of both human and mouse epidermis (Galliano et al. 2005). SPINK5 cleavage fragments function as inhibitors of KLK5 and KLK7 proteases, preventing premature degradation of corneodesmosomes by KLK5/KLK7, and thus maintaining integrity and cohesion of the stratum corneum (reviewed in Ishida Yamamoto et al. 2018).SPRR2A gene is part of a gene cluster of 1.5 Mb on human chromosomal band 1q21 that includes several other small proline-rich protein genes, as well as LORICRIN and IVL genes, which have all likely evolved from a common ancestor. By immunohistochemistry, SPRR2A protein is expressed at moderate levels in stratum granulosum of interfollicular epidermis, and by in situ RNA hybridization SPRR2A mRNA is restricted to the uppermost spinous and granular epidermis layers. Retinoic acid inhibit accumulation of SPRR2A mRNA and protein in keratinocytes. SPRR2A may be a precursor protein of the cornified envelope (Hohl et al. 1995). SPRR2A expression is strongly induced by binding of the epithelium-specific transcription factor ELF3, also known as ESE-1, upregulated during Ca2+-induced terminal differentiation of keratinocytes, to the Ets site in the SPRR2A gene promoter (Sark et al. 1998). POU2F3 transcription factor isoform Skn-1a cooperates with the transcription factor ELF3 in the induction of SPRR2A gene expression during terminal differentiation of keratinocytes in the epidermis (Cabral et al. 2003).Markers of the stratum corneum keratinocytes (corneocytes) are summarized in the "Table of markers of corneocytes in interfollicular epidermis". Some of the markers, in particular LGLAS7, are described in more detail in the section "Keratinocyte stem cell differentiates into transit amplifying cell in the basal layer of interfollicular epidermis".Table of markers of corneocytes in interfollicular epidermis. Please note that keratinocytes in CellMarker database and PanglaoDB correspond to corneocytes in Reactome.Marker (protein/RNA)Literature ReferenceCellMarker database – RNA/Protein (Hu et al. 2022)PanglaoDB – RNA (Franzén et al. 2019)CALML5 (protein)Mehul et al. 2001Mehul et al. 2006NoYesCASP14Fischer et al. 2004Alibardi et al. 2004NoNoFLGSimon et al. 1996Girbal Neuhauser et al. 1997Pendaries et al. 2014NoYesKLK5Caubet et al. 2004de Veer et al. 2017NoNoKLK7Caubet et al. 2004de Veer et al. 2017NoNoLGALS7Magnaldo et al. 1995Umayahara et al. 2020NoYesCALML5 is expressed in keratinocytes of lower layers of the stratum corneum. CALML5 is proteolytically degraded in upper layers of normal but not psoriatic stratum corneum, which is prevented by Ca2+ (Mehul et al. 2006).CASP14 is highly expressed in differentiated epidermal keratinocytes and is the predominant caspase in the stratum corneum where it is normally present exclusively in its processed form. Both pro-caspase-14 and CASP14 subunits produced by cleavage are present in incompletely matured stratum corneum in psoriasis and seborrheic dermatitis (Fischer et al. 2004). CASP14 is first detectable in the nuclei and keratohyalin granules of stratum granulosum keratinocytes, and it is present in the cornified envelope, cytosol, and nucleus of corneocytes (Alibardi et al. 2004).FLG partially co-localizes with the cornified envelope in corneocytes (Simon et al. 1996). Anti-(pro)filaggrin autoantibodies derived from patients with rheumatoid arthritis produce diffuse staining of stratum corneum (Girbal-Neuhauser et al. 1997). FLG is expressed in corneocytes and needed for the maintenance of the corneocyte intracellular matrix.KLK5 (Caubet et al. 2004). KLK5 is expressed in stratum corneum and is able to directly cleave all three components of corneodesmosomes, CDSN, DSC1, and DSG1, and to proteolytically activate KLK7; de Veer et al. 2017: KLK5 can be isolated from the plantar stratum corneum, and contributes to desquamation).KLK7 is expressed in the stratum corneum and can directly cleave CDSN and DSC1 components of corneodesmosomes, but not DSG1 (Caubet et al. 2004). KLK7 can be isolated from the plantar stratum corneum and is the main protease involved in desquamation (de Veer et al. 2017).LGALS7 is expressed in all epidermal layers, especially highly in the stratum corneum (Umayahara et al. 2020).For molecular details of cornified envelope formation during differentiation of stratum granulosum keratinocytes into corneocytes, please refer to Reactome pathway "Formation of the cornified envelope", a subpathway of the Reactome "Keratinization" pathway (Blumenberg, M. 2016. “Keratinization.” Reactome - a Curated Knowledgebase of Biological Pathways 58 (September). https://doi.org/10.3180/r hsa 6805567.1).'</code></pre>
-</div>
-</div>
-<div id="574484fd" class="cell" data-execution_count="5">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>idx <span class="op">=</span> df[<span class="st">'num_sentences'</span>].idxmax()</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>target_note <span class="op">=</span> df[<span class="st">'original_notes'</span>].iloc[idx]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">'original_notes'</span>] <span class="op">==</span> target_note]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">original_notes</th>
-<th data-quarto-table-cell-role="th">sentences</th>
-<th data-quarto-table-cell-role="th">num_sentences</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6012</td>
-<td>During differentiation of stratum granulosum k...</td>
-<td>[During differentiation of stratum granulosum ...</td>
-<td>128</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="39f70524" class="cell" data-execution_count="6">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>print_stats(df[<span class="st">'num_sentences'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of rows:</span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Descriptive Statistics:
-Mean: 3.61
-Median: 3.00
-Standard Deviation: 3.59
-Minimum: 1
-Maximum: 128
-25th percentile (Q1): 2.00
-75th percentile (Q3): 4.00
-IQR (Interquartile Range): 2.00</code></pre>
+<pre><code>Number of rows:14802</code></pre>
 </div>
 </div>
-<div id="62a8a070" class="cell" data-execution_count="7">
+<p>Sentences dataframe</p>
+<div id="4cf7a3f3" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_sentences.head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_sentences.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="20">
 <div>
 
 
@@ -399,45 +305,143 @@ IQR (Interquartile Range): 2.00</code></pre>
 <td>3</td>
 <td>1</td>
 </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="0f29fba7" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of rows:</span><span class="sc">{</span><span class="bu">len</span>(df_sentences)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of rows:53380</code></pre>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">max</span> <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="bu">max</span>):</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  display(Markdown(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> **Original notes at index </span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss">:**  </span><span class="ch">\n</span><span class="sc">{</span>df[<span class="st">'original_notes'</span>]<span class="sc">.</span>iloc[idx]<span class="sc">}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">"</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  sentences <span class="op">=</span> <span class="st">"  </span><span class="ch">\n</span><span class="st">"</span>.join([<span class="ss">f"**-** </span><span class="sc">{</span>s<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> s <span class="kw">in</span> df[<span class="st">'sentences'</span>].iloc[idx]])</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  display(Markdown(<span class="ss">f"**Sentences of note at index </span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss">:**  </span><span class="ch">\n</span><span class="sc">{</span>sentences<span class="sc">}</span><span class="ss">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<p><strong>Original notes at index 0:</strong><br>
+The following mutations in MCCC1 have been identified in patients with MCCC deficiency I. They have been shown to have compromised activity in vitro and are classified as either “likely pathological” or “pathological” in ClinVar despite variable clinical presentations:M325R: appears to abolish the ability of the protein to be biotinylated, possibly affecting protein stability (Gallardo et al, 2001).R385S: appears to affect protein activity without affecting stability. May act as a dominant negative (Steen et al, 1999; Gallardo et al, 2001; Baumgartner et al, 2001; Baumgartner et al, 2004; Fonseca et al, 2016; Dantas et al, 2005; Morscher et al, 2012).L437P: abolishes enzyme activity (Baumgartner et al, 2001)I460M: reduces enzyme activity to D532H: This mutation arises as a result of a nucleotide change causing an alteration of a splice site, and results in a truncated protein (Baumgartner et al, 2001)V694*: This mutation leads to premature truncation and removes the essential biotinylation site (Holzinger et al, 2001)The following mutations in MCCC2 have been identified in patients with MCCC deficiency II, have been shown to have compromised activity in vitro and are classified as either “likely pathological” or “pathological” in ClinVar, despite variable clinical presentations:E99Q: this mutation shows no detectable MCCC activity in expression studies and variable clinical outcome (Baumgartner et al, 2001; Grünert et al, 2012).S173L: no detectable MCCC activity in expression studies (Baumgartner et al, 2001).H190Y: mutation of a highly conserved residue, severely decreased MCCC activity (Dantas et al, 2005)V339M: ~4% residual MCCC activity with severe clinical outcome in two Turkish patients (Baumgartner et al, 2001).G352R: mutation of a highly conserved residue, severely decreased MCCC activity (Dantas et al, 2005; Grünert et al, 2012)A456V: mutation of a highly conserved residue, virtually no detectable MCCC activity (Dantas et al, 2005; Grünert et al, 2012).</p>
+<p><strong>Sentences of note at index 0:</strong><br>
+<strong>-</strong> The following mutations in MCCC1 have been identified in patients with MCCC deficiency I.<br>
+<strong>-</strong> They have been shown to have compromised activity in vitro and are classified as either “likely pathological” or “pathological” in ClinVar despite variable clinical presentations:M325R: appears to abolish the ability of the protein to be biotinylated, possibly affecting protein stability (Gallardo et al, 2001).<br>
+<strong>-</strong> R385S: appears to affect protein activity without affecting stability.<br>
+<strong>-</strong> May act as a dominant negative (Steen et al, 1999; Gallardo et al, 2001; Baumgartner et al, 2001; Baumgartner et al, 2004; Fonseca et al, 2016; Dantas et al, 2005; Morscher et al, 2012).<br>
+<strong>-</strong> L437P: abolishes enzyme activity (Baumgartner et al, 2001)I460M: reduces enzyme activity to D532H: This mutation arises as a result of a nucleotide change causing an alteration of a splice site, and results in a truncated protein (Baumgartner et al, 2001)V694*: This mutation leads to premature truncation and removes the essential biotinylation site (Holzinger et al, 2001)The following mutations in MCCC2 have been identified in patients with MCCC deficiency II, have been shown to have compromised activity in vitro and are classified as either “likely pathological” or “pathological” in ClinVar, despite variable clinical presentations:E99Q: this mutation shows no detectable MCCC activity in expression studies and variable clinical outcome (Baumgartner et al, 2001; Grünert et al, 2012).<br>
+<strong>-</strong> S173L: no detectable MCCC activity in expression studies (Baumgartner et al, 2001).<br>
+<strong>-</strong> H190Y: mutation of a highly conserved residue, severely decreased MCCC activity (Dantas et al, 2005)V339M: ~4% residual MCCC activity with severe clinical outcome in two Turkish patients (Baumgartner et al, 2001).<br>
+<strong>-</strong> G352R: mutation of a highly conserved residue, severely decreased MCCC activity (Dantas et al, 2005; Grünert et al, 2012)A456V: mutation of a highly conserved residue, virtually no detectable MCCC activity (Dantas et al, 2005; Grünert et al, 2012).</p>
+<p><strong>Original notes at index 1:</strong><br>
+The following ALK mutants are resistant to inhibition by ASP-3026:ALK T1551M: Amin et al 2016ALK I1171S: Amin et al 2016ALK I1171T: Katayama et al, 2014ALK F1174L: Amin et al, 2016 (moderate)ALKR 1192P: Amin et al, 2016ALK G1269A: Amin et al, 2016 (moderate)</p>
+<p><strong>Sentences of note at index 1:</strong><br>
+<strong>-</strong> The following ALK mutants are resistant to inhibition by ASP-3026:ALK T1551M: Amin et al 2016ALK I1171S: Amin et al 2016ALK I1171T: Katayama et al, 2014ALK F1174L: Amin et al, 2016 (moderate)ALKR 1192P: Amin et al, 2016ALK G1269A: Amin et al, 2016 (moderate)</p>
+<p><strong>Original notes at index 2:</strong><br>
+Beta-1,3-galactosyltransferase 6 (B3GALT6) transfers a second galactose to the tetrasaccharide linker. Although it can act on substrates with a terminal beta-linked galactose residue, it prefers the sequence galactose-beta-1,4-xylose (Bai et al.&nbsp;2001). B3GALT6 requires manganese as a cofactor (Zhou et al.&nbsp;1999).</p>
+<p><strong>Sentences of note at index 2:</strong><br>
+<strong>-</strong> Beta-1,3-galactosyltransferase 6 (B3GALT6) transfers a second galactose to the tetrasaccharide linker.<br>
+<strong>-</strong> Although it can act on substrates with a terminal beta-linked galactose residue, it prefers the sequence galactose-beta-1,4-xylose (Bai et al.&nbsp;2001).<br>
+<strong>-</strong> B3GALT6 requires manganese as a cofactor (Zhou et al.&nbsp;1999).</p>
+<p><strong>Original notes at index 3:</strong><br>
+Xylosyltransferases (XYLT1, XYLT2) catalyse the initial step in the tetrasaccharide linkage required for glycosaminoglycan biosynthesis. This reaction can take place in the Golgi apparatus and endoplasmic reticulum (not shown here). XYLTs mediates the transfer of xylose from the active nucleotide sugar UDP-xylose to specific serine hydroxy groups in the core protein. A C-terminal DxD motif on the enzyme is thought to be critical for activity (Muller et al.&nbsp;2005, Goetting et al.&nbsp;2004, Voglmeir et al.&nbsp;2007).</p>
+<p><strong>Sentences of note at index 3:</strong><br>
+<strong>-</strong> Xylosyltransferases (XYLT1, XYLT2) catalyse the initial step in the tetrasaccharide linkage required for glycosaminoglycan biosynthesis.<br>
+<strong>-</strong> This reaction can take place in the Golgi apparatus and endoplasmic reticulum (not shown here).<br>
+<strong>-</strong> XYLTs mediates the transfer of xylose from the active nucleotide sugar UDP-xylose to specific serine hydroxy groups in the core protein.<br>
+<strong>-</strong> A C-terminal DxD motif on the enzyme is thought to be critical for activity (Muller et al.&nbsp;2005, Goetting et al.&nbsp;2004, Voglmeir et al.&nbsp;2007).</p>
+<p><strong>Original notes at index 4:</strong><br>
+UDP-glucuronic acid decarboxylase 1 (UXS1) decarboxylates UDP-alpha-D-glucuronate (UDP-GlcA) to form UDP-alpha-D-xylose (UDP-Xyl). The reaction is localized to the Golgi apparatus (inferred from studies of the homologous rat enzyme (Moriarity et al.&nbsp;2002). UXS1 is associated with NAD+ (Eixelberger et al.&nbsp;2012; Walsh et al.&nbsp;2015 ). The active form of the enzyme is a tetramer of four UXS1:NAD+ subunits (Polizzi et al 2013). UDP-xylose is then used to initiate glycosaminoglycan biosynthesis on the core protein of proteoglycans.</p>
+<p><strong>Sentences of note at index 4:</strong><br>
+<strong>-</strong> UDP-glucuronic acid decarboxylase 1 (UXS1) decarboxylates UDP-alpha-D-glucuronate (UDP-GlcA) to form UDP-alpha-D-xylose (UDP-Xyl).<br>
+<strong>-</strong> The reaction is localized to the Golgi apparatus (inferred from studies of the homologous rat enzyme (Moriarity et al.&nbsp;2002).<br>
+<strong>-</strong> UXS1 is associated with NAD+ (Eixelberger et al.&nbsp;2012; Walsh et al.&nbsp;2015 ).<br>
+<strong>-</strong> The active form of the enzyme is a tetramer of four UXS1:NAD+ subunits (Polizzi et al 2013).<br>
+<strong>-</strong> UDP-xylose is then used to initiate glycosaminoglycan biosynthesis on the core protein of proteoglycans.</p>
+<div id="a61185e7" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df.sort_values(by<span class="op">=</span><span class="st">"num_sentences"</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">original_notes</th>
+<th data-quarto-table-cell-role="th">sentences</th>
+<th data-quarto-table-cell-role="th">num_sentences</th>
+</tr>
+</thead>
+<tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
-<td>2</td>
-<td>Beta-1,3-galactosyltransferase 6 (B3GALT6) tra...</td>
-<td>Although it can act on substrates with a termi...</td>
-<td>3</td>
-<td>1</td>
+<td data-quarto-table-cell-role="th">6012</td>
+<td>During differentiation of stratum granulosum k...</td>
+<td>[During differentiation of stratum granulosum ...</td>
+<td>128</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
-<td>2</td>
-<td>Beta-1,3-galactosyltransferase 6 (B3GALT6) tra...</td>
-<td>B3GALT6 requires manganese as a cofactor (Zhou...</td>
-<td>3</td>
-<td>1</td>
+<td data-quarto-table-cell-role="th">5988</td>
+<td>Trunk bipotent pancreatic progenitor cells (bi...</td>
+<td>[Trunk bipotent pancreatic progenitor cells (b...</td>
+<td>105</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>3</td>
-<td>Xylosyltransferases (XYLT1, XYLT2) catalyse th...</td>
-<td>Xylosyltransferases (XYLT1, XYLT2) catalyse th...</td>
-<td>4</td>
-<td>1</td>
+<td data-quarto-table-cell-role="th">5986</td>
+<td>Pancreatic pro-acinar cells mature into pancre...</td>
+<td>[Pancreatic pro-acinar cells mature into pancr...</td>
+<td>91</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
-<td>3</td>
-<td>Xylosyltransferases (XYLT1, XYLT2) catalyse th...</td>
-<td>This reaction can take place in the Golgi appa...</td>
-<td>4</td>
-<td>1</td>
+<td data-quarto-table-cell-role="th">6016</td>
+<td>The formation of foregut endoderm cells from d...</td>
+<td>[The formation of foregut endoderm cells from ...</td>
+<td>67</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
-<td>3</td>
-<td>Xylosyltransferases (XYLT1, XYLT2) catalyse th...</td>
-<td>XYLTs mediates the transfer of xylose from the...</td>
-<td>4</td>
-<td>1</td>
+<td data-quarto-table-cell-role="th">6020</td>
+<td>The formation of foregut endoderm cells from d...</td>
+<td>[The formation of foregut endoderm cells from ...</td>
+<td>61</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7151</td>
+<td>Transcriptional coactivators recruited to the ...</td>
+<td>[Transcriptional coactivators recruited to the...</td>
+<td>59</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5593</td>
+<td>Optineurin (OPTN, also called FIP2 and NRP), i...</td>
+<td>[Optineurin (OPTN, also called FIP2 and NRP), ...</td>
+<td>42</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">10976</td>
+<td>Angiotensin-converting enzyme (ACE) is a centr...</td>
+<td>[Angiotensin-converting enzyme (ACE) is a cent...</td>
+<td>42</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">423</td>
+<td>β-adrenergic receptor antagonists ("β-blockers...</td>
+<td>[β-adrenergic receptor antagonists ("β-blocker...</td>
+<td>41</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11857</td>
+<td>Acetylcholinesterase (ACHE) is involved in the...</td>
+<td>[Acetylcholinesterase (ACHE) is involved in th...</td>
+<td>41</td>
 </tr>
 </tbody>
 </table>
@@ -445,15 +449,42 @@ IQR (Interquartile Range): 2.00</code></pre>
 </div>
 </div>
 </div>
-<div id="2dca3e60" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sentence_counts <span class="op">=</span> df_sentences[<span class="st">'sentence'</span>].value_counts().reset_index()</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sentence_counts.columns <span class="op">=</span> [<span class="st">'sentence'</span>, <span class="st">'count'</span>]</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>repeated_sentences <span class="op">=</span> sentence_counts[sentence_counts[<span class="st">'count'</span>] <span class="op">&gt;</span> <span class="dv">1</span>]</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>repeated_sentences</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>display(Markdown(<span class="ss">f"**Note with max value of sentences**</span><span class="ch">\n</span><span class="sc">{</span>df[<span class="st">'original_notes'</span>]<span class="sc">.</span>iloc[df[<span class="st">'num_sentences'</span>].idxmax()]<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<p><strong>Note with max value of sentences</strong> During differentiation of stratum granulosum keratinocytes into corneocytes, lytic enzymes are activated by the influx of Ca2+ and all metabolic activity ceases. Corneocytes, in the form of flattened squames, represent cellular skeletons filled with keratin filaments and sealed together by lipids. Corneocytes form an impermeable and insoluble barrier that protects against the invasion of microorganisms and loss of bodily fluids (reviewed by Fuchs 1990).Markers of granular keratinocytes are summarized in the “Table of granular keratinocytes in interfollicular epidermis”. Some of the markers, in particular AQP3, LGLAS7, and FABP5, are described in more detail in the sections “Keratinocyte stem cell differentiates into transit amplifying cell in the basal layer of interfollicular epidermis” and “Keratinocyte of spinosum layer differentiates into keratinocyte of granulosum layer in interfollicular epidermis”.CALML5 (Calmodulin-like protein 5, also known as Calmodulin-like skin protein or CLSP) is expressed in keratinocytes of stratum granulosum and lower layers of stratum corneum and is a marker of late keratinocyte differentiation (Mehul et al.&nbsp;2001). CALML5 is proteolytically degraded in upper layers of normal but not psoriatic stratum corneum, which is prevented by Ca2+ (Mehul et al.&nbsp;2006). CALML5 is implicated in regulation of function of Ca2+-dependent proteins involved in skin barrier formation (Donovan et al.&nbsp;2015). By RNA sequencing, CALML5 is the most enriched gene in differentiating outer epidermis. CALML5 gene transcription is upregulated by ZNF750 transcription factor and CALML5 mRNA is stabilized by noncoding RNA TINCR; CALML5 knockdown interferes with terminal differentiation of keratinocytes, formation of keratohyalin granules, and the skin barrier function. SFN is a binding partner of CALML5 (Sun et al.&nbsp;2015).Table of markers of granular keratinocytes in interfollicular epidermis. Please note that keratinocytes in CellMarker database and PanglaoDB correspond to granular keratinocytes in Reactome.Marker (protein/RNA)Literature ReferenceCellMarker database – RNA/Protein (Hu et al.&nbsp;2022)PanglaoDB – RNA (Franzén et al.&nbsp;2019)AQP3 (protein)Sugiyama et al.&nbsp;2001Ma et al.&nbsp;2002 Sougrat et al.&nbsp;2002NoYesCALML5 (protein)Mehul et al.&nbsp;2001Mehul et al.&nbsp;2006Donovan et al.&nbsp;2015Sun et al.&nbsp;2015NoYesDMKN (protein)Matsui et al.&nbsp;2004Higashi et al.&nbsp;2012Leclerc et al.&nbsp;2014NoYesFAPB5 (protein)Let et al.&nbsp;1998NoFLG (protein)Smoller et al.&nbsp;1990Steven et al.&nbsp;1990Juhlin et al.&nbsp;1992Girbal Neuhauser et al.&nbsp;1997Yoneda et al.&nbsp;2012Sakabe et al.&nbsp;2013Wong et al.&nbsp;2015reviewed in McLean 2016reviewed in Ishida Yamamoto et al.&nbsp;2018NoYesGJB3 (protein)Butterweck et al.&nbsp;1994Di et al.&nbsp;2001NoYesHOPX (protein)Obarzanek Fojt et al.&nbsp;2011NoNoIVL (protein)Bernard et al.&nbsp;1985Smoller et al.&nbsp;1990van Duijnhoven et al.&nbsp;1992Ishida Yamamoto et al.&nbsp;1996Crish et al.&nbsp;2002Chen et al.&nbsp;2013NoYes&gt;KLK5 (protein)Ishida Yamamoto et al.&nbsp;2005Sakabe et al.&nbsp;2013Miyai et al.&nbsp;2014NoNoKLK7 (protein)Ishida Yamamoto et al.&nbsp;2005Miyai et al.&nbsp;2014NoNoKPRP (protein)Lee et al.&nbsp;2005Suga et al.&nbsp;2019Jeriha et al.&nbsp;2020NoYesKRT1 (protein)reviewed in Fuchs 1990Totsuka et al.&nbsp;2017NoYesKRT10 (protein)Yoneda et al.&nbsp;2012Totsuka et al.&nbsp;2017NoYesKRTDAP (protein)Matsui et al.&nbsp;2004Tsuchida et al.&nbsp;2004NoNoLGALS7 (protein)Magnaldo et al.&nbsp;1995Umayahara et al.&nbsp;2020NoYesLORICRIN (protein, RNA)Steven et al.&nbsp;1990Juhlin et al.&nbsp;1992Magnaldo et al.&nbsp;1992Ishida Yamamoto et al.&nbsp;1996reviewed in Ishida Yamamoto et al.&nbsp;1998Yoneda et al.&nbsp;2012reviewed in Ishida Yamamoto et al.&nbsp;2018NoNoPRSS3 (protein)Nakanishi et al.&nbsp;2010Miyai et al.&nbsp;2014NoNoSBSN (protein)Matsui et al.&nbsp;2004Bazzi et al.&nbsp;2007Aoshima et al.&nbsp;2019NoYesSPINK5, also known as LEKTI (protein)Bitoun et al.&nbsp;2003Ishida Yamamoto et al.&nbsp;2005Galliano et al.&nbsp;2005reviewed in Ishida Yamamoto et al.&nbsp;2018NoNoSPRR2A (protein)Hohl et al.&nbsp;1995Sark et al.&nbsp;1998Cabral et al.&nbsp;2003YesNoDMKN (dermokine)-endcoding gene is part of the keratinocyte related locus on human chromosome 19q13.1 that also includes SBSN and KRTDAP genes. Coordinated transcription of these genes is detectable in stratum spinosum, but proteins are the most prominent in the granular layer keratinocytes, from which they are secreted. DMKN has several splicing isoforms, of which alpha, beta, and gamma are known to be expressed in the epidermis (Matsui et al.&nbsp;2004). DMKN beta splicing isoform was shown to inhibit activating phosphorylation of MAPK1/MAPK3, which depends on the interaction of DMKN with GRP78 (Higashi et al.&nbsp;2012). The pups of mice deficient in Dmkn beta have smaller keratohyalin granules and their cornified envelopes are more sensitive to mechanical stress (Leclerc et al.&nbsp;2014).In human skin biopsies, FLG (filaggrin) is expressed in all keratinocytes above the stratum spinosum (Smoller et al.&nbsp;1990), including keratinocytes of the granular layer of epidermis (Juhlin et al.&nbsp;1992). In newborn mouse skin, FLG is first detected in large, irregular shaped keratohyalin granules in the keratinocytes of stratum granulosum, and then distributed throughout the cytoplasm of the corneocytes of the innermost layer of stratum corneum (Steven et al.&nbsp;1990). Anti-(pro)filaggrin autoantibodies derived from patients with rheumatoid arthritis produce granular staining of stratum granulosum (Girbal Neuhauser et al.&nbsp;1997). FLG is detectable in the cytosol and nucleus of stratum granulosum cells formed by cultured human keratinocytes. As FLG undergoes proteolytic cleavage upon terminal differentiation of granular keratinocytes, FLG cleavage products are detectable (Yoneda et al.&nbsp;2012). Profilaggrin is expressed in the stratum granulosum of human epidermis by immunochemistry (Sakabe et al.&nbsp;2013). Hypoxia leads to HIF1A- and EPAS1 (HIF2A)-mediated stimulation of FLG transcription in a Ca2+-independent and cell confluency-independent manner, and stimulates expression of SPINK5, an inhibitor of epidermal serine proteases that regulates conversion of profilaggrin into monomeric filaggrin. Three putative hypoxia response elements (HREs) are found in the promoter region of the human FLG gene, of which two HREs are functional. One of the two functional HREs is evolutionarily conserved. Direct binding of HIF1A/EPAS1 to these HREs has not been demonstrated. Simultaneous HIF1A and EPAS1 deficiency inhibits terminal differentiation of keratinocytes and formation of stratum granulosum and cornified envelope. ARNT Aryl hydrocarbon receptor nuclear translocator involved in ceramide synthesis also positively regulates FLG expression (Wong et al.&nbsp;2015). Profilaggrin, a protein of &gt;400 kDa that is the major protein constituent of keratohyalin granules in keratinocytes of stratum granulosum, consists of 10 to 12 near identical repeats of FLG monomers connected by short cleavable linkers. When granular keratinocytes commit to differentiation into corneocytes, profilaggrin is cleaved and 37 kDa FLG monomers are release. FLG monomers bind to and condense keratin cytoskeleton, facilitating cellular compression. In the stratum corneum, FLG monomers are further broken down to form natural moisturizing factor - NMF - a pool of hygroscopic amino acids and derivatives. Loss-of-function mutations in the FLG gene, present in ~10% of human population, are the cause of ichthyosis vulgaris, dry flaky skin phenotype. Ichthyosis vulgaris is mild in heterozygous carriers, and the phenotype severity also depends on environmental and lifestyle factors, being more pronounced in cold, dry climates, and ameliorated by the use of skin moisturizers. A naturally occurring Flg mutation in mice results in the “flaky tail” phenotype. Loss-of-function FLG mutations as well as subtle size variations in the FLG gene predispose carriers to atopic conditions such as eczema and allergy, by compromising the skin barrier and allowing allergens to cross the skin epidermis, triggering Th-2 allergic immunity (reviewed in McLean 2016). Profilaggrin, synthesized in granular keratinocytes, is proteolyzed into FLG monomers in cornified keratinocytes, concurrent with disappearance of nucleus and cell organelles and FLG mediated aggregation of keratin filaments into a tight matrix (reviewed in Ishida Yamamoto et al.&nbsp;2018).GJB3 (Gap junction beta 3 protein, also known as Connexin 31 or CX31), is expressed in stratum granulosum of mouse epidermis (Butterweck et al.&nbsp;1994). In normal human epidermis, GJB3 is predominantly expressed in stratum granulosum, with a punctate staining at the plasma membrane, consistent with its involvement in formation of gap junctions. Mutations in GJB3 gene are associated with erythrokeratoderma variabilis (Di et al.&nbsp;2001).HOPX is an atypical homeodomain protein unable to bind to DNA, expressed in keratinocytes of stratum granulosum of human epidermis, and induced during Ca2+-mediated differentiation of cultured primary human keratinocytes. Overexpression of HOPX leads to upregulation of FLG and LORICRIN, while HOPX knockdown interferes with Ca2+-mediated induction of FLG and LORICRIN expression. Flg and Loricrin mRNA levels are downregulated in the epidermis of Hopx knockout mice (Obarzanek Fojt et al.&nbsp;2011).IVL is detected in stratum granulosum in normal epidermis and all layers except the basal layer in psoriatic epidermis (Bernard et al.&nbsp;1985). In human skin biopsies, involucrin is expressed in all keratinocytes above the stratum spinosum (Smoller et al.&nbsp;1990). Human IVL is expressed in keratinocytes of stratum granulosum, with expression increasing as the cells reach confluence (van Duijnhoven et al.&nbsp;1992). In the keratinocytes of stratum granulosum, IVL is detected along the plasma membrane. In the corneocytes, involucrin labeling is reduced, but it is very intense in the psoriatic epidermis. Formation of the cornified envelope likely first involves the deposition of IVL, followed by incorporation of LORICRIN. In psoriatic epidermis, IVL deposition at the cornified envelope occurs precociously, without further maturation of the cornified envelope (Ishida Yamamoto et al.&nbsp;1996). The distal regulatory region of the human IVL gene promoter, located at 2 2.5 kb upstream of the transcription start site, is needed to recapitulate the normal pattern of IVL expression in the epidermis of transgenic mice. The distal regulatory region contains two distinct, spatially separate regulatory elements that likely bind AP1 transcription factors (Crish et al.&nbsp;2002). In the normal skin, IVL is detectable in the stratum granulosum and upper layers of stratum spinosum. IVL expression may be upregulated by IL13, IL17A, EDN1, TNF, IFNG, and MAPK1/MAPK3 and GSK3B signaling (Chen et al.&nbsp;2013).In normal epidermis, KLK5 (Kallikrein-5) and KLK7 (Kallikrein-7) are found in lamellar granules in stratum granulosum, localized separately from SPINK5, which is also found in lamellar granules (Ishida Yamamoto et al.&nbsp;2005). KLK5 is expressed in stratum granulosum of human epidermis by immunochemistry. KLK5 co localizes with profilaggrin and is responsible for profilaggrin cleavage at the linker domain and release of FLG monomers (Sakabe et al.&nbsp;2013). KLK5 and KLK7 co-localize with PRSS3 in the upper layers of stratum granulosum and can be activated by PRSS3 mediated proteolytic cleavage. KLK5 is thought to be the initiator of the kallikrein proteolytic cascade that leads to activation of kallikrein-related peptidases - KLKs - and degradation of corneodesmosomes, leading to desquamation - shedding of the outermost layer of corneocytes (Miyai et al.&nbsp;2014).Expression of KPRP gene, encoding human keratinocyte proline rich protein, is induced by Ca2+ in cultured normal human epidermal keratinocytes. KPRP is predominantly expressed in upper layers of stratum granulosum. In psoriatic epidermis, KPRP levels are increased compared to normal epidermis (Lee et al.&nbsp;2005). KPRP is expressed in upper layers of stratum granulosum of human epidermis and is significantly decreased in atopic dermatitis compared to normal skin. KPRP co localizes with LORICRIN and is mainly detected in the cytoskeleton fraction of human keratinocytes (Suga et al.&nbsp;2019). In an in vitro model of Ca2+ induced differentiation of human keratinocytes, KPRP is a marker of stratum granulosum, consistent with its in vivo expression pattern (Jeriha et al.&nbsp;2020).While keratinocytes in stratum granulosum stop transcribing keratin genes, keratin proteins, including KRT1, are still detectable (Totsuka et al.&nbsp;2017, reviewed in Fuchs 1990).KRT10 protein is detectable in stratum granulosum keratinocytes (Totsuka et al.&nbsp;2017). In stratum granulosum formed by cultured human keratinocytes, KRT10 protein is detectable in the cytosol and nucleus, and co-localizes with the N-terminal cleavage product of profilaggrin (Yoneda et al.&nbsp;2012).KRTDAP gene, encoding keratinocyte differentiation-associated protein (also known as KDAP), is part of the keratinocyte related locus on human chromosome 19q13.1 that also includes SBSN and DKMN genes. Coordinated transcription of these genes is detectable in stratum spinosum, but proteins are the most prominent in the granular layer keratinocytes, from which they are secreted (Matsui et al.&nbsp;2004). In normal human skin, KRTDAP protein is found exclusively in lamellar granules of keratinocytes in stratum granulosum and in the intercellular space in stratum corneum. In psoriatic skin, KRTDAP is expressed more widely and detected in all suprabasal keratinocytes (Tsuchida et al.&nbsp;2004).In newborn mouse skin, LORICRIN is first detected in small, round, keratohyalin granules in keratinocytes of stratum granulosum, and then at the periphery of corneocytes throughout the stratum corneum (Steven et al.&nbsp;1990). LORICRIN is expressed in keratinocytes of granular layer of human epidermis. In skin disorders characterized by incomplete differentiation, e.g.&nbsp;psoriasis, LORICRIN is not detected but FLG is still expressed (Juhlin et al.&nbsp;1992). LORICRIN mRNA and protein are present in stratum granulosum and both transcript and protein are diminished upon treatment of human epidermis culture with retinoic acid (Magnaldo et al.&nbsp;1992). LORICRIN is distributed diffusely in keratinocytes of stratum granulosum, occasionally in granular aggregates in the cytoplasm and nucleus, and concentrated on the desmosomal attachment plaques where it co-localizes with desmoglein. LORICRIN is diminished in psoriatic epidermis (Ishida Yamamoto et al.&nbsp;1996). LORICRIN, diffusely distributed in granular keratinocytes, is associated with the cornified envelope in corneocytes, a tough structure beneath the corneocyte plasma membrane. Mutations in LORICRIN gene are implicated in two hereditary skin disorders, Vohwinkel’s syndrome and progressive symmetric erythrokeratoderma (reviewed in Ishida Yamamoto et al.&nbsp;1998). LORICRIN is detectable in the cytosol and nucleus of cultured human keratinocytes in stratum granulosum, where it co-localizes with the N-terminal cleavage product of FLG (Yoneda et al.&nbsp;2012). As granular keratinocytes differentiate into corneocytes, cornified envelope is formed by covalent crosslinking through transglutamination of various proteins, including LORICRIN, which is one of the main constituents of the cornified envelope (reviewed in Ishida Yamamoto et al.&nbsp;2018).PRSS3, also known as mesotrypsin, is expressed only in the granular layer of epidermis. In cultured keratinocytes, PRSS3 mRNA is expressed at the confluent stage and is strongly upregulated after air exposure (Nakanishi et al.&nbsp;2010). PRSS3 is expressed in the upper granular layer of epidermis, where KLKs and SPINK5 are also found. PRSS3 is able to proteolytically activate KLK5 and KLK7, and hydrolyze SPINK5 fragments bound to KLKs, thus contributing to the desquamation process. PRSS3 expression level in epidermis decreases after the age of 60 (Miyai et al.&nbsp;2014).SBSN gene, encoding Suprabasin, is part of the keratinocyte related locus on human chromosome 19q13.1 that also includes KRTDAP and DKMN genes. Coordinated transcription of these genes is detectable in stratum spinosum, but proteins are the most prominent in the granular layer keratinocytes, from which they are secreted (Matsui et al.&nbsp;2004). The cluster of Sbsn, Krtdap, and Dkmn genes is conserved on mouse chromosome 7, and these genes are coordinately expressed during epidermal differentiation (Bazzi et al.&nbsp;2007). SBSN deficient human skin three dimensional model has compact stratum corneum, immature stratum granulosum, and increased keratinocyte apoptosis (Aoshima et al.&nbsp;2019).SPINK5, also known as serine protease inhibitor LEKTI, is strongly expressed in keratinocytes of stratum granulosum and uppermost layers of keratinocytes of stratum spinosum. Two isoforms of SPINK5, of 145 kDa and 125 kDa, are detectable in keratinocytes. Both isoforms are glycosylated ad processed by a FURIN-like enzyme in the post-endoplasmic reticulum compartment, yielding fragments of 42 kDa, 65 kDa, and 68 kDa. SPINK5 genetic defects lead to Netherthon syndrome, a severe autosomal recessive ichtyosis (Bitoun et al.&nbsp;2003). In normal epidermis, SPINK5 is found in lamellar granules, membrane-bound organelles of stratum granulosum and uppermost layers of stratum spinosum, that fuse with the plasma membrane and secrete their contents into the extracellular space. SPINK5 localizes separately from KLK5 and KLK7, which are also found in lamellar granules, and is likely secreted before KLK5 and KLK7 (Ishida Yamamoto et al.&nbsp;2005). SPINK5 is expressed in keratinocytes of stratum granulosum of both human and mouse epidermis (Galliano et al.&nbsp;2005). SPINK5 cleavage fragments function as inhibitors of KLK5 and KLK7 proteases, preventing premature degradation of corneodesmosomes by KLK5/KLK7, and thus maintaining integrity and cohesion of the stratum corneum (reviewed in Ishida Yamamoto et al.&nbsp;2018).SPRR2A gene is part of a gene cluster of 1.5 Mb on human chromosomal band 1q21 that includes several other small proline-rich protein genes, as well as LORICRIN and IVL genes, which have all likely evolved from a common ancestor. By immunohistochemistry, SPRR2A protein is expressed at moderate levels in stratum granulosum of interfollicular epidermis, and by in situ RNA hybridization SPRR2A mRNA is restricted to the uppermost spinous and granular epidermis layers. Retinoic acid inhibit accumulation of SPRR2A mRNA and protein in keratinocytes. SPRR2A may be a precursor protein of the cornified envelope (Hohl et al.&nbsp;1995). SPRR2A expression is strongly induced by binding of the epithelium-specific transcription factor ELF3, also known as ESE-1, upregulated during Ca2+-induced terminal differentiation of keratinocytes, to the Ets site in the SPRR2A gene promoter (Sark et al.&nbsp;1998). POU2F3 transcription factor isoform Skn-1a cooperates with the transcription factor ELF3 in the induction of SPRR2A gene expression during terminal differentiation of keratinocytes in the epidermis (Cabral et al.&nbsp;2003).Markers of the stratum corneum keratinocytes (corneocytes) are summarized in the “Table of markers of corneocytes in interfollicular epidermis”. Some of the markers, in particular LGLAS7, are described in more detail in the section “Keratinocyte stem cell differentiates into transit amplifying cell in the basal layer of interfollicular epidermis”.Table of markers of corneocytes in interfollicular epidermis. Please note that keratinocytes in CellMarker database and PanglaoDB correspond to corneocytes in Reactome.Marker (protein/RNA)Literature ReferenceCellMarker database – RNA/Protein (Hu et al.&nbsp;2022)PanglaoDB – RNA (Franzén et al.&nbsp;2019)CALML5 (protein)Mehul et al.&nbsp;2001Mehul et al.&nbsp;2006NoYesCASP14Fischer et al.&nbsp;2004Alibardi et al.&nbsp;2004NoNoFLGSimon et al.&nbsp;1996Girbal Neuhauser et al.&nbsp;1997Pendaries et al.&nbsp;2014NoYesKLK5Caubet et al.&nbsp;2004de Veer et al.&nbsp;2017NoNoKLK7Caubet et al.&nbsp;2004de Veer et al.&nbsp;2017NoNoLGALS7Magnaldo et al.&nbsp;1995Umayahara et al.&nbsp;2020NoYesCALML5 is expressed in keratinocytes of lower layers of the stratum corneum. CALML5 is proteolytically degraded in upper layers of normal but not psoriatic stratum corneum, which is prevented by Ca2+ (Mehul et al.&nbsp;2006).CASP14 is highly expressed in differentiated epidermal keratinocytes and is the predominant caspase in the stratum corneum where it is normally present exclusively in its processed form. Both pro-caspase-14 and CASP14 subunits produced by cleavage are present in incompletely matured stratum corneum in psoriasis and seborrheic dermatitis (Fischer et al.&nbsp;2004). CASP14 is first detectable in the nuclei and keratohyalin granules of stratum granulosum keratinocytes, and it is present in the cornified envelope, cytosol, and nucleus of corneocytes (Alibardi et al.&nbsp;2004).FLG partially co-localizes with the cornified envelope in corneocytes (Simon et al.&nbsp;1996). Anti-(pro)filaggrin autoantibodies derived from patients with rheumatoid arthritis produce diffuse staining of stratum corneum (Girbal-Neuhauser et al.&nbsp;1997). FLG is expressed in corneocytes and needed for the maintenance of the corneocyte intracellular matrix.KLK5 (Caubet et al.&nbsp;2004). KLK5 is expressed in stratum corneum and is able to directly cleave all three components of corneodesmosomes, CDSN, DSC1, and DSG1, and to proteolytically activate KLK7; de Veer et al.&nbsp;2017: KLK5 can be isolated from the plantar stratum corneum, and contributes to desquamation).KLK7 is expressed in the stratum corneum and can directly cleave CDSN and DSC1 components of corneodesmosomes, but not DSG1 (Caubet et al.&nbsp;2004). KLK7 can be isolated from the plantar stratum corneum and is the main protease involved in desquamation (de Veer et al.&nbsp;2017).LGALS7 is expressed in all epidermal layers, especially highly in the stratum corneum (Umayahara et al.&nbsp;2020).For molecular details of cornified envelope formation during differentiation of stratum granulosum keratinocytes into corneocytes, please refer to Reactome pathway “Formation of the cornified envelope”, a subpathway of the Reactome “Keratinization” pathway (Blumenberg, M. 2016. “Keratinization.” Reactome - a Curated Knowledgebase of Biological Pathways 58 (September). https://doi.org/10.3180/r hsa 6805567.1).</p>
+<div id="a680bc59" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Statistics of variable num_sentences:"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>print_stats(df[<span class="st">'num_sentences'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Statistics of variable num_sentences:
+
+Descriptive Statistics:
+Mean: 3.61
+Median: 3.00
+Standard Deviation: 3.59
+Minimum: 1
+Maximum: 128
+25th percentile (Q1): 2.00
+75th percentile (Q3): 4.00
+IQR (Interquartile Range): 2.00</code></pre>
+</div>
+</div>
+<section id="repeated-sentences" class="level1">
+<h1>Repeated sentences</h1>
+<div id="cfa453f9" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sentence_counts <span class="op">=</span> df_sentences[<span class="st">'sentence'</span>].value_counts().reset_index()</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sentence_counts.columns <span class="op">=</span> [<span class="st">'sentence'</span>, <span class="st">'count'</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>repeated_sentences <span class="op">=</span> sentence_counts[sentence_counts[<span class="st">'count'</span>] <span class="op">&gt;</span> <span class="dv">1</span>]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>repeated_sentences</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="26">
 <div>
 
 
@@ -528,25 +559,35 @@ IQR (Interquartile Range): 2.00</code></pre>
 </div>
 </div>
 </div>
-<div id="4be5bb57" class="cell" data-execution_count="9">
+<div id="a102e992" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sentence_to_check <span class="op">=</span> repeated_sentences.iloc[<span class="dv">0</span>][<span class="st">'sentence'</span>]</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>notes_with_sentence <span class="op">=</span> df_sentences[df_sentences[<span class="st">'sentence'</span>] <span class="op">==</span> sentence_to_check]</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(notes_with_sentence[<span class="st">'original_notes'</span>].iloc[<span class="dv">0</span>])</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(notes_with_sentence[<span class="st">'original_notes'</span>].iloc[<span class="dv">1</span>])</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(notes_with_sentence[<span class="st">'original_notes'</span>].iloc[<span class="dv">2</span>])</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(notes_with_sentence[<span class="st">'original_notes'</span>].iloc[<span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sentence_to_check <span class="op">=</span> repeated_sentences.iloc[<span class="dv">0</span>][<span class="st">'sentence'</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>notes_with_sentence <span class="op">=</span> df_sentences[df_sentences[<span class="st">'sentence'</span>] <span class="op">==</span> sentence_to_check]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    note <span class="op">=</span> notes_with_sentence[<span class="st">'original_notes'</span>].iloc[i]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    display(Markdown(<span class="ss">f"**Original notes at index </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">:**  </span><span class="ch">\n</span><span class="sc">{</span>note<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>This COVID-19 event has been created by a combination of computational inference (see https://reactome.org/documentation/inferred-events) from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.Nonstructural protein 15 (nsp15) of the SARS coronavirus (SARS-CoV-1) binds to the replication-transcription complex (RTC) through interaction with nsp8 (Imbert et al. 2008). This interaction appears to be conserved in other coronaviruses, such as mouse hepatitis virus (MHV) (Athmer et al. 2017). nsp15 is an endonuclease characteristic for the order Nidovirales that includes the family Coronaviridae. nsp15 preferentially cleaves 3' of uridines, generating 2'-3' cyclic phosphates after cleavage. nsp15 requires Mn2+ ions for catalytic activity. Functional nsp15 is needed for production of viable virions and for viral transcription (Guarino et al. 2005, Ricagno et al. 2006, Bhardwaj et al. 2006, Joseph et al. 2007, Bhardwaj et al. 2008, Bhardwaj et al. 2012). The biological role of nsp15 has not been elucidated. It may degrade host mRNAs to shut down host translation, but so far no human or viral RNA targets have been identified.
-This COVID-19 event has been created by a combination of computational inference (see https://reactome.org/documentation/inferred-events) from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.The SARS-CoV nsp3 was shown to bind ORF7a and Nsp6 by using proteomics analysis (Neuman et al, 2008)
-This COVID-19 event has been created by a combination of computational inference (see https://reactome.org/documentation/inferred-events) from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.Non-structural protein 14 (nsp14) of the human SARS coronavirus is a bifunctional enzyme bearing 3'-5 exoribonuclease activity involved in replication fidelity and RNA cap N7-guanine methyltransferase activity involved in 5'-RNA capping. nsp14 binds to the minimal replication and transcription complex (RTC), composed of nsp7, nsp8, and nsp12, by directly binding to nsp12 (the main RNA-dependent RNA polymerase). Binding of nsp14 does not affect the processivity of the RTC (Minskaia et al. 2006, Subissi et al. 2014).
-This COVID-19 event has been created by a combination of computational inference (see https://reactome.org/documentation/inferred-events) from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.On the final assembly, proteomics data suggest that the NAB−βSM−TM1 domains of nsp3 can interact with nsp7 − 8, as well as nsps 12–16, and the domain Y1 plus CoV-Y interacts with nsp9 and nsp12 (Imbert et al., 2008). Also a PL2pro−NAB−βSM−TM1 construct of Nsp3 can bind Nsp4 and Nsp12, while the region from TM1 to the end of Nsp3 only binds Nsp8 (Pan et al., 2008).</code></pre>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><strong>Original notes at index 0:</strong><br>
+This COVID-19 event has been created by a combination of computational inference (see https://reactome.org/documentation/inferred-events) from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.Nonstructural protein 15 (nsp15) of the SARS coronavirus (SARS-CoV-1) binds to the replication-transcription complex (RTC) through interaction with nsp8 (Imbert et al.&nbsp;2008). This interaction appears to be conserved in other coronaviruses, such as mouse hepatitis virus (MHV) (Athmer et al.&nbsp;2017). nsp15 is an endonuclease characteristic for the order Nidovirales that includes the family Coronaviridae. nsp15 preferentially cleaves 3’ of uridines, generating 2’-3’ cyclic phosphates after cleavage. nsp15 requires Mn2+ ions for catalytic activity. Functional nsp15 is needed for production of viable virions and for viral transcription (Guarino et al.&nbsp;2005, Ricagno et al.&nbsp;2006, Bhardwaj et al.&nbsp;2006, Joseph et al.&nbsp;2007, Bhardwaj et al.&nbsp;2008, Bhardwaj et al.&nbsp;2012). The biological role of nsp15 has not been elucidated. It may degrade host mRNAs to shut down host translation, but so far no human or viral RNA targets have been identified.</p>
+</div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><strong>Original notes at index 1:</strong><br>
+This COVID-19 event has been created by a combination of computational inference (see https://reactome.org/documentation/inferred-events) from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.The SARS-CoV nsp3 was shown to bind ORF7a and Nsp6 by using proteomics analysis (Neuman et al, 2008)</p>
+</div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><strong>Original notes at index 2:</strong><br>
+This COVID-19 event has been created by a combination of computational inference (see https://reactome.org/documentation/inferred-events) from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.Non-structural protein 14 (nsp14) of the human SARS coronavirus is a bifunctional enzyme bearing 3’-5 exoribonuclease activity involved in replication fidelity and RNA cap N7-guanine methyltransferase activity involved in 5’-RNA capping. nsp14 binds to the minimal replication and transcription complex (RTC), composed of nsp7, nsp8, and nsp12, by directly binding to nsp12 (the main RNA-dependent RNA polymerase). Binding of nsp14 does not affect the processivity of the RTC (Minskaia et al.&nbsp;2006, Subissi et al.&nbsp;2014).</p>
+</div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><strong>Original notes at index 3:</strong><br>
+This COVID-19 event has been created by a combination of computational inference (see https://reactome.org/documentation/inferred-events) from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.On the final assembly, proteomics data suggest that the NAB−βSM−TM1 domains of nsp3 can interact with nsp7 − 8, as well as nsps 12–16, and the domain Y1 plus CoV-Y interacts with nsp9 and nsp12 (Imbert et al., 2008). Also a PL2pro−NAB−βSM−TM1 construct of Nsp3 can bind Nsp4 and Nsp12, while the region from TM1 to the end of Nsp3 only binds Nsp8 (Pan et al., 2008).</p>
 </div>
 </div>
 <!-- -->
 
+</section>
 
 </main>
 <!-- /main column -->
@@ -1000,79 +1041,95 @@ This COVID-19 event has been created by a combination of computational inference
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb13" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Notes Analysis"</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">    html:</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">        code-fold: true</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">        code-tools: true</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="an">jupyter:</span><span class="co"> python3</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> descriptive_stat_functions <span class="im">import</span> plot_data, print_stats, extract_references</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>ggplot_colors <span class="op">=</span> plt.rcParams[<span class="st">'axes.prop_cycle'</span>].by_key()[<span class="st">'color'</span>]</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the big dataset </span></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reaction_sentences.parquet"</span>)</span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>df_sentences <span class="op">=</span> pd.read_parquet(<span class="st">"./sentences.parquet"</span>)</span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop file_id and the duplicates</span></span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="bu">max</span> <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="bu">max</span>):</span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"Original notes:</span><span class="ch">\n</span><span class="sc">{</span>df[<span class="st">'original_notes'</span>]<span class="sc">.</span>iloc[idx]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"Sentences:</span><span class="ch">\n</span><span class="sc">{</span>df[<span class="st">'sentences'</span>]<span class="sc">.</span>iloc[idx]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>df.sort_values(by<span class="op">=</span><span class="st">"num_sentences"</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span>
-<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'original_notes'</span>].iloc[df[<span class="st">'num_sentences'</span>].idxmax()]</span>
-<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>idx <span class="op">=</span> df[<span class="st">'num_sentences'</span>].idxmax()</span>
-<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>target_note <span class="op">=</span> df[<span class="st">'original_notes'</span>].iloc[idx]</span>
-<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">'original_notes'</span>] <span class="op">==</span> target_note]</span>
-<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>print_stats(df[<span class="st">'num_sentences'</span>])</span>
-<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>df_sentences.head(<span class="dv">15</span>)</span>
-<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a>sentence_counts <span class="op">=</span> df_sentences[<span class="st">'sentence'</span>].value_counts().reset_index()</span>
-<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a>sentence_counts.columns <span class="op">=</span> [<span class="st">'sentence'</span>, <span class="st">'count'</span>]</span>
-<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a>repeated_sentences <span class="op">=</span> sentence_counts[sentence_counts[<span class="st">'count'</span>] <span class="op">&gt;</span> <span class="dv">1</span>]</span>
-<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a>repeated_sentences</span>
-<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a>sentence_to_check <span class="op">=</span> repeated_sentences.iloc[<span class="dv">0</span>][<span class="st">'sentence'</span>]</span>
-<span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a>notes_with_sentence <span class="op">=</span> df_sentences[df_sentences[<span class="st">'sentence'</span>] <span class="op">==</span> sentence_to_check]</span>
-<span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(notes_with_sentence[<span class="st">'original_notes'</span>].iloc[<span class="dv">0</span>])</span>
-<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(notes_with_sentence[<span class="st">'original_notes'</span>].iloc[<span class="dv">1</span>])</span>
-<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(notes_with_sentence[<span class="st">'original_notes'</span>].iloc[<span class="dv">2</span>])</span>
-<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(notes_with_sentence[<span class="st">'original_notes'</span>].iloc[<span class="dv">3</span>])</span>
-<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-92"><a href="#cb13-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb13-93"><a href="#cb13-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Notes Analysis"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">    html:</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">        code-fold: true</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">        code-tools: true</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="an">jupyter:</span><span class="co"> python3</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> descriptive_stat_functions <span class="im">import</span> plot_data, print_stats, extract_references</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, Markdown</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>ggplot_colors <span class="op">=</span> plt.rcParams[<span class="st">'axes.prop_cycle'</span>].by_key()[<span class="st">'color'</span>]</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reaction_sentences.parquet"</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>df_sentences <span class="op">=</span> pd.read_parquet(<span class="st">"./sentences.parquet"</span>)</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>Reaction Sentences dataframe</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">10</span>)</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of rows:</span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>Sentences dataframe</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>df_sentences.head(<span class="dv">10</span>)</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of rows:</span><span class="sc">{</span><span class="bu">len</span>(df_sentences)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a><span class="bu">max</span> <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,<span class="bu">max</span>):</span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>  display(Markdown(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> **Original notes at index </span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss">:**  </span><span class="ch">\n</span><span class="sc">{</span>df[<span class="st">'original_notes'</span>]<span class="sc">.</span>iloc[idx]<span class="sc">}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">"</span>))</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a>  sentences <span class="op">=</span> <span class="st">"  </span><span class="ch">\n</span><span class="st">"</span>.join([<span class="ss">f"**-** </span><span class="sc">{</span>s<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> s <span class="kw">in</span> df[<span class="st">'sentences'</span>].iloc[idx]])</span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a>  display(Markdown(<span class="ss">f"**Sentences of note at index </span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss">:**  </span><span class="ch">\n</span><span class="sc">{</span>sentences<span class="sc">}</span><span class="ss">"</span>))</span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>df.sort_values(by<span class="op">=</span><span class="st">"num_sentences"</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a>display(Markdown(<span class="ss">f"**Note with max value of sentences**</span><span class="ch">\n</span><span class="sc">{</span>df[<span class="st">'original_notes'</span>]<span class="sc">.</span>iloc[df[<span class="st">'num_sentences'</span>].idxmax()]<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>))</span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Statistics of variable num_sentences:"</span>)</span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a>print_stats(df[<span class="st">'num_sentences'</span>])</span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a><span class="fu"># Repeated sentences </span></span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a>sentence_counts <span class="op">=</span> df_sentences[<span class="st">'sentence'</span>].value_counts().reset_index()</span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>sentence_counts.columns <span class="op">=</span> [<span class="st">'sentence'</span>, <span class="st">'count'</span>]</span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a>repeated_sentences <span class="op">=</span> sentence_counts[sentence_counts[<span class="st">'count'</span>] <span class="op">&gt;</span> <span class="dv">1</span>]</span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a>repeated_sentences</span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>sentence_to_check <span class="op">=</span> repeated_sentences.iloc[<span class="dv">0</span>][<span class="st">'sentence'</span>]</span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>notes_with_sentence <span class="op">=</span> df_sentences[df_sentences[<span class="st">'sentence'</span>] <span class="op">==</span> sentence_to_check]</span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>    note <span class="op">=</span> notes_with_sentence[<span class="st">'original_notes'</span>].iloc[i]</span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a>    display(Markdown(<span class="ss">f"**Original notes at index </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">:**  </span><span class="ch">\n</span><span class="sc">{</span>note<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>))</span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

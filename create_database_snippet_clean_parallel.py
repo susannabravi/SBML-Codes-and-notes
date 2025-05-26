@@ -108,7 +108,10 @@ def process_file(file_path):
         
         # Modified snippet: remove namespaces and delete notes and annotation elements.
         clean_reaction = remove_namespaces_and_elements(reaction)
-        snippet = ET.tostring(clean_reaction, encoding='unicode')
+        # Cleaning again the snippet (22/05)
+        raw_snippet = ET.tostring(clean_reaction, encoding='unicode')
+        normalized_snippet = "\n".join(line.strip() for line in raw_snippet.splitlines() if line.strip())
+        snippet = normalized_snippet
         
         # Extract the natural language description from the notes section.
         notes_text = None
