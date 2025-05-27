@@ -7,13 +7,13 @@ df = df.drop(["file_id"], axis=1)
 df = df.drop_duplicates().reset_index(drop=True)
 
 # Extract and deduplicate 'original_notes'
-df2 = df[['original_notes']].drop_duplicates().reset_index(drop=True)
+df2 = df[['notes']].drop_duplicates().reset_index(drop=True)
 
 # Initialize sentence segmenter
 segmenter = pysbd.Segmenter(language="en", clean=True)
 
 # Split each note into sentences
-df2['sentences'] = df2['original_notes'].apply(lambda text: segmenter.segment(text))
+df2['sentences'] = df2['notes'].apply(lambda text: segmenter.segment(text))
 df2['num_sentences'] = df2['sentences'].apply(len)
 
 # Save data

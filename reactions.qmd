@@ -212,3 +212,32 @@ plot_data(data = references_per_reaction,
 print("Raw data statistics")
 print_stats(references_per_reaction)
 ```
+
+## References without duplicates per reaction distribution
+```{python}
+plot_data(data = unique_refs_per_reactions,
+          outputname = "fig10.png",
+          title = "Referencese per reactions",
+          xlabel = "References",
+          boxplot = True
+          )
+plot_data(data = unique_refs_per_reactions,
+          outputname = "fig11.png",
+          title = "Referencese per reactions with log scale x",
+          xlabel = "References",
+          boxplot = True,
+          logscale_x = True,
+          n_bins = 15
+          )
+plot_data(data = unique_refs_per_reactions,
+          outputname = "fig12.png",
+          title = "Referencese per reactions cutted",
+          xlabel = "References",
+          boxplot = True,
+          cut_percentile=(0,90),
+          n_bins = 15
+          )
+
+print("Unique references raw data statistics")
+print_stats(unique_refs_per_reactions)
+```

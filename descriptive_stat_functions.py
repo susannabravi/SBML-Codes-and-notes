@@ -89,8 +89,10 @@ def print_stats(data):
     print(f"Standard Deviation: {data.std():.2f}")
     print(f"Minimum: {data.min()}")
     print(f"Maximum: {data.max()}")
+    print(f"5th percentile: {np.percentile(data, 5):.2f}")
     print(f"25th percentile (Q1): {np.percentile(data, 25):.2f}")
     print(f"75th percentile (Q3): {np.percentile(data, 75):.2f}")
+    print(f"95th percentile: {np.percentile(data, 95):.2f}")
     print(f"IQR (Interquartile Range): {np.percentile(data, 75) - np.percentile(data, 25):.2f}")
 
 def extract_references(entry):
@@ -99,5 +101,6 @@ def extract_references(entry):
     refs = []
     for group in entry.split(';'):
         group = group.strip().strip('()')
-        refs.extend([ref.strip() for ref in group.split(',')])
+        if group:
+            refs.append(group)
     return refs

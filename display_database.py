@@ -19,7 +19,7 @@ print("\nFirst 5 rows of key columns:")
 print(df.head())
 
 # Display a sample of the dataset.
-num_samples = 5  
+num_samples = 6  
 
 # Iterate over the first num_samples rows and print full content without extra spaces.
 print("\n--- Displaying full content for sample rows ---")

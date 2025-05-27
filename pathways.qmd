@@ -17,6 +17,8 @@ import seaborn as sns
 from scipy import stats
 import numpy as np
 from descriptive_stat_functions import plot_data, print_stats, extract_references
+from IPython.display import display, Markdown
+from collections import Counter
 ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 ```
 
@@ -71,7 +73,7 @@ print_stats(reaction_count)
 ### Log-scaled data
 Log10 transformation of the data
 ```{python}
-# Log-scaled data ---------------------------------
+# Log-scaled data 
 plot_data(reaction_count, 
           logscale_x = True, 
           outputname = "fig2.png", 
@@ -94,10 +96,34 @@ plot_data(data =  df['reaction_count'],
 # References per Pathway distribution
 
 ```{python}
-print(f"\nFirst reference:\n{df['all_references'].iloc[0]}")
+display(Markdown(f"\n**First reference:**\n{df['all_references'].iloc[0]}"))
 print(f"\nTotal number of references in all files (with duplicates): {sum(df.total_references.values)}")
 print(f"Total number of unique references across all files: {sum(df.unique_references.values)}")
+```
 
+```{python}
+# Flatten all references across files into a single list
+all_refs_flat = df['all_references'].explode()
+# Count frequency of each reference
+ref_counts = Counter(all_refs_flat)
+
+reference_links = {
+    "Bagci et al. 2020": "https://pubmed.ncbi.nlm.nih.gov/31871319/",
+    "Müller et al. 2020": "https://www.nature.com/articles/s41586-020-2474-7",
+    "Jaiswal et al. 2013": "https://pubmed.ncbi.nlm.nih.gov/23711700/", 
+}
+
+
+top_n = 3
+for ref, count in ref_counts.most_common(top_n):
+    url = reference_links.get(ref)
+    link_md = f"[Link]({url})" if url else "_Link not available_"
+    display(Markdown(f"**Reference:** {ref} **Citations:** {count} **{link_md}** \n"))
+```
+
+(note: va bene che il primo articolo abbia 6994 e non 10617 perchè il primo è l'articolo più citato tra tutti i file mentre il secondo numero è il massimo numero di citazioni in un file.)
+
+```{python}
 plot_data(data = df['total_references'],
           outputname = "fig4.png",
           title = "References per file (with duplicates)",
@@ -150,6 +176,9 @@ plot_data(data =  df['unique_references'],
           boxplot = True,
           cut_percentile=(0,90)
           )
+
+print("Summary statistic of references per file without duplicates, raw data: \n")
+print_stats(df['unique_references'])
 ```
 
 ## Pathways without any reference

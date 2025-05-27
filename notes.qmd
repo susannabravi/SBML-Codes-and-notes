@@ -46,7 +46,7 @@ print(f"Number of rows:{len(df_sentences)}")
 #| output: asis
 max = 5
 for idx in range(0,max):
-  display(Markdown(f"\n **Original notes at index {idx}:**  \n{df['original_notes'].iloc[idx]} \n"))
+  display(Markdown(f"\n **notes at index {idx}:**  \n{df['notes'].iloc[idx]} \n"))
   sentences = "  \n".join([f"**-** {s}" for s in df['sentences'].iloc[idx]])
   display(Markdown(f"**Sentences of note at index {idx}:**  \n{sentences}"))
 ```
@@ -58,7 +58,7 @@ df.sort_values(by="num_sentences", ascending=False).head(10)
 
 ```{python}
 #| output: asis
-display(Markdown(f"**Note with max value of sentences**\n{df['original_notes'].iloc[df['num_sentences'].idxmax()]}\n"))
+display(Markdown(f"**Note with max value of sentences**\n{df['notes'].iloc[df['num_sentences'].idxmax()]}\n"))
 ```
 
 
@@ -81,7 +81,7 @@ repeated_sentences
 sentence_to_check = repeated_sentences.iloc[0]['sentence']
 notes_with_sentence = df_sentences[df_sentences['sentence'] == sentence_to_check]
 for i in range(4):
-    note = notes_with_sentence['original_notes'].iloc[i]
+    note = notes_with_sentence['notes'].iloc[i]
     display(Markdown(f"**Original notes at index {i}:**  \n{note}\n"))
 ```
 
