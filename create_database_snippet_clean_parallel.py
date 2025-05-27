@@ -67,6 +67,7 @@ def remove_citations(text):
     # Clean up 
     text = re.sub(r'\s*:\s*', ': ', text)  # fix spacing after colons
     text = re.sub(r'\s+([.,;:!?])', r'\1', text)  # remove space before punctuation
+    text = re.sub(r'^\W+$', '', text)  # remove strings that are only punctuation
     text = " ".join(text.split())  # remove excessive whitespace
 
     citations_str = "; ".join(citations) if citations else None
