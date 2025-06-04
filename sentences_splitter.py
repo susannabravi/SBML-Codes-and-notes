@@ -7,7 +7,7 @@ df = df.drop_duplicates(subset=[col for col in df.columns if col != 'file_id']).
 df = df.drop_duplicates().reset_index(drop=True)
 
 # Extract and deduplicate notes
-df2 = df[['notes']].drop_duplicates().reset_index(drop=True)
+df2 = df[['notes','original_notes']].drop_duplicates().reset_index(drop=True)
 
 # Initialize sentence segmenter
 segmenter = pysbd.Segmenter(language="en", clean=True)
@@ -25,6 +25,7 @@ df_sentences = df2.explode('sentences').reset_index()
 # After exploding and before counting
 df_sentences['sentences'] = df_sentences['sentences'].str.strip()
 
+'''
 # Drop any sentence that is empty or just punctuation
 df_sentences = df_sentences[
     df_sentences['sentences'].str.len() > 2  # remove very short strings
@@ -32,6 +33,7 @@ df_sentences = df_sentences[
 df_sentences = df_sentences[
     ~df_sentences['sentences'].isin([".", ",", ";", ":", "!", "?", "()", "[]", "{}"])
 ]
+'''
 
 df_sentences.rename(columns={'index': 'note_index', 'sentences': 'sentence'}, inplace=True)
 

@@ -1,9 +1,0 @@
----
-title: "Reactome Pathways Analysis"
-format: html
----
-## Choose a document to view:
-
-- [Pathways](pathways.html)
-- [Reactions](reactions.html)
-- [Notes](notes.html)

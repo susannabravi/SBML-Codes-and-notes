@@ -46,6 +46,7 @@ def remove_namespaces_and_elements(elem):
             new_elem.append(new_child)
     return new_elem
 
+'''
 def remove_citations(text):
     if not text:
         return text, None
@@ -73,7 +74,111 @@ def remove_citations(text):
     citations_str = "; ".join(citations) if citations else None
 
     return text, citations_str
+'''
 
+def remove_links(text):
+    """
+    Removes entire (...) expressions that contain a URL, DOI, or Reactome-style ID.
+    """
+    if not text:
+        return text, []
+
+    # Match any parenthesis block containing a URL-like or DOI-like pattern, allowing for unusual punctuation or whitespace
+    pattern = r'\((?=[^)]*(https?://|doi\.org|reactome|10\.\d{4,9}))[^)]*\)'
+
+    removed = re.findall(pattern, text)
+    cleaned = re.sub(pattern, '', text)
+
+    # Remove leftover empty parentheses and clean spacing/punctuation
+    cleaned = re.sub(r'\(\s*\)', '', cleaned)  # empty ()
+    cleaned = re.sub(r'\s+([.,;:!?])', r'\1', cleaned)
+    cleaned = re.sub(r'\s{2,}', ' ', cleaned).strip()
+
+    return cleaned, removed
+
+
+def remove_citations(text):
+    """Enhanced citation removal with better cleanup"""
+    if not text:
+        return text, None
+
+    citations = []
+
+    # (Amin et al, 2016), (Lambert 2008))
+    paren_pattern = r'\(\s*(?:e\.g\.\s*)?[A-Z][^()]*?\d{4}[a-z]?\s*\)'
+    paren_citations = re.findall(paren_pattern, text)
+    citations.extend(paren_citations)
+    text = re.sub(paren_pattern, '', text)
+
+    # Amin et al. 2016
+    inline_pattern = r'\b[A-Z][a-z]+(?:\s(?:et al\.?|and\s[A-Z][a-z]+)?)?(?:,)?\s+et al\.?(?:,)?\s*\d{4}[a-z]?\b'
+    inline_citations = re.findall(inline_pattern, text)
+    citations.extend(inline_citations)
+    text = re.sub(inline_pattern, '', text)
+
+    # "NoYes", "NoNo", "YesNo", "YesYes" patterns that separate entries
+    text = re.sub(r'(No|Yes)(No|Yes)', r'\1 \2 ', text)
+    
+    # Add spaces before protein names that follow years or database terms
+    text = re.sub(r'(\d{4}[a-z]?)([A-Z][A-Z0-9]+\s*\()', r'\1 \2', text)
+    text = re.sub(r'(RNA|Protein|NoYes|NoNo|YesNo|YesYes)([A-Z][A-Z0-9]+)', r'\1 \2', text)
+    
+    # Add spaces between author names and years when stuck together
+    text = re.sub(r'([a-z])([A-Z][a-z]+\s+et\s+al)', r'\1 \2', text)
+    text = re.sub(r'(\d{4}[a-z]?)([A-Z][a-z]+\s+et\s+al)', r'\1 \2', text)
+    
+    # Remove parenthetical citations (Author et al. YYYY)
+    paren_pattern = r'\([^()]*?\d{4}[a-z]?[^()]*?\)'
+    citations += re.findall(paren_pattern, text)
+    text = re.sub(paren_pattern, '', text)
+
+    # Remove "reviewed in/by" patterns
+    review_pattern = r'\breviewed\s+(in|by)(?:\s+[A-Z][A-Za-z]*(?:\s+(?:[A-Z][A-Za-z]*|et\s+al\.?|and\s+[A-Z][A-Za-z]*))*)?\s*\d{4}[a-z]?'
+    review_matches = re.findall(review_pattern, text)
+    if review_matches:
+        citations += [match[0] if isinstance(match, tuple) else match for match in review_matches]
+    text = re.sub(review_pattern, '', text)
+
+    # Remove inline citations (Author et al. YYYY) - more aggressive pattern
+    inline_pattern = r'\b[A-Z][A-Za-z]*(?:\s+[A-Z][A-Za-z]*)*\s+et\s+al\.?\s+\d{4}[a-z]?'
+    inline_citations = re.findall(inline_pattern, text)
+    citations += inline_citations
+    text = re.sub(inline_pattern, '', text)
+    
+    # Remove single author citations (Author YYYY)
+    single_author_pattern = r'\b[A-Z][A-Za-z]+\s+\d{4}[a-z]?\b'
+    single_citations = re.findall(single_author_pattern, text)
+    citations += single_citations
+    text = re.sub(single_author_pattern, '', text)
+    
+    # Remove two-author citations (Author and Author YYYY)
+    two_author_pattern = r'\b[A-Z][A-Za-z]+\s+and\s+[A-Z][A-Za-z]+\s+\d{4}[a-z]?\b'
+    two_citations = re.findall(two_author_pattern, text)
+    citations += two_citations
+    text = re.sub(two_author_pattern, '', text)
+
+    # Clean up multiple spaces and punctuation issues
+    text = re.sub(r'\s*:\s*', ': ', text)
+    text = re.sub(r'\s+([.,;:!?])', r'\1', text)
+    text = re.sub(r'([.,;:!?])\s*([.,;:!?])', r'\1\2', text)
+    text = re.sub(r'^\W+$', '', text)
+    text = " ".join(text.split())
+
+    # Remove empty parentheses
+    text = re.sub(r'\(\s*\)', '', text)
+
+    # Fix leftover punctuation
+    # Collapse ".." into "." only at sentence ends
+    text = re.sub(r'\.\.+', '.', text)
+
+    text = re.sub(r'\.\s*\.', '.', text)  # handles ". ."
+    text = re.sub(r'(?<!\.)\.\.(?!\.)', '.', text)  # handles ".." => "."
+    text = re.sub(r'\s+([.!?])$', r'\1', text)  # fix spacing before final punctuation
+
+
+    citations_str = "; ".join(citations) if citations else None
+
+    return text.strip(), citations_str
 
 
 def process_file(file_path):
@@ -109,7 +214,7 @@ def process_file(file_path):
         
         # Modified snippet: remove namespaces and delete notes and annotation elements.
         clean_reaction = remove_namespaces_and_elements(reaction)
-        # Cleaning again the snippet (22/05)
+        
         raw_snippet = ET.tostring(clean_reaction, encoding='unicode')
         normalized_snippet = "\n".join(line.strip() for line in raw_snippet.splitlines() if line.strip())
         snippet = normalized_snippet
@@ -130,9 +235,16 @@ def process_file(file_path):
         
         # Remove citations from the notes.
         if notes_text:
-            cleaned_notes, only_references = remove_citations(notes_text)
+            # First remove links
+            text_no_links, links = remove_links(notes_text)
+            # Then remove citations
+            cleaned_notes, citations = remove_citations(text_no_links)
+            # Combine all references
+            all_refs = links + (citations.split("; ") if citations else [])
+            only_references = "; ".join(all_refs) if all_refs else None
         else:
-            cleaned_notes, only_references = notes_text, None
+            cleaned_notes, only_references = None, None
+
         
         # Append the extracted data including original and processed notes.
         records.append({

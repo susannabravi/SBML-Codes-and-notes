@@ -1,0 +1,89 @@
+---
+title: "Notes Analysis"
+format: 
+    html:
+        code-fold: true
+        code-tools: true
+jupyter: python3
+---
+
+```{python}
+#| echo: false
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+import numpy as np
+import pysbd
+from descriptive_stat_functions import plot_data, print_stats, extract_references
+from IPython.display import display, Markdown
+ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
+```
+
+```{python}
+df = pd.read_parquet("../reaction_sentences.parquet")
+df_sentences = pd.read_parquet("../sentences.parquet")
+```
+
+Reaction Sentences dataframe
+```{python}
+df.head(10)
+```
+```{python}
+print(f"Number of rows:{len(df)}")
+```
+
+Sentences dataframe
+```{python}
+df_sentences.head(10)
+```
+
+```{python}
+print(f"Number of rows:{len(df_sentences)}")
+```
+
+```{python}
+#| output: asis
+max = 5
+for idx in range(0,max):
+  display(Markdown(f"\n **notes at index {idx}:**  \n{df['notes'].iloc[idx]} \n"))
+  sentences = "  \n".join([f"**-** {s}" for s in df['sentences'].iloc[idx]])
+  display(Markdown(f"**Sentences of note at index {idx}:**  \n{sentences}"))
+```
+
+```{python}
+df.sort_values(by="num_sentences", ascending=False).head(10)
+```
+
+```{python}
+#| output: asis
+display(Markdown(f"**Note with max value of sentences**\n{df['notes'].iloc[df['num_sentences'].idxmax()]}\n"))
+```
+
+```{python}
+#| output: asis
+display(Markdown(f"**Original Note with max value of sentences**\n{df['original_notes'].iloc[df['num_sentences'].idxmax()]}\n"))
+```
+
+```{python}
+print("Statistics of variable num_sentences:")
+print_stats(df['num_sentences'])
+```
+
+# Repeated sentences 
+
+```{python}
+sentence_counts = df_sentences['sentence'].value_counts().reset_index()
+sentence_counts.columns = ['sentence', 'count']
+repeated_sentences = sentence_counts[sentence_counts['count'] > 1]
+repeated_sentences
+```
+
+```{python}
+sentence_to_check = repeated_sentences.iloc[1]['sentence']
+notes_with_sentence = df_sentences[df_sentences['sentence'] == sentence_to_check]
+for i in range(4):
+    note = notes_with_sentence['notes'].iloc[i]
+    display(Markdown(f"**Original notes at index {i}:**  \n{note}\n"))
+```
