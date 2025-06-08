@@ -2,6 +2,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from collections import Counter
 
 def plot_data(
     data,
@@ -104,3 +105,80 @@ def extract_references(entry):
         if group:
             refs.append(group)
     return refs
+
+
+def analyze_tokenization(df, tokenizer, text_columns=['snippet', 'notes'], sample_size=None):
+    """
+    Analyze tokenization of text data from a DataFrame
+    """
+
+    if sample_size:
+        df_sample = df.sample(n=min(sample_size, len(df)), random_state=42)
+    else:
+        df_sample = df
+    
+    for column in text_columns:
+        if column not in df_sample.columns:
+            print(f"Warning: Column '{column}' not found in DataFrame")
+            continue
+            
+        print(f"\n{'-'*50}")
+        print(f"ANALYZING COLUMN: {column}")
+        print(f"{'-'*50}")
+        
+        # Filter out null values
+        text_data = df_sample[column].dropna()
+        
+        if len(text_data) == 0:
+            print(f"No valid text data found in column '{column}'")
+            continue
+        
+        # Tokenize all texts
+        token_lengths = []
+        all_tokens = []
+        
+        for i, text in enumerate(text_data):
+            # Tokenize the text
+            tokens = tokenizer(str(text), return_tensors="pt", truncation=False)
+            token_ids = tokens['input_ids'][0].tolist()
+            token_lengths.append(len(token_ids))
+            all_tokens.extend(token_ids)
+        
+        # Statistical analysis
+        token_lengths = np.array(token_lengths)
+        
+        print(f"\nTOKENIZATION STATISTICS for {column}:")
+        print(f"  Total texts: {len(text_data)}")
+        print(f"  Mean token length: {token_lengths.mean():.2f}")
+        print(f"  Median token length: {np.median(token_lengths):.2f}")
+        print(f"  Min token length: {token_lengths.min()}")
+        print(f"  Max token length: {token_lengths.max()}")
+        print(f"  Std deviation: {token_lengths.std():.2f}")
+        print(f"  5th percentile: {np.percentile(token_lengths, 5):.0f}")
+        print(f"  25th percentile: {np.percentile(token_lengths, 25):.0f}")
+        print(f"  75th percentile: {np.percentile(token_lengths, 75):.0f}")
+        print(f"  95th percentile: {np.percentile(token_lengths, 95):.0f}")
+        
+        # Token frequency analysis
+        token_counter = Counter(all_tokens)
+        most_common_tokens = token_counter.most_common(20)
+        
+        print(f"\nTOP 20 MOST FREQUENT TOKENS:")
+        for token_id, count in most_common_tokens:
+            token_text = tokenizer.decode([token_id])
+            print(f"  Token ID {token_id}: '{token_text}' -> {count} times")
+        
+        # Show some examples
+        print(f"\nSAMPLE TOKENIZATIONS:")
+        sample_indices = np.random.choice(len(text_data), size=min(3, len(text_data)), replace=False)
+        
+        for idx in sample_indices:
+            text = text_data.iloc[idx]
+            tokens = tokenizer(str(text), return_tensors="pt")
+            token_ids = tokens['input_ids'][0].tolist()
+            decoded_tokens = [tokenizer.decode([tid], skip_special_tokens=False) for tid in token_ids]
+            
+            print(f"\nOriginal text ({len(token_ids)} tokens):")
+            print(f"{str(text)}")
+            print(f"Token IDs: {token_ids}")
+            print(f"Decoded tokens: {decoded_tokens}")

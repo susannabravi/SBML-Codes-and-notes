@@ -7,3 +7,4 @@ format: html
 - [Pathways](pathways.html)
 - [Reactions](reactions.html)
 - [Notes](notes.html)
+- [Tokens](tokens.html)

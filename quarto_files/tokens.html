@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.29">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Notes Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="tokens_files/libs/clipboard/clipboard.min.js"></script>
+<script src="tokens_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="tokens_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="tokens_files/libs/quarto-html/popper.min.js"></script>
+<script src="tokens_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="tokens_files/libs/quarto-html/anchor.min.js"></script>
+<link href="tokens_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="tokens_files/libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="tokens_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="tokens_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="tokens_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Notes Analysis</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="89462fd0" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"../reactions_train.parquet"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"deepseek-ai/DeepSeek-Coder-V2-Base"</span>, trust_remote_code<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>analyze_tokenization(df, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                    tokenizer,        </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                    text_columns<span class="op">=</span>[<span class="st">'snippet'</span>, <span class="st">'notes'</span>],</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                    sample_size<span class="op">=</span><span class="va">None</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/usr/local/lib/python3.10/dist-packages/huggingface_hub/file_download.py:896: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+--------------------------------------------------
+ANALYZING COLUMN: snippet
+--------------------------------------------------
+
+TOKENIZATION STATISTICS for snippet:
+  Total texts: 21751
+  Mean token length: 359.05
+  Median token length: 339.00
+  Min token length: 119
+  Max token length: 4314
+  Std deviation: 124.85
+  5th percentile: 213
+  25th percentile: 273
+  75th percentile: 412
+  95th percentile: 559
+
+TOP 20 MOST FREQUENT TOKENS:
+  Token ID 15: '0' -&gt; 699246 times
+  Token ID 485: '="' -&gt; 547052 times
+  Token ID 1: '"' -&gt; 519866 times
+  Token ID 16: '1' -&gt; 457407 times
+  Token ID 62: '_' -&gt; 416344 times
+  Token ID 24: '9' -&gt; 257593 times
+  Token ID 43009: 'species' -&gt; 251953 times
+  Token ID 21: '6' -&gt; 229045 times
+  Token ID 185: '
+' -&gt; 228036 times
+  Token ID 17: '2' -&gt; 219129 times
+  Token ID 23: '8' -&gt; 203445 times
+  Token ID 18: '3' -&gt; 202801 times
+  Token ID 20: '5' -&gt; 196086 times
+  Token ID 22: '7' -&gt; 193601 times
+  Token ID 19: '4' -&gt; 172655 times
+  Token ID 27: '&lt;' -&gt; 169501 times
+  Token ID 29: '&gt;' -&gt; 134825 times
+  Token ID 1985: ' id' -&gt; 114964 times
+  Token ID 2502: 'list' -&gt; 109079 times
+  Token ID 4112: 'Of' -&gt; 109078 times
+
+SAMPLE TOKENIZATIONS:
+
+  Original text (278 tokens):
+&lt;reaction compartment="compartment_70101" fast="false" id="reaction_5666216" name="RHOA:GTP:RTKN binds TAX1BP3" reversible="false"&gt;
+&lt;listOfReactants&gt;
+&lt;speciesReference constant="true" id="speciesreference_5666216_input_5666199" sboTerm="SBO:0000010" species="species_5666199" stoichiometry="1" /&gt;
+&lt;speciesReference constant="true" id="speciesreference_5666216_input_5666217" sboTerm="SBO:0000010" species="species_5666217" stoichiometry="1" /&gt;
+&lt;/listOfReactants&gt;
+&lt;listOfProducts&gt;
+&lt;speciesReference constant="true" id="speciesreference_5666216_output_5666210" sboTerm="SBO:0000011" species="species_5666210" stoichiometry="1" /&gt;
+&lt;/listOfProducts&gt;
+&lt;/reaction&gt;
+Token IDs: [100000, 27, 68452, 45303, 485, 690, 1629, 469, 62, 22, 15, 16, 15, 16, 1, 4311, 485, 6086, 1, 1985, 485, 68452, 62, 20, 21, 21, 21, 17, 16, 21, 1, 1210, 485, 49, 11292, 32, 25, 38, 7112, 25, 19310, 33369, 67651, 323, 22549, 16, 17478, 18, 1, 60998, 485, 6086, 684, 185, 27, 2502, 4112, 36320, 1453, 29, 185, 27, 43009, 12054, 4081, 485, 4492, 1, 1985, 485, 43009, 9694, 62, 20, 21, 21, 21, 17, 16, 21, 62, 3598, 62, 20, 21, 21, 21, 16, 24, 24, 1, 252, 957, 14851, 485, 50, 9305, 25, 15, 15, 15, 15, 15, 16, 15, 1, 8217, 485, 43009, 62, 20, 21, 21, 21, 16, 24, 24, 1, 27210, 42488, 7732, 485, 16, 1, 3993, 185, 27, 43009, 12054, 4081, 485, 4492, 1, 1985, 485, 43009, 9694, 62, 20, 21, 21, 21, 17, 16, 21, 62, 3598, 62, 20, 21, 21, 21, 17, 16, 22, 1, 252, 957, 14851, 485, 50, 9305, 25, 15, 15, 15, 15, 15, 16, 15, 1, 8217, 485, 43009, 62, 20, 21, 21, 21, 17, 16, 22, 1, 27210, 42488, 7732, 485, 16, 1, 3993, 185, 535, 2502, 4112, 36320, 1453, 29, 185, 27, 2502, 4112, 48981, 29, 185, 27, 43009, 12054, 4081, 485, 4492, 1, 1985, 485, 43009, 9694, 62, 20, 21, 21, 21, 17, 16, 21, 62, 8157, 62, 20, 21, 21, 21, 17, 16, 15, 1, 252, 957, 14851, 485, 50, 9305, 25, 15, 15, 15, 15, 15, 16, 16, 1, 8217, 485, 43009, 62, 20, 21, 21, 21, 17, 16, 15, 1, 27210, 42488, 7732, 485, 16, 1, 3993, 185, 535, 2502, 4112, 48981, 29, 185, 535, 68452, 29]
+Decoded tokens: ['&lt;｜begin▁of▁sentence｜&gt;', '&lt;', 'reaction', ' compartment', '="', 'com', 'part', 'ment', '_', '7', '0', '1', '0', '1', '"', ' fast', '="', 'false', '"', ' id', '="', 'reaction', '_', '5', '6', '6', '6', '2', '1', '6', '"', ' name', '="', 'R', 'HO', 'A', ':', 'G', 'TP', ':', 'RT', 'KN', ' binds', ' T', 'AX', '1', 'BP', '3', '"', ' reversible', '="', 'false', '"&gt;', '\n', '&lt;', 'list', 'Of', 'React', 'ants', '&gt;', '\n', '&lt;', 'species', 'Reference', ' constant', '="', 'true', '"', ' id', '="', 'species', 'reference', '_', '5', '6', '6', '6', '2', '1', '6', '_', 'input', '_', '5', '6', '6', '6', '1', '9', '9', '"', ' s', 'bo', 'Term', '="', 'S', 'BO', ':', '0', '0', '0', '0', '0', '1', '0', '"', ' species', '="', 'species', '_', '5', '6', '6', '6', '1', '9', '9', '"', ' sto', 'ichi', 'ometry', '="', '1', '"', ' /&gt;', '\n', '&lt;', 'species', 'Reference', ' constant', '="', 'true', '"', ' id', '="', 'species', 'reference', '_', '5', '6', '6', '6', '2', '1', '6', '_', 'input', '_', '5', '6', '6', '6', '2', '1', '7', '"', ' s', 'bo', 'Term', '="', 'S', 'BO', ':', '0', '0', '0', '0', '0', '1', '0', '"', ' species', '="', 'species', '_', '5', '6', '6', '6', '2', '1', '7', '"', ' sto', 'ichi', 'ometry', '="', '1', '"', ' /&gt;', '\n', '&lt;/', 'list', 'Of', 'React', 'ants', '&gt;', '\n', '&lt;', 'list', 'Of', 'Products', '&gt;', '\n', '&lt;', 'species', 'Reference', ' constant', '="', 'true', '"', ' id', '="', 'species', 'reference', '_', '5', '6', '6', '6', '2', '1', '6', '_', 'output', '_', '5', '6', '6', '6', '2', '1', '0', '"', ' s', 'bo', 'Term', '="', 'S', 'BO', ':', '0', '0', '0', '0', '0', '1', '1', '"', ' species', '="', 'species', '_', '5', '6', '6', '6', '2', '1', '0', '"', ' sto', 'ichi', 'ometry', '="', '1', '"', ' /&gt;', '\n', '&lt;/', 'list', 'Of', 'Products', '&gt;', '\n', '&lt;/', 'reaction', '&gt;']
+
+  Original text (262 tokens):
+&lt;reaction compartment="compartment_70101" fast="false" id="reaction_449200" name="Interaction of ABL1 with CDO complex" reversible="false"&gt;
+&lt;listOfReactants&gt;
+&lt;speciesReference constant="true" id="speciesreference_449200_input_375987" sboTerm="SBO:0000010" species="species_375987" stoichiometry="1" /&gt;
+&lt;speciesReference constant="true" id="speciesreference_449200_input_376011" sboTerm="SBO:0000010" species="species_376011" stoichiometry="1" /&gt;
+&lt;/listOfReactants&gt;
+&lt;listOfProducts&gt;
+&lt;speciesReference constant="true" id="speciesreference_449200_output_449191" sboTerm="SBO:0000011" species="species_449191" stoichiometry="1" /&gt;
+&lt;/listOfProducts&gt;
+&lt;/reaction&gt;
+Token IDs: [100000, 27, 68452, 45303, 485, 690, 1629, 469, 62, 22, 15, 16, 15, 16, 1, 4311, 485, 6086, 1, 1985, 485, 68452, 62, 19, 19, 24, 17, 15, 15, 1, 1210, 485, 58420, 280, 338, 14873, 16, 366, 339, 8447, 4301, 1, 60998, 485, 6086, 684, 185, 27, 2502, 4112, 36320, 1453, 29, 185, 27, 43009, 12054, 4081, 485, 4492, 1, 1985, 485, 43009, 9694, 62, 19, 19, 24, 17, 15, 15, 62, 3598, 62, 18, 22, 20, 24, 23, 22, 1, 252, 957, 14851, 485, 50, 9305, 25, 15, 15, 15, 15, 15, 16, 15, 1, 8217, 485, 43009, 62, 18, 22, 20, 24, 23, 22, 1, 27210, 42488, 7732, 485, 16, 1, 3993, 185, 27, 43009, 12054, 4081, 485, 4492, 1, 1985, 485, 43009, 9694, 62, 19, 19, 24, 17, 15, 15, 62, 3598, 62, 18, 22, 21, 15, 16, 16, 1, 252, 957, 14851, 485, 50, 9305, 25, 15, 15, 15, 15, 15, 16, 15, 1, 8217, 485, 43009, 62, 18, 22, 21, 15, 16, 16, 1, 27210, 42488, 7732, 485, 16, 1, 3993, 185, 535, 2502, 4112, 36320, 1453, 29, 185, 27, 2502, 4112, 48981, 29, 185, 27, 43009, 12054, 4081, 485, 4492, 1, 1985, 485, 43009, 9694, 62, 19, 19, 24, 17, 15, 15, 62, 8157, 62, 19, 19, 24, 16, 24, 16, 1, 252, 957, 14851, 485, 50, 9305, 25, 15, 15, 15, 15, 15, 16, 16, 1, 8217, 485, 43009, 62, 19, 19, 24, 16, 24, 16, 1, 27210, 42488, 7732, 485, 16, 1, 3993, 185, 535, 2502, 4112, 48981, 29, 185, 535, 68452, 29]
+Decoded tokens: ['&lt;｜begin▁of▁sentence｜&gt;', '&lt;', 'reaction', ' compartment', '="', 'com', 'part', 'ment', '_', '7', '0', '1', '0', '1', '"', ' fast', '="', 'false', '"', ' id', '="', 'reaction', '_', '4', '4', '9', '2', '0', '0', '"', ' name', '="', 'Interaction', ' of', ' A', 'BL', '1', ' with', ' C', 'DO', ' complex', '"', ' reversible', '="', 'false', '"&gt;', '\n', '&lt;', 'list', 'Of', 'React', 'ants', '&gt;', '\n', '&lt;', 'species', 'Reference', ' constant', '="', 'true', '"', ' id', '="', 'species', 'reference', '_', '4', '4', '9', '2', '0', '0', '_', 'input', '_', '3', '7', '5', '9', '8', '7', '"', ' s', 'bo', 'Term', '="', 'S', 'BO', ':', '0', '0', '0', '0', '0', '1', '0', '"', ' species', '="', 'species', '_', '3', '7', '5', '9', '8', '7', '"', ' sto', 'ichi', 'ometry', '="', '1', '"', ' /&gt;', '\n', '&lt;', 'species', 'Reference', ' constant', '="', 'true', '"', ' id', '="', 'species', 'reference', '_', '4', '4', '9', '2', '0', '0', '_', 'input', '_', '3', '7', '6', '0', '1', '1', '"', ' s', 'bo', 'Term', '="', 'S', 'BO', ':', '0', '0', '0', '0', '0', '1', '0', '"', ' species', '="', 'species', '_', '3', '7', '6', '0', '1', '1', '"', ' sto', 'ichi', 'ometry', '="', '1', '"', ' /&gt;', '\n', '&lt;/', 'list', 'Of', 'React', 'ants', '&gt;', '\n', '&lt;', 'list', 'Of', 'Products', '&gt;', '\n', '&lt;', 'species', 'Reference', ' constant', '="', 'true', '"', ' id', '="', 'species', 'reference', '_', '4', '4', '9', '2', '0', '0', '_', 'output', '_', '4', '4', '9', '1', '9', '1', '"', ' s', 'bo', 'Term', '="', 'S', 'BO', ':', '0', '0', '0', '0', '0', '1', '1', '"', ' species', '="', 'species', '_', '4', '4', '9', '1', '9', '1', '"', ' sto', 'ichi', 'ometry', '="', '1', '"', ' /&gt;', '\n', '&lt;/', 'list', 'Of', 'Products', '&gt;', '\n', '&lt;/', 'reaction', '&gt;']
+
+  Original text (278 tokens):
+&lt;reaction compartment="compartment_70101" fast="false" id="reaction_5666216" name="RHOA:GTP:RTKN binds TAX1BP3" reversible="false"&gt;
+&lt;listOfReactants&gt;
+&lt;speciesReference constant="true" id="speciesreference_5666216_input_5666217" sboTerm="SBO:0000010" species="species_5666217" stoichiometry="1" /&gt;
+&lt;speciesReference constant="true" id="speciesreference_5666216_input_5666199" sboTerm="SBO:0000010" species="species_5666199" stoichiometry="1" /&gt;
+&lt;/listOfReactants&gt;
+&lt;listOfProducts&gt;
+&lt;speciesReference constant="true" id="speciesreference_5666216_output_5666210" sboTerm="SBO:0000011" species="species_5666210" stoichiometry="1" /&gt;
+&lt;/listOfProducts&gt;
+&lt;/reaction&gt;
+Token IDs: [100000, 27, 68452, 45303, 485, 690, 1629, 469, 62, 22, 15, 16, 15, 16, 1, 4311, 485, 6086, 1, 1985, 485, 68452, 62, 20, 21, 21, 21, 17, 16, 21, 1, 1210, 485, 49, 11292, 32, 25, 38, 7112, 25, 19310, 33369, 67651, 323, 22549, 16, 17478, 18, 1, 60998, 485, 6086, 684, 185, 27, 2502, 4112, 36320, 1453, 29, 185, 27, 43009, 12054, 4081, 485, 4492, 1, 1985, 485, 43009, 9694, 62, 20, 21, 21, 21, 17, 16, 21, 62, 3598, 62, 20, 21, 21, 21, 17, 16, 22, 1, 252, 957, 14851, 485, 50, 9305, 25, 15, 15, 15, 15, 15, 16, 15, 1, 8217, 485, 43009, 62, 20, 21, 21, 21, 17, 16, 22, 1, 27210, 42488, 7732, 485, 16, 1, 3993, 185, 27, 43009, 12054, 4081, 485, 4492, 1, 1985, 485, 43009, 9694, 62, 20, 21, 21, 21, 17, 16, 21, 62, 3598, 62, 20, 21, 21, 21, 16, 24, 24, 1, 252, 957, 14851, 485, 50, 9305, 25, 15, 15, 15, 15, 15, 16, 15, 1, 8217, 485, 43009, 62, 20, 21, 21, 21, 16, 24, 24, 1, 27210, 42488, 7732, 485, 16, 1, 3993, 185, 535, 2502, 4112, 36320, 1453, 29, 185, 27, 2502, 4112, 48981, 29, 185, 27, 43009, 12054, 4081, 485, 4492, 1, 1985, 485, 43009, 9694, 62, 20, 21, 21, 21, 17, 16, 21, 62, 8157, 62, 20, 21, 21, 21, 17, 16, 15, 1, 252, 957, 14851, 485, 50, 9305, 25, 15, 15, 15, 15, 15, 16, 16, 1, 8217, 485, 43009, 62, 20, 21, 21, 21, 17, 16, 15, 1, 27210, 42488, 7732, 485, 16, 1, 3993, 185, 535, 2502, 4112, 48981, 29, 185, 535, 68452, 29]
+Decoded tokens: ['&lt;｜begin▁of▁sentence｜&gt;', '&lt;', 'reaction', ' compartment', '="', 'com', 'part', 'ment', '_', '7', '0', '1', '0', '1', '"', ' fast', '="', 'false', '"', ' id', '="', 'reaction', '_', '5', '6', '6', '6', '2', '1', '6', '"', ' name', '="', 'R', 'HO', 'A', ':', 'G', 'TP', ':', 'RT', 'KN', ' binds', ' T', 'AX', '1', 'BP', '3', '"', ' reversible', '="', 'false', '"&gt;', '\n', '&lt;', 'list', 'Of', 'React', 'ants', '&gt;', '\n', '&lt;', 'species', 'Reference', ' constant', '="', 'true', '"', ' id', '="', 'species', 'reference', '_', '5', '6', '6', '6', '2', '1', '6', '_', 'input', '_', '5', '6', '6', '6', '2', '1', '7', '"', ' s', 'bo', 'Term', '="', 'S', 'BO', ':', '0', '0', '0', '0', '0', '1', '0', '"', ' species', '="', 'species', '_', '5', '6', '6', '6', '2', '1', '7', '"', ' sto', 'ichi', 'ometry', '="', '1', '"', ' /&gt;', '\n', '&lt;', 'species', 'Reference', ' constant', '="', 'true', '"', ' id', '="', 'species', 'reference', '_', '5', '6', '6', '6', '2', '1', '6', '_', 'input', '_', '5', '6', '6', '6', '1', '9', '9', '"', ' s', 'bo', 'Term', '="', 'S', 'BO', ':', '0', '0', '0', '0', '0', '1', '0', '"', ' species', '="', 'species', '_', '5', '6', '6', '6', '1', '9', '9', '"', ' sto', 'ichi', 'ometry', '="', '1', '"', ' /&gt;', '\n', '&lt;/', 'list', 'Of', 'React', 'ants', '&gt;', '\n', '&lt;', 'list', 'Of', 'Products', '&gt;', '\n', '&lt;', 'species', 'Reference', ' constant', '="', 'true', '"', ' id', '="', 'species', 'reference', '_', '5', '6', '6', '6', '2', '1', '6', '_', 'output', '_', '5', '6', '6', '6', '2', '1', '0', '"', ' s', 'bo', 'Term', '="', 'S', 'BO', ':', '0', '0', '0', '0', '0', '1', '1', '"', ' species', '="', 'species', '_', '5', '6', '6', '6', '2', '1', '0', '"', ' sto', 'ichi', 'ometry', '="', '1', '"', ' /&gt;', '\n', '&lt;/', 'list', 'Of', 'Products', '&gt;', '\n', '&lt;/', 'reaction', '&gt;']
+
+--------------------------------------------------
+ANALYZING COLUMN: notes
+--------------------------------------------------
+
+TOKENIZATION STATISTICS for notes:
+  Total texts: 21751
+  Mean token length: 140.47
+  Median token length: 103.00
+  Min token length: 5
+  Max token length: 15590
+  Std deviation: 193.43
+  5th percentile: 30
+  25th percentile: 63
+  75th percentile: 166
+  95th percentile: 354
+
+TOP 20 MOST FREQUENT TOKENS:
+  Token ID 254: ' the' -&gt; 81429 times
+  Token ID 16: '1' -&gt; 78421 times
+  Token ID 12: '-' -&gt; 75843 times
+  Token ID 13: '.' -&gt; 70803 times
+  Token ID 280: ' of' -&gt; 70783 times
+  Token ID 11: ',' -&gt; 69809 times
+  Token ID 285: ' and' -&gt; 58029 times
+  Token ID 17: '2' -&gt; 56007 times
+  Token ID 334: ' (' -&gt; 47085 times
+  Token ID 276: ' to' -&gt; 40318 times
+  Token ID 279: ' in' -&gt; 39011 times
+  Token ID 18: '3' -&gt; 38978 times
+  Token ID 8: ')' -&gt; 31423 times
+  Token ID 317: ' is' -&gt; 31153 times
+  Token ID 207: ' ' -&gt; 25154 times
+  Token ID 245: ' a' -&gt; 23500 times
+  Token ID 20: '5' -&gt; 22356 times
+  Token ID 100000: '&lt;｜begin▁of▁sentence｜&gt;' -&gt; 21751 times
+  Token ID 19: '4' -&gt; 21412 times
+  Token ID 366: ' with' -&gt; 16592 times
+
+SAMPLE TOKENIZATIONS:
+
+  Original text (139 tokens):
+BRCA1 associated protein 1 (BAP1) is a tumour suppressor that is believed to mediate its effects through chromatin modulation, transcriptional regulation, and possibly via the ubiquitin-proteasome system and the DNA damage response pathway. BAP1 mediates the deubiquitination of Host cell factor 1 (HCFC1) thereby regulating cell growth, though deubiquitination of HCFC1 does not lead to increased HCFC1 stability. HCFC1 is K48 and K63 ubiquitinated. The major site of linkage are lysines 1807 and 1808.
+Token IDs: [100000, 11678, 7159, 16, 5329, 15032, 207, 16, 334, 33, 2840, 16, 8, 317, 245, 14382, 416, 25917, 256, 344, 317, 11510, 276, 1746, 11918, 895, 5766, 1184, 24514, 8392, 35036, 11, 48359, 266, 21624, 11, 285, 8658, 3764, 254, 17716, 1475, 80133, 12, 33394, 281, 498, 1317, 285, 254, 22046, 7051, 4400, 37224, 13, 380, 2840, 16, 21125, 985, 254, 315, 458, 1475, 260, 2583, 280, 16103, 5185, 6088, 207, 16, 334, 17024, 11122, 16, 8, 19603, 58106, 5185, 6026, 11, 2451, 315, 458, 1475, 260, 2583, 280, 54261, 11122, 16, 1217, 441, 2023, 276, 7322, 54261, 11122, 16, 13668, 13, 54261, 11122, 16, 317, 721, 19, 23, 285, 721, 21, 18, 17716, 1475, 260, 15802, 13, 429, 3144, 3302, 280, 84469, 418, 284, 886, 1451, 207, 16, 23, 15, 22, 285, 207, 16, 23, 15, 23, 13]
+Decoded tokens: ['&lt;｜begin▁of▁sentence｜&gt;', 'BR', 'CA', '1', ' associated', ' protein', ' ', '1', ' (', 'B', 'AP', '1', ')', ' is', ' a', ' tum', 'our', ' suppress', 'or', ' that', ' is', ' believed', ' to', ' med', 'iate', ' its', ' effects', ' through', ' chrom', 'atin', ' modulation', ',', ' transcription', 'al', ' regulation', ',', ' and', ' possibly', ' via', ' the', ' ub', 'iqu', 'itin', '-', 'prote', 'as', 'ome', ' system', ' and', ' the', ' DNA', ' damage', ' response', ' pathway', '.', ' B', 'AP', '1', ' medi', 'ates', ' the', ' de', 'ub', 'iqu', 'it', 'ination', ' of', ' Host', ' cell', ' factor', ' ', '1', ' (', 'HC', 'FC', '1', ')', ' thereby', ' regulating', ' cell', ' growth', ',', ' though', ' de', 'ub', 'iqu', 'it', 'ination', ' of', ' HC', 'FC', '1', ' does', ' not', ' lead', ' to', ' increased', ' HC', 'FC', '1', ' stability', '.', ' HC', 'FC', '1', ' is', ' K', '4', '8', ' and', ' K', '6', '3', ' ub', 'iqu', 'it', 'inated', '.', ' The', ' major', ' site', ' of', ' linkage', ' are', ' l', 'ys', 'ines', ' ', '1', '8', '0', '7', ' and', ' ', '1', '8', '0', '8', '.']
+
+  Original text (33 tokens):
+Based on a study with mouse NOTCH3 and presumably mouse JAG2 (Jagged2), JAG2 ligand binds to NOTCH3 receptor.
+Token IDs: [100000, 19550, 331, 245, 3437, 366, 10554, 5790, 3404, 18, 285, 35082, 10554, 568, 4592, 17, 334, 41, 21931, 17, 654, 568, 4592, 17, 35125, 384, 67651, 276, 5790, 3404, 18, 39785, 13]
+Decoded tokens: ['&lt;｜begin▁of▁sentence｜&gt;', 'Based', ' on', ' a', ' study', ' with', ' mouse', ' NOT', 'CH', '3', ' and', ' presumably', ' mouse', ' J', 'AG', '2', ' (', 'J', 'agged', '2', '),', ' J', 'AG', '2', ' lig', 'and', ' binds', ' to', ' NOT', 'CH', '3', ' receptor', '.']
+
+  Original text (29 tokens):
+14-3-3 family proteins can bind Raf1 and have been suggested to activate Raf1, but this has been refuted.
+Token IDs: [100000, 16, 19, 12, 18, 12, 18, 2617, 29510, 481, 14849, 26012, 16, 285, 463, 803, 9105, 276, 23567, 26012, 16, 11, 548, 437, 643, 803, 1327, 29251, 13]
+Decoded tokens: ['&lt;｜begin▁of▁sentence｜&gt;', '1', '4', '-', '3', '-', '3', ' family', ' proteins', ' can', ' bind', ' Raf', '1', ' and', ' have', ' been', ' suggested', ' to', ' activate', ' Raf', '1', ',', ' but', ' this', ' has', ' been', ' ref', 'uted', '.']</code></pre>
+</div>
+</div>
+<!-- -->
+
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Notes Analysis"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    html:</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">        code-fold: true</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">        code-tools: true</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="an">jupyter:</span><span class="co"> python3</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> descriptive_stat_functions <span class="im">import</span> analyze_tokenization</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, Markdown</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForSeq2SeqLM, AutoModelForCausalLM</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> flash_attn</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>ggplot_colors <span class="op">=</span> plt.rcParams[<span class="st">'axes.prop_cycle'</span>].by_key()[<span class="st">'color'</span>]</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"../reactions_train.parquet"</span>)</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"deepseek-ai/DeepSeek-Coder-V2-Base"</span>, trust_remote_code<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>analyze_tokenization(df, </span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>                    tokenizer,        </span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>                    text_columns<span class="op">=</span>[<span class="st">'snippet'</span>, <span class="st">'notes'</span>],</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>                    sample_size<span class="op">=</span><span class="va">None</span>) </span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

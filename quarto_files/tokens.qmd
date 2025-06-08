@@ -1,0 +1,40 @@
+---
+title: "Notes Analysis"
+format: 
+    html:
+        code-fold: true
+        code-tools: true
+jupyter: python3
+---
+
+```{python}
+#| echo: false
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+import numpy as np
+from descriptive_stat_functions import analyze_tokenization
+from IPython.display import display, Markdown
+import torch
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModelForCausalLM
+import os
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from collections import Counter
+import flash_attn
+ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
+```
+
+```{python}
+
+df = pd.read_parquet("../reactions_train.parquet")
+tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-Coder-V2-Base", trust_remote_code=True)
+analyze_tokenization(df, 
+                    tokenizer,        
+                    text_columns=['snippet', 'notes'],
+                    sample_size=None) 
+```
