@@ -6,7 +6,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from collections import Counter
-import flash_attn
 import re
 
 
@@ -14,15 +13,12 @@ def download_model_hf(model_path, model_name):
     """
     Download a Hugging Face model and tokenizer to the specified directory
     """
-    # Check if the directory already exists
     if not os.path.exists(model_path):
-        # Create the directory
         os.makedirs(model_path)
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
-    # Save the model and tokenizer to the specified directory
     model.save_pretrained(model_path)
     tokenizer.save_pretrained(model_path)
 
@@ -33,7 +29,6 @@ def clean_data(df, columns=['snippet', 'notes']):
     initial_shape = df.shape
     print(f"Initial data shape: {initial_shape}")
 
-    # Drop duplicate rows based on specified columns
     df_cleaned = df.drop_duplicates(subset=columns, keep='first')
 
     cleaned_shape = df_cleaned.shape
@@ -44,9 +39,8 @@ def clean_data(df, columns=['snippet', 'notes']):
 
 def load_or_create_train_data(parquet_file_path, train_file_path, columns=['snippet', 'notes'], force_recreate=False):
     """
-    Load existing train data if available, otherwise create it from the original parquet file.
+    Load existing train data if available, otherwise create it from the original reactions file.
     """
-    # Check if train file already exists and we don't want to force recreate
     if os.path.exists(train_file_path) and not force_recreate:
         print(f"Loading existing train data from: {train_file_path}")
         try:
@@ -57,16 +51,13 @@ def load_or_create_train_data(parquet_file_path, train_file_path, columns=['snip
             print(f"Error loading existing train file: {e}")
             print("Will create new train file...")
     
-    # Load original data and clean it
     print(f"Creating new train data from: {parquet_file_path}")
     try:
         df = pd.read_parquet(parquet_file_path)
         print(f"Loaded original data with shape: {df.shape}")
         
-        # Clean the data
         df_cleaned = clean_data(df, columns=columns)
         
-        # Save the cleaned data as train file
         print(f"Saving cleaned train data to: {train_file_path}")
         df_cleaned.to_parquet(train_file_path, index=False)
         
@@ -79,13 +70,62 @@ def load_or_create_train_data(parquet_file_path, train_file_path, columns=['snip
     except Exception as e:
         print(f"Error processing data: {e}")
         return None
+
+def extract_protein_names_from_data(df, text_columns=['notes'], min_frequency=2):
+    """
+    Extract protein names from the dataset using improved regex patterns
+    """
+    patterns = [
+        r'\b[A-Z][A-Z0-9]{1,10}\b',  # NOTCH3, TP53, BRCA1
+        r'\b[A-Z][a-z]+\d+[A-Za-z]*\b',  # Notch3, Brca1
+        r'\b[A-Z]{2,}(?:-[A-Z]{1,3})?\b',  # TNF-α, IL-6 
+        r'\b[A-Za-z]+-[A-Z]{2,}\b',  # α-SMA, β-catenin
+        r'\b[A-Z][A-Z]+[0-9]*[A-Za-z]*\b',  # General pattern for protein abbreviations
+    ]
     
+    protein_counter = Counter()
+    
+    print(f"Extracting protein names from columns: {text_columns}")
+    
+    for column in text_columns:
+        if column not in df.columns:
+            print(f"Warning: Column '{column}' not found")
+            continue
+            
+        text_data = df[column].dropna()
+        print(f"Processing {len(text_data)} entries from column '{column}'")
+        
+        for text in text_data:
+            text_str = str(text)
+            for pattern in patterns:
+                matches = re.findall(pattern, text_str)
+                for match in matches:
+                    # Filter reasonable protein names
+                    if (2 <= len(match) <= 20 and 
+                        not match.isdigit() and 
+                        not match.lower() in {'the', 'and', 'for', 'with', 'are', 'was', 'were'}):
+                        protein_counter[match] += 1
+    
+    # Filter by frequency
+    frequent_proteins = {protein for protein, count in protein_counter.items() 
+                        if count >= min_frequency}
+    
+    print(f"Found {len(protein_counter)} unique protein-like terms")
+    print(f"After frequency filtering (>= {min_frequency}): {len(frequent_proteins)} terms")
+    
+    # Show most common proteins
+    print("\nMost common protein-like terms:")
+    for protein, count in protein_counter.most_common(20):
+        print(f"  {protein}: {count}")
+    
+    return frequent_proteins
+
 def extend_tokenizer_vocabulary(tokenizer, new_tokens, save_path=None):
     """
-    Add new tokens to the tokenizer vocabulary
+    Add new tokens to the tokenizer vocabulary as special tokens to ensure they're treated as single units
     """
-
     print(f"Original vocabulary size: {tokenizer.vocab_size}")
+    print(f"Original vocab + added tokens: {len(tokenizer.get_vocab())}")
     
     # Filter out tokens that already exist
     existing_tokens = set(tokenizer.get_vocab().keys())
@@ -95,13 +135,33 @@ def extend_tokenizer_vocabulary(tokenizer, new_tokens, save_path=None):
         print("No new tokens to add - all tokens already exist in vocabulary")
         return tokenizer, 0
     
-    print(f"Adding {len(truly_new_tokens)} new tokens: {truly_new_tokens}")
+    print(f"Adding {len(truly_new_tokens)} new tokens")
+    print(f"Sample new tokens: {list(truly_new_tokens)[:10]}")
     
-    # Add new tokens to the tokenizer
-    num_added_tokens = tokenizer.add_tokens(truly_new_tokens)
+    # Add new tokens (this forces them to be treated as single units)
+    num_added_tokens = tokenizer.add_tokens(truly_new_tokens, special_tokens=False)
     
     print(f"Successfully added {num_added_tokens} tokens")
-    print(f"New vocabulary size: {tokenizer.vocab_size}")
+    print(f"New vocabulary size (.vocab_size): {tokenizer.vocab_size}")
+    print(f"Total vocabulary size (len(get_vocab())): {len(tokenizer.get_vocab())}")
+    print(f"Difference: {len(tokenizer.get_vocab()) - tokenizer.vocab_size}")
+    
+    # Verify some tokens were added correctly
+    sample_tokens = list(truly_new_tokens)[:5]
+    print(f"\nVerifying token addition:")
+    for token in sample_tokens:
+        if token in tokenizer.get_vocab():
+            token_id = tokenizer.get_vocab()[token]
+            encoded = tokenizer.encode(token, add_special_tokens=False)
+            print(f"  OK '{token}' -> ID: {token_id}, encode: {encoded}")
+        else:
+            print(f"  NOT OK '{token}' -> NOT FOUND in vocabulary")
+    
+    # Test if tokens are now single units
+    print(f"\nTesting tokenization of added tokens:")
+    for token in sample_tokens:
+        tokens = tokenizer.tokenize(token)
+        print(f"  '{token}' -> {tokens} ({'✓ single' if len(tokens) == 1 else '✗ multiple'})")
     
     # Save the extended tokenizer if path provided
     if save_path:
@@ -110,55 +170,45 @@ def extend_tokenizer_vocabulary(tokenizer, new_tokens, save_path=None):
             os.makedirs(save_path)
         tokenizer.save_pretrained(save_path)
     
-    return tokenizer, num_added_tokens    
+    return tokenizer, num_added_tokens
 
-def extract_protein_names_from_data(df, text_column=['notes'], pattern=None):
+def test_tokenization_with_proteins(tokenizer, test_texts, title="TESTING TOKENIZATION"):
     """
-    Extract protein names from the dataset using regex patterns
+    Test how the tokenizer handles protein names in context
     """
-    if pattern is None:
-        # Common protein name patterns:
-        # - All caps with numbers: NOTCH3, JAG2, TP53
-        # - Mixed case with numbers: Notch3, p53
-        # - Greek letters: α-SMA, β-catenin
-        pattern = r'\b[A-Za-z]*[A-Z]+[A-Za-z]*\d+[A-Za-z]*\b|\b[A-Z]{2,}[0-9]*\b|\b[A-Za-z]*[αβγδεζηθικλμνξοπρστυφχψω]-?[A-Za-z]+\b'
+    print("\n" + "="*60)
+    print(title)
+    print("="*60)
     
-    protein_names = set()
-     
-    print(f"Extracting protein names from column: {text_column}")
-    text_data = df[text_column].dropna()
-    
-    for text in text_data:
-        matches = re.findall(pattern, str(text))
-        # Filter matches to reasonable protein name lengths and formats
-        filtered_matches = [
-            match for match in matches 
-            if 2 <= len(match) <= 20 and not match.isdigit()
-        ]
-        protein_names.update(filtered_matches)
-
-    return protein_names
-
-
-
-
+    for i, text in enumerate(test_texts):
+        print(f"\nTest {i+1}: {text}")
+        
+        # Tokenize
+        tokens = tokenizer(text, return_tensors="pt", add_special_tokens=True)
+        token_ids = tokens['input_ids'][0].tolist()
+        
+        # Decode individual tokens
+        decoded_tokens = [tokenizer.decode([tid], skip_special_tokens=False) for tid in token_ids]
+        
+        print(f"  Tokens ({len(token_ids)}): {decoded_tokens}")
+        print(f"  Token IDs: {token_ids}")
+        
+        # Check specific protein names
+        protein_names_in_text = re.findall(r'\b[A-Z]+[0-9]*[A-Za-z]*\b|\b[A-Za-z]+-[A-Z]+\b', text)
+        for protein in protein_names_in_text:
+            if len(protein) > 1:  # Skip single letters
+                protein_tokens = tokenizer.tokenize(protein)
+                is_single_token = len(protein_tokens) == 1
+                print(f"  '{protein}' -> {protein_tokens} ({'OK, single token' if is_single_token else 'NO, multiple tokens'})")
 
 def analyze_tokenization(df, tokenizer, text_columns=['snippet', 'notes'], sample_size=None):
     """
     Analyze tokenization of text data from a DataFrame
-    
-    Args:
-        df: pandas DataFrame containing the text data
-        tokenizer: HuggingFace tokenizer
-        text_columns: list of column names to analyze
-        sample_size: number of samples to analyze (None for all)
     """
     if sample_size:
         df_sample = df.sample(n=min(sample_size, len(df)), random_state=42)
     else:
         df_sample = df
-    
-    results = {}
     
     for column in text_columns:
         if column not in df_sample.columns:
@@ -169,14 +219,12 @@ def analyze_tokenization(df, tokenizer, text_columns=['snippet', 'notes'], sampl
         print(f"ANALYZING COLUMN: {column}")
         print(f"{'-'*50}")
         
-        # Filter out null values
         text_data = df_sample[column].dropna()
         
         if len(text_data) == 0:
             print(f"No valid text data found in column '{column}'")
             continue
         
-        # Tokenize all texts
         token_lengths = []
         all_tokens = []
         
@@ -185,13 +233,11 @@ def analyze_tokenization(df, tokenizer, text_columns=['snippet', 'notes'], sampl
             if i % 100 == 0:
                 print(f"Progress: {i+1}/{len(text_data)}")
             
-            # Tokenize the text
-            tokens = tokenizer(str(text), return_tensors="pt", truncation=False)
+            tokens = tokenizer(str(text), return_tensors="pt", truncation=False, add_special_tokens=True)
             token_ids = tokens['input_ids'][0].tolist()
             token_lengths.append(len(token_ids))
             all_tokens.extend(token_ids)
         
-        # Statistical analysis
         token_lengths = np.array(token_lengths)
         
         print(f"\nTOKENIZATION STATISTICS for {column}:")
@@ -208,11 +254,11 @@ def analyze_tokenization(df, tokenizer, text_columns=['snippet', 'notes'], sampl
         
         # Token frequency analysis
         token_counter = Counter(all_tokens)
-        most_common_tokens = token_counter.most_common(20)
+        most_common_tokens = token_counter.most_common(10)
         
-        print(f"\nTOP 20 MOST FREQUENT TOKENS:")
+        print(f"\nTOP 10 MOST FREQUENT TOKENS:")
         for token_id, count in most_common_tokens:
-            token_text = tokenizer.decode([token_id])
+            token_text = tokenizer.decode([token_id], skip_special_tokens=False)
             print(f"  Token ID {token_id}: '{token_text}' -> {count} times")
         
         # Show some examples
@@ -221,60 +267,19 @@ def analyze_tokenization(df, tokenizer, text_columns=['snippet', 'notes'], sampl
         
         for idx in sample_indices:
             text = text_data.iloc[idx]
-            tokens = tokenizer(str(text), return_tensors="pt")
+            tokens = tokenizer(str(text), return_tensors="pt", add_special_tokens=True)
             token_ids = tokens['input_ids'][0].tolist()
+            decoded_tokens = [tokenizer.decode([tid], skip_special_tokens=False) for tid in token_ids]
             
-            print(f"\n  Original text ({len(token_ids)} tokens):")
-            print(f"    {str(text)[:200]}{'...' if len(str(text)) > 200 else ''}")
-            print(f"  Token IDs: {token_ids[:20]}{'...' if len(token_ids) > 20 else ''}")
-            print(f"  Decoded tokens: {[tokenizer.decode([tid]) for tid in token_ids[:10]]}{'...' if len(token_ids) > 10 else ''}")
-        
-        results[column] = {
-            'token_lengths': token_lengths,
-            'total_texts': len(text_data),
-            'mean_length': token_lengths.mean(),
-            'median_length': np.median(token_lengths),
-            'max_length': token_lengths.max(),
-            'min_length': token_lengths.min(),
-            'std_length': token_lengths.std(),
-            'most_common_tokens': most_common_tokens
-        }
-    
-    return results
-
-def test_tokenization_with_proteins(tokenizer, test_texts):
-    """
-    Test how the tokenizer handles protein names in context
-    """
-    print("\n" + "="*60)
-    print("TESTING TOKENIZATION WITH PROTEIN NAMES")
-    print("="*60)
-    
-    for i, text in enumerate(test_texts):
-        print(f"\nTest {i+1}: {text}")
-        
-        # Tokenize
-        tokens = tokenizer(text, return_tensors="pt")
-        token_ids = tokens['input_ids'][0].tolist()
-        
-        # Decode individual tokens
-        decoded_tokens = [tokenizer.decode([tid]) for tid in token_ids]
-        
-        print(f"  Tokens ({len(token_ids)}): {decoded_tokens}")
-        print(f"  Token IDs: {token_ids}")
-        
-        # Check if protein names are single tokens
-        protein_names_in_text = re.findall(r'\b[A-Z]+\d*\b', text)
-        for protein in protein_names_in_text:
-            protein_tokens = tokenizer.tokenize(protein)
-            is_single_token = len(protein_tokens) == 1
-            print(f"  '{protein}' -> {protein_tokens} ({'✓ single token' if is_single_token else '✗ multiple tokens'})")
+            print(f"\nOriginal text ({len(token_ids)} tokens):")
+            print(f"'{str(text)[:100]}{'...' if len(str(text)) > 100 else ''}'")
+            print(f"Decoded tokens: {decoded_tokens[:10]}{'...' if len(decoded_tokens) > 10 else ''}")
 
 def main():
     # File paths
     parquet_file_path = "reactions.parquet" 
     train_file_path = "reactions_train.parquet"
-    extended_tokenizer_path = "./extended_tokenizer"  # Path to save extended tokenizer
+    extended_tokenizer_path = "./extended_tokenizer"  
     
     # Load or create train data
     df = load_or_create_train_data(
@@ -296,27 +301,8 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-Coder-V2-Base", trust_remote_code=True)
     
     print(f"Original tokenizer vocab size: {tokenizer.vocab_size}")
-    print(f"Original tokenizer model max length: {tokenizer.model_max_length}")
     
-    # Option 1: Add custom curated protein list
-    print("\n" + "="*60)
-    print("EXTENDING TOKENIZER WITH CUSTOM PROTEIN NAMES")
-    print("="*60)
-    
-    # Option 2: Extract protein names from your data (uncomment to use)
-    print("\nExtracting protein names from data...")
-    extracted_proteins = extract_protein_names_from_data(df, ['snippet', 'notes'])
-    print(f"Extracted {len(extracted_proteins)} unique protein-like terms from data")
-    print(f"Sample extracted: {list(extracted_proteins)[:10] if extracted_proteins else 'None'}")
-    
-    # Extend the tokenizer
-    extended_tokenizer, num_added = extend_tokenizer_vocabulary(
-        tokenizer, 
-        extracted_proteins, 
-        save_path=extended_tokenizer_path
-    )
-    
-    # Test the extended tokenizer
+    # Test original tokenizer first
     test_texts = [
         "The NOTCH3 protein interacts with JAG2 in cellular signaling.",
         "Expression of TP53 and BRCA1 was analyzed in tumor samples.",
@@ -324,31 +310,64 @@ def main():
         "The α-SMA and β-catenin pathways are crucial for development."
     ]
     
-    test_tokenization_with_proteins(extended_tokenizer, test_texts)
+    test_tokenization_with_proteins(tokenizer, test_texts, "ORIGINAL TOKENIZER TEST")
     
-    # Show basic info about the columns of interest
-    for col in ['snippet', 'notes']:
-        if col in df.columns:
-            non_null_count = df[col].notna().sum()
-            print(f"\nColumn '{col}': {non_null_count} non-null values out of {len(df)}")
+    print("\nExtracting protein names from data...")
+    extracted_proteins = extract_protein_names_from_data(
+        df, 
+        text_columns=['snippet', 'notes'], 
+        min_frequency=1 
+    )
+    
+    if not extracted_proteins:
+        print("No protein names extracted. Exiting.")
+        return
+    
+    # Extend the tokenizer
+    print(f"\nExtending tokenizer with {len(extracted_proteins)} protein names...")
+    extended_tokenizer, num_added = extend_tokenizer_vocabulary(
+        tokenizer, 
+        extracted_proteins, 
+        save_path=extended_tokenizer_path
+    )
+    
+    # Test the extended tokenizer
+    test_tokenization_with_proteins(extended_tokenizer, test_texts, "EXTENDED TOKENIZER TEST")
+    
+    # Additional test with common proteins that should be in the data
+    additional_test_proteins = ["NOTCH3", "JAG2", "TP53", "BRCA1", "TNF", "IL6"]
+    
+    print(f"\nTesting specific proteins: {additional_test_proteins}")
+    for protein in additional_test_proteins:
+        # Add to tokenizer if not already there
+        if protein not in extended_tokenizer.get_vocab():
+            print(f"Adding missing protein: {protein}")
+            extended_tokenizer.add_tokens([protein])
+        
+        # Test tokenization
+        tokens = extended_tokenizer.tokenize(protein)
+        token_ids = extended_tokenizer.encode(protein, add_special_tokens=False)
+        print(f"'{protein}' -> tokens: {tokens}, ids: {token_ids}")
     
     # Analyze tokenization with extended tokenizer
     print(f"\n{'='*60}")
     print("ANALYZING TOKENIZATION WITH EXTENDED TOKENIZER")
     print(f"{'='*60}")
     
-    results = analyze_tokenization(df, 
-                                   extended_tokenizer,        
-                                   text_columns=['snippet', 'notes'],
-                                   sample_size=1000) 
+    analyze_tokenization(df, 
+                        extended_tokenizer,        
+                        text_columns=['snippet', 'notes'],
+                        sample_size=500)  # Reduced sample size for faster processing
     
-    print(f"\n{'='*60}")
-    print("SUMMARY")
-    print(f"{'='*60}")
-    print(f"Original vocabulary size: {tokenizer.vocab_size}")
-    print(f"Extended vocabulary size: {extended_tokenizer.vocab_size}")
-    print(f"Added {num_added} new tokens")
-    print(f"Extended tokenizer saved to: {extended_tokenizer_path}")
+    # Final verification
+    print(f"\nFinal verification - testing a few protein names:")
+    test_proteins = ["NOTCH3", "TP53", "BRCA1", "JAG2"]
+    for protein in test_proteins:
+        if protein in extended_tokenizer.get_vocab():
+            tokens = extended_tokenizer.tokenize(protein)
+            print(f"  '{protein}': {tokens} ({'single token' if len(tokens) == 1 else 'multiple tokens'})")
+        else:
+            print(f"  '{protein}': not in vocabulary")
 
 if __name__ == "__main__":
     main()

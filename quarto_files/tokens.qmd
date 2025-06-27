@@ -1,5 +1,5 @@
 ---
-title: "Notes Analysis"
+title: "Tokens Analysis"
 format: 
     html:
         code-fold: true
@@ -33,6 +33,15 @@ ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 
 df = pd.read_parquet("../reactions_train.parquet")
 tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-Coder-V2-Base", trust_remote_code=True)
+analyze_tokenization(df, 
+                    tokenizer,        
+                    text_columns=['snippet', 'notes'],
+                    sample_size=None) 
+```
+
+```{python}
+
+tokenizer = AutoTokenizer.from_pretrained("../extended_tokenizer", trust_remote_code=True)
 analyze_tokenization(df, 
                     tokenizer,        
                     text_columns=['snippet', 'notes'],
