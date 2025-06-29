@@ -71,55 +71,6 @@ def load_or_create_train_data(parquet_file_path, train_file_path, columns=['snip
         print(f"Error processing data: {e}")
         return None
 
-def extract_protein_names_from_data(df, text_columns=['notes'], min_frequency=2):
-    """
-    Extract protein names from the dataset using improved regex patterns
-    """
-    patterns = [
-        r'\b[A-Z][A-Z0-9]{1,10}\b',  # NOTCH3, TP53, BRCA1
-        r'\b[A-Z][a-z]+\d+[A-Za-z]*\b',  # Notch3, Brca1
-        r'\b[A-Z]{2,}(?:-[A-Z]{1,3})?\b',  # TNF-α, IL-6 
-        r'\b[A-Za-z]+-[A-Z]{2,}\b',  # α-SMA, β-catenin
-        r'\b[A-Z][A-Z]+[0-9]*[A-Za-z]*\b',  # General pattern for protein abbreviations
-    ]
-    
-    protein_counter = Counter()
-    
-    print(f"Extracting protein names from columns: {text_columns}")
-    
-    for column in text_columns:
-        if column not in df.columns:
-            print(f"Warning: Column '{column}' not found")
-            continue
-            
-        text_data = df[column].dropna()
-        print(f"Processing {len(text_data)} entries from column '{column}'")
-        
-        for text in text_data:
-            text_str = str(text)
-            for pattern in patterns:
-                matches = re.findall(pattern, text_str)
-                for match in matches:
-                    # Filter reasonable protein names
-                    if (2 <= len(match) <= 20 and 
-                        not match.isdigit() and 
-                        not match.lower() in {'the', 'and', 'for', 'with', 'are', 'was', 'were'}):
-                        protein_counter[match] += 1
-    
-    # Filter by frequency
-    frequent_proteins = {protein for protein, count in protein_counter.items() 
-                        if count >= min_frequency}
-    
-    print(f"Found {len(protein_counter)} unique protein-like terms")
-    print(f"After frequency filtering (>= {min_frequency}): {len(frequent_proteins)} terms")
-    
-    # Show most common proteins
-    print("\nMost common protein-like terms:")
-    for protein, count in protein_counter.most_common(20):
-        print(f"  {protein}: {count}")
-    
-    return frequent_proteins
-
 def extend_tokenizer_vocabulary(tokenizer, new_tokens, save_path=None):
     """
     Add new tokens to the tokenizer vocabulary as special tokens to ensure they're treated as single units

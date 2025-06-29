@@ -67,4 +67,4 @@ def extract_proteins(input_file='complete_list_of_pathways_nuova.txt'):
     return list(all_proteins)
 
 extract_proteins()
-print("Finish")
+print("Finishhh")

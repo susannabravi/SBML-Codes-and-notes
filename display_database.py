@@ -8,7 +8,7 @@ import pandas as pd
 # pd.set_option('display.max_colwidth', None)
 
 # Read the Parquet file into a DataFrame.
-df = pd.read_parquet("./reactions.parquet")
+df = pd.read_parquet("./dataset_with_token_counts.parquet")
 
 # Basic info
 print("Dataset length:", len(df))
@@ -28,5 +28,9 @@ for idx in df.index[:num_samples]:
     print(f"Snippet:\n{df.at[idx, 'snippet']}")
     print(f"\nOriginal Notes:\n{df.at[idx, 'original_notes']}")
     print(f"\nCleaned Notes (without citations):\n{df.at[idx, 'notes']}")
+    print(f"\nTokens (NLTK):\n{df.at[idx, 'notes_tokens_nltk']}")
+    print(f"\nTokens Count (NLTK):\n{df.at[idx, 'notes_token_count_nltk']}")
+    print(f"\nTokens (DEEP):\n{df.at[idx, 'notes_tokens_deep']}")
+    print(f"\nTokens Count (DEEP):\n{df.at[idx, 'notes_token_count_deep']}")
     print(f"\nExtracted Citations:\n{df.at[idx, 'only_references']}")
     print("-" * 40)
