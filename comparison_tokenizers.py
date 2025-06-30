@@ -10,6 +10,9 @@ df = pd.read_parquet("./reactions_train.parquet")
 
 # Load the DeepSeek tokenizer 
 deepseek_tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-Coder-V2-Base", trust_remote_code=True)
+extended_tokenizer = AutoTokenizer.from_pretrained("./extended_tokenizer")
+
+print(f"Extended tokenizer model  max lenght: {extended_tokenizer.model_max_length}\n") #16384
     
 def tokenization_nltk(text):
     if pd.isna(text):
@@ -22,6 +25,13 @@ def tokenization_deep(text):
         return [], 0
     
     tokens = deepseek_tokenizer.tokenize(str(text))
+    return tokens, len(tokens)
+
+def tokenization_extended(text):
+    if pd.isna(text):
+        return [], 0
+    
+    tokens = extended_tokenizer.tokenize(str(text))
     return tokens, len(tokens)
 
 # Function to process text columns
@@ -50,8 +60,10 @@ text_columns = 'notes'
 # Apply word counting
 df = add_word_counts(df, text_columns, tokenization_nltk, "nltk")
 df = add_word_counts(df, text_columns, tokenization_deep, "deep")
+df = add_word_counts(df, text_columns, tokenization_extended, "extended")
 
 # Save results as parquet file
 df.to_parquet('dataset_with_token_counts.parquet', index=False)
 
 print("Finishhh.")
+
