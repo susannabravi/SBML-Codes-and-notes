@@ -6,7 +6,6 @@ import os
 max_workers = min(int(os.cpu_count()/2), 15)
 
 def process_pathway(pathway_id):
-    """Process a single pathway and return protein names"""
     proteins = set()
     try:
         participants = reactome.participants_physical_entities(pathway_id)
@@ -43,7 +42,7 @@ def extract_proteins(input_file='complete_list_of_pathways_nuova.txt'):
     completed = 0
     
     # Process pathways in parallel with progress tracking
-    with ThreadPoolExecutor(max_workers=10) as executor:
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_pathway = {executor.submit(process_pathway, pathway_id): pathway_id 
                             for pathway_id in pathway_ids}
         
