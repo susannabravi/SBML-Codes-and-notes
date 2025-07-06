@@ -92,7 +92,7 @@ def extend_tokenizer_vocabulary(tokenizer, new_tokens, save_path=None):
     print(f"Total vocabulary size (len(get_vocab())): {len(tokenizer.get_vocab())}")
     print(f"Difference: {len(tokenizer.get_vocab()) - tokenizer.vocab_size}")
     
-    # Save the extended tokenizer if path provided
+    # Save the extended tokenizer 
     if save_path:
         print(f"Saving extended tokenizer to: {save_path}")
         if not os.path.exists(save_path):
@@ -136,7 +136,7 @@ def main():
     
     # Extend tokenizer with protein vocabulary
     print(f"\nExtending tokenizer with {len(protein_list)} proteins...")
-    extended_tokenizer, num_added = extend_tokenizer_vocabulary(
+    extend_tokenizer_vocabulary(
         tokenizer=tokenizer,
         new_tokens=protein_list,
         save_path=extended_tokenizer_path

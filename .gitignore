@@ -173,3 +173,33 @@ cython_debug/
 sbml_exports
 test.parquet
 train.parquet
+
+# Model outputs and checkpoints
+output_small/
+output/
+checkpoint-*/
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# Training data
+finetune_data/
+*.json
+*.jsonl
+
+# Images and plots
+*.png
+*.jpg
+*.jpeg
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# System files
+.DS_Store
+Thumbs.db
+.env
+EOF
