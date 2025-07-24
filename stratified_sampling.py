@@ -8,14 +8,14 @@ import seaborn as sns
 import os
 
 def calculate_length_quartiles(df, column):
-    lengths = df[column].str.len()
+    lengths = df[column].apply(lambda x: len(str(x).split()))
     q1 = lengths.quantile(0.25)
     q2 = lengths.quantile(0.50)  
     q3 = lengths.quantile(0.75)
     return q1, q2, q3
 
 def categorize_by_length(text, q1, q2, q3):
-    length = len(text)
+    length = len(str(text).split())
     if length <= q1:
         return "short"
     elif length <= q2:
@@ -182,7 +182,7 @@ def main():
     print_stats(df_categorized)
 
     # Perform stratified split
-    print("\nPerforming stratified split...")
+    print("\nPerforming stratified split")
     train_df, val_df, test_df = stratified_split(
         df_categorized, 
         train_size=0.7, 
@@ -192,7 +192,7 @@ def main():
     )
     
     # Verify stratification worked
-    print("\nVerifying stratification...")
+    print("\nVerifying stratification")
     print("Training set distribution:")
     print(train_df['combined_category'].value_counts().sort_index())
     print("\nValidation set distribution:")
