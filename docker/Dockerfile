@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y \
     git \
     wget \
     unzip \
+    build-essential \
+    ninja-build \
     libxt6 libxrender1 libxext6 libsm6 libgl1 \
     && rm -rf /var/lib/apt/lists/*
 
@@ -27,14 +29,27 @@ RUN wget https://quarto.org/download/latest/quarto-linux-amd64.deb && \
 # Set working directory
 WORKDIR /app
 
-# Copy and install requirements
-COPY requirements.txt /app/
-RUN pip install --upgrade pip && \
-    pip install packaging jupyter nbformat && \
-    pip install --no-cache-dir -r requirements.txt
+# Install PyTorch FIRST with exact CUDA 12.4 compatibility
+RUN pip install --upgrade pip setuptools wheel
+RUN pip install torch==2.6.0 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 
-# Install flash-attn
-RUN pip install --no-cache-dir flash_attn --no-build-isolation
+# Install transformers and related packages
+RUN pip install transformers==4.54.0 peft==0.7.1 accelerate==1.9.0
+
+# Copy requirements
+COPY requirements.txt /app/
+
+# Install other requirements (excluding flash-attn to avoid conflicts)
+RUN pip install packaging jupyter nbformat
+RUN grep -v "flash" requirements.txt > requirements_no_flash.txt || true
+RUN pip install --no-cache-dir -r requirements_no_flash.txt || pip install --no-cache-dir -r requirements.txt
+
+# Install Flash Attention with specific compatibility for PyTorch 2.6.0 + CUDA 12.4
+# This will either find a compatible wheel or compile from source
+RUN pip install flash-attn==2.6.3 --no-build-isolation
+
+# Set fallback environment variable in case flash attention still has issues
+ENV DISABLE_FLASH_ATTN=0
 
 # Default command
 CMD ["/bin/bash"]
