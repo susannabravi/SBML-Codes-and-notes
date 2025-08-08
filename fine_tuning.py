@@ -46,6 +46,11 @@ class TrainingArguments(transformers.TrainingArguments):
     learning_rate: float = field(default=3e-4)  # Higher LR for LoRA
     warmup_ratio: float = field(default=0.03)
     weight_decay: float = field(default=0.0)
+    
+    # Memory optimization
+    gradient_checkpointing: bool = field(default=True)
+    dataloader_pin_memory: bool = field(default=False)
+    
     # LoRA configuration
     lora_r: int = field(default=16, metadata={"help": "LoRA rank"})
     lora_alpha: int = field(default=32, metadata={"help": "LoRA alpha"})
@@ -128,7 +133,6 @@ def train_tokenize_function(examples, tokenizer):
     data_dict = preprocess(sources, targets, tokenizer)
     return data_dict
 
-# Added because I'm not using the instruct one
 def setup_tokenizer(model_path: str, model_max_length: int):
     """Setup tokenizer for base model with proper special tokens."""
     tokenizer = transformers.AutoTokenizer.from_pretrained(
@@ -176,6 +180,10 @@ def setup_lora_model(model, training_args):
     # Print trainable parameters
     model.print_trainable_parameters()
     
+    # Enable gradient checkpointing for memory efficiency
+    if training_args.gradient_checkpointing:
+        model.gradient_checkpointing_enable()
+    
     return model
 
 def train():
@@ -187,7 +195,7 @@ def train():
         print(training_args)
         print(f"Fine-tuning DeepSeek Coder V2 Base with LoRA: {model_args.model_name_or_path}")
     
-    # Setup tokenizer with special handling for base model (added because I'm not using the instruct)
+    # Setup tokenizer with special handling for base model
     tokenizer = setup_tokenizer(model_args.model_name_or_path, training_args.model_max_length)
 
     if training_args.local_rank == 0:
@@ -196,20 +204,28 @@ def train():
         print("EOS Token:", tokenizer.eos_token, tokenizer.eos_token_id)
         print("EOT Token:", tokenizer.convert_tokens_to_ids(EOT_TOKEN))
         print("Vocab size:", len(tokenizer))
-
-    if training_args.local_rank == 0:
         print("Load tokenizer from {} over.".format(model_args.model_name_or_path))
 
-    # Load model with memory-efficient settings
+    # Load model with multi-GPU memory distribution
     model = transformers.AutoModelForCausalLM.from_pretrained(
         model_args.model_name_or_path,
         torch_dtype=torch.bfloat16, 
         trust_remote_code=True,
         low_cpu_mem_usage=True,
-        device_map="auto"  # Automatically handle device placement
+        device_map="auto",  # Let it distribute across available GPUs
+        max_memory={
+            0: "20GiB", 1: "20GiB", 2: "20GiB", 3: "20GiB",  # Use all 4 GPUs
+            "cpu": "50GiB"  # Plenty of CPU fallback
+        },
+        offload_folder="./offload_folder",
+        offload_buffers=True
     )
     
-    # Resize embeddings if we added new tokens (Use in future with extended tokenizer spernado funzioni)
+    if training_args.local_rank == 0:
+        print(f"Model loaded with multi-GPU device mapping")
+        print(f"Model device map: {model.hf_device_map}")  # Show which layers are on which GPU
+    
+    # Resize embeddings if we added new tokens
     if len(tokenizer) > model.config.vocab_size:
         model.resize_token_embeddings(len(tokenizer))
         if training_args.local_rank == 0:
@@ -262,12 +278,12 @@ def train():
 
     trainer = Trainer(
         model=model, 
-        tokenizer=tokenizer, 
+        processing_class=tokenizer,  # Use processing_class instead of tokenizer
         args=training_args, 
         **data_module
     )
 
-    # Clear cache before training (added because non mi funzionava un cazz)
+    # Clear cache before training
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
 
