@@ -5,7 +5,7 @@ from reactome2py import content
 
 # Costants
 output_dir = './sbml_exports/'
-input_file = './complete_list_of_pathways_nuova.txt'
+input_file = './complete_list_of_pathways.txt'
 retry_file = 'failed_downloads.txt'
 max_workers = min(int(os.cpu_count()/2), 15)
 retry_mode = False  # Set to True to retry from failed_downloads.txt
