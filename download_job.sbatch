@@ -1,9 +1,10 @@
 #!/bin/bash
 #SBATCH --partition=dev-gn
-#SBATCH --account=iacroma
+#SBATCH --account=sbravi
 #SBATCH --time 00:30:00
 #SBATCH --job-name "download_pathways"
 #SBATCH --nodes=1
+#SBATCH --nodelist=gnode02
 #SBATCH --ntasks=1
 #SBATCH --output="download_%j.out"
 #SBATCH --error="download_%j.err"
