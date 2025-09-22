@@ -2,7 +2,7 @@ import requests
 
 # Link to reactomr and output file 
 url = "https://reactome.org/download/current/ReactomePathways.txt"
-output_file = "complete_list_of_pathways_nuova.txt"
+output_file = "complete_list_of_pathways.txt"
 
 print(f"Downloading pathway list from Reactome")
 response = requests.get(url)
