@@ -1,6 +1,4 @@
 #!/bin/bash
-#SBATCH --partition=dev-gn
-#SBATCH --account=sbravi
 #SBATCH --nodelist=gnode02
 #SBATCH --time=00:30:00
 #SBATCH --job-name="download_pathways"
