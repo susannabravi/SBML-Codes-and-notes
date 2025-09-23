@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="pathways_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="pathways_files/libs/quarto-html/anchor.min.js"></script>
 <link href="pathways_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="pathways_files/libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="pathways_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="pathways_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="pathways_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="pathways_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -102,11 +102,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Analysis at Pathway level.</p>
-<div id="6241145c" class="cell" data-execution_count="2">
+<div id="07b4eb3c" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the big dataset </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"../pathways.parquet"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./pathways.parquet"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of rows in the original data:</span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop_duplicates(subset<span class="op">=</span>[</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'file_id'</span>, <span class="st">'reaction_count'</span>, <span class="st">'notes_count'</span>,</span>
@@ -117,208 +117,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of rows in the original data:2769
-Number of rows after dropping duplicates:2769
+<pre><code>Number of rows in the original data:2825
+Number of rows after dropping duplicates:2825
 Columns:Index(['file_id', 'reaction_count', 'notes_count', 'all_references',
        'total_references', 'unique_references'],
       dtype='object')</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">file_id</th>
-<th data-quarto-table-cell-role="th">reaction_count</th>
-<th data-quarto-table-cell-role="th">notes_count</th>
-<th data-quarto-table-cell-role="th">all_references</th>
-<th data-quarto-table-cell-role="th">total_references</th>
-<th data-quarto-table-cell-role="th">unique_references</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>R-HSA-5467337.sbml</td>
-<td>1</td>
-<td>1</td>
-<td>[Behrens et al, 1998, Kishida et al, 1998, Har...</td>
-<td>13</td>
-<td>13</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>R-HSA-1296025.sbml</td>
-<td>2</td>
-<td>2</td>
-<td>[Krenz et al. 2002]</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>R-HSA-73930.sbml</td>
-<td>2</td>
-<td>2</td>
-<td>[Bennett et al. 1997, Bennet et al. 1997]</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>R-HSA-9026527.sbml</td>
-<td>3</td>
-<td>3</td>
-<td>[Middlemas et al. 1994, Eide et al. 1996, Yama...</td>
-<td>8</td>
-<td>8</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>R-HSA-9619483.sbml</td>
-<td>3</td>
-<td>3</td>
-<td>[Thornton et al. 2011, Mairet-Coello et al. 20...</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>R-HSA-5467333.sbml</td>
-<td>1</td>
-<td>1</td>
-<td>[Tran and Polakis, 2012, Tran and Polakis, 201...</td>
-<td>4</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>R-HSA-9667769.sbml</td>
-<td>4</td>
-<td>4</td>
-<td>[]</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>R-HSA-392170.sbml</td>
-<td>4</td>
-<td>4</td>
-<td>[Bodor et al. 2003, Hollopeter G et al. 2001, ...</td>
-<td>4</td>
-<td>4</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>R-HSA-180689.sbml</td>
-<td>3</td>
-<td>3</td>
-<td>[Yu et al., 2004, Wurtzer et al., 2006]</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
-<td>R-HSA-9032845.sbml</td>
-<td>6</td>
-<td>6</td>
-<td>[Cheung et al. 2007, Lai et al. 2012, Cheung e...</td>
-<td>10</td>
-<td>4</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
-<td>R-HSA-165158.sbml</td>
-<td>3</td>
-<td>3</td>
-<td>[Maira et al. 2001, Du et al. 2003, Currie et ...</td>
-<td>4</td>
-<td>4</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
-<td>R-HSA-211163.sbml</td>
-<td>2</td>
-<td>2</td>
-<td>[Zhang et al. 2002, Zhang et al. 2002, 2006, B...</td>
-<td>3</td>
-<td>3</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>R-HSA-170984.sbml</td>
-<td>6</td>
-<td>6</td>
-<td>[on tyrosine 1096, Knudsen et al. 1994, York, ...</td>
-<td>3</td>
-<td>3</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
-<td>R-HSA-418592.sbml</td>
-<td>7</td>
-<td>7</td>
-<td>[e.g. Bassi et al. 1996, Lambert 2008, Sugawar...</td>
-<td>9</td>
-<td>9</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
-<td>R-HSA-8854518.sbml</td>
-<td>2</td>
-<td>2</td>
-<td>[Bayliss et al. 2003, Groen et al. 2004, Maxwe...</td>
-<td>7</td>
-<td>6</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<section id="reactions-per-pathways" class="level1">
-<h1>Reactions per pathways</h1>
-<p>Counting how many reactions there are per each pathway and analyzing its distibution.</p>
-<section id="raw-data" class="level3">
-<h3 class="anchored" data-anchor-id="raw-data">Raw data</h3>
-<div id="9779d524" class="cell" data-execution_count="3">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read Reaction Count data</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>reaction_count <span class="op">=</span> df[<span class="st">'reaction_count'</span>]</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the row with the maximum reaction count</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>max_idx <span class="op">=</span> df[<span class="st">'reaction_count'</span>].idxmax()  </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>max_row <span class="op">=</span> df.loc[max_idx]   </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">File with Maximum Reaction Count: </span><span class="sc">{</span>max_row[<span class="st">'file_id'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reaction_count: </span><span class="sc">{</span>max_row[<span class="st">'reaction_count'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#R-HSA-162582.sbml</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-File with Maximum Reaction Count: R-HSA-162582.sbml
-reaction_count: 2582</code></pre>
-</div>
-</div>
-<p><a href="https://reactome.org/content/detail/R-HSA-162582">R-HSA-162582</a></p>
-<div id="4fa23551" class="cell" data-execution_count="4">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the DataFrame by reaction_count in descending order</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sorted_df <span class="op">=</span> df.sort_values(by<span class="op">=</span><span class="st">'reaction_count'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the top files</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Files sorted by reaction_count (descending):"</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>sorted_df.head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Files sorted by reaction_count (descending):</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
@@ -338,139 +141,139 @@ Files sorted by reaction_count (descending):</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2768</td>
-<td>R-HSA-162582.sbml</td>
-<td>2582</td>
-<td>2582</td>
-<td>[Garrett JE et al, 1995, Kifor O et al, 1997, ...</td>
-<td>11483</td>
-<td>4901</td>
+<td data-quarto-table-cell-role="th">0</td>
+<td>R-HSA-4720489.sbml</td>
+<td>1</td>
+<td>1</td>
+<td>[Chantret et al. 2002, ALG12-CDG, CDG1g, MIM:6...</td>
+<td>5</td>
+<td>4</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2767</td>
-<td>R-HSA-1430728.sbml</td>
-<td>2355</td>
-<td>2355</td>
-<td>[Liou et al. 2002, Scott and Wright 1979, Zhan...</td>
-<td>4919</td>
-<td>3366</td>
+<td data-quarto-table-cell-role="th">1</td>
+<td>R-HSA-3359473.sbml</td>
+<td>1</td>
+<td>1</td>
+<td>[Mah et al. 2013, Plesa et al. 2011, Deme et a...</td>
+<td>5</td>
+<td>5</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2764</td>
-<td>R-HSA-1643685.sbml</td>
-<td>1940</td>
-<td>1940</td>
-<td>[Oostra et al, 2007, GILBS, MIM:143500, CN1, C...</td>
-<td>9111</td>
-<td>4501</td>
+<td data-quarto-table-cell-role="th">2</td>
+<td>R-HSA-373756.sbml</td>
+<td>2</td>
+<td>2</td>
+<td>[]</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2766</td>
-<td>R-HSA-168256.sbml</td>
-<td>1737</td>
-<td>1737</td>
-<td>[Youngnak et al. 2003, Pentcheva-Hoang et al. ...</td>
-<td>5789</td>
-<td>3329</td>
+<td data-quarto-table-cell-role="th">3</td>
+<td>R-HSA-425561.sbml</td>
+<td>4</td>
+<td>4</td>
+<td>[Palty R et al, 2004, Cai X and Lytton J, 2004...</td>
+<td>10</td>
+<td>10</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2508</td>
-<td>R-HSA-74160.sbml</td>
-<td>1141</td>
-<td>1141</td>
-<td>[Contente et al. 2002, Bergamaschi et al. 2004...</td>
-<td>2519</td>
-<td>1382</td>
+<td data-quarto-table-cell-role="th">4</td>
+<td>R-HSA-2408550.sbml</td>
+<td>7</td>
+<td>7</td>
+<td>[Venkatachalam et al. 1998, Xu et al. 2000, Yu...</td>
+<td>10</td>
+<td>6</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2679</td>
-<td>R-HSA-5663205.sbml</td>
-<td>999</td>
-<td>999</td>
-<td>[Oostra et al, 2007, Gan et al, 2008, Carter e...</td>
-<td>3351</td>
-<td>1859</td>
+<td data-quarto-table-cell-role="th">5</td>
+<td>R-HSA-6783984.sbml</td>
+<td>3</td>
+<td>3</td>
+<td>[Fujiwara et al. 1984, Harris et al. 1997, Cis...</td>
+<td>4</td>
+<td>4</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2749</td>
-<td>R-HSA-556833.sbml</td>
-<td>994</td>
-<td>994</td>
-<td>[Vogel et al., 1991, Wilkening et al., 2000, A...</td>
-<td>1869</td>
-<td>1228</td>
+<td data-quarto-table-cell-role="th">6</td>
+<td>R-HSA-9761174.sbml</td>
+<td>5</td>
+<td>5</td>
+<td>[Lam et al. 2014, Torres et al. 1995, Lam et a...</td>
+<td>5</td>
+<td>4</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2301</td>
-<td>R-HSA-1266738.sbml</td>
-<td>956</td>
-<td>956</td>
-<td>[Wang et al, 2005, Zhang et al, 2005, Tabor et...</td>
-<td>4248</td>
-<td>1781</td>
+<td data-quarto-table-cell-role="th">7</td>
+<td>R-HSA-5576893.sbml</td>
+<td>3</td>
+<td>3</td>
+<td>[Plant et al. 2014, Chen et al. 2007, Schroede...</td>
+<td>21</td>
+<td>21</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2761</td>
-<td>R-HSA-73857.sbml</td>
-<td>940</td>
-<td>940</td>
-<td>[Contente et al. 2002, Bergamaschi et al. 2004...</td>
-<td>1647</td>
-<td>951</td>
+<td data-quarto-table-cell-role="th">8</td>
+<td>R-HSA-9702590.sbml</td>
+<td>1</td>
+<td>1</td>
+<td>[Mori et al, 2017, Tarver et al, 2020, Mori et...</td>
+<td>3</td>
+<td>2</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2718</td>
-<td>R-HSA-392499.sbml</td>
-<td>891</td>
-<td>891</td>
-<td>[Nyefeler B et al, 2003, Zhang B et al, 2003, ...</td>
-<td>2375</td>
-<td>1535</td>
+<td data-quarto-table-cell-role="th">9</td>
+<td>R-HSA-5579020.sbml</td>
+<td>1</td>
+<td>1</td>
+<td>[SCHBCKD, MIM:269250, Hiraoka et al. 2007, Fur...</td>
+<td>3</td>
+<td>3</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1926</td>
-<td>R-HSA-212436.sbml</td>
-<td>879</td>
-<td>879</td>
-<td>[Contente et al. 2002, Bergamaschi et al. 2004...</td>
-<td>1596</td>
-<td>910</td>
+<td data-quarto-table-cell-role="th">10</td>
+<td>R-HSA-2151209.sbml</td>
+<td>2</td>
+<td>2</td>
+<td>[http://, Jiang et al. 1997, Knutti et al. 200...</td>
+<td>4</td>
+<td>4</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1570</td>
-<td>R-HSA-1280215.sbml</td>
-<td>791</td>
-<td>791</td>
-<td>[Zhou et al. 2000, Rosengren et.al, 2005, Yeun...</td>
-<td>2129</td>
-<td>1405</td>
+<td data-quarto-table-cell-role="th">11</td>
+<td>R-HSA-4839743.sbml</td>
+<td>4</td>
+<td>4</td>
+<td>[Nhieu et al, 1999, Clements et al, 2002, revi...</td>
+<td>22</td>
+<td>13</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2762</td>
-<td>R-HSA-9006934.sbml</td>
-<td>759</td>
-<td>759</td>
-<td>[Chan et al. 2011, Gambi et al, 2019, Zhang et...</td>
-<td>1577</td>
-<td>967</td>
+<td data-quarto-table-cell-role="th">12</td>
+<td>R-HSA-9706377.sbml</td>
+<td>1</td>
+<td>1</td>
+<td>[Sargin et al, 2007, Reindl et al, 2009, Calig...</td>
+<td>4</td>
+<td>4</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2765</td>
-<td>R-HSA-9824446.sbml</td>
-<td>753</td>
-<td>753</td>
-<td>[Oostra et al, 2007, Gan et al, 2008, Carter e...</td>
-<td>2834</td>
-<td>1503</td>
+<td data-quarto-table-cell-role="th">13</td>
+<td>R-HSA-9927353.sbml</td>
+<td>4</td>
+<td>4</td>
+<td>[Murphy et al. 2006, Murphy et al. 2006, Watan...</td>
+<td>3</td>
+<td>2</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2333</td>
-<td>R-HSA-168249.sbml</td>
-<td>744</td>
-<td>744</td>
-<td>[Lehrere et al. 1993, Newton 2010, Kim T et al...</td>
-<td>3268</td>
-<td>1671</td>
+<td data-quarto-table-cell-role="th">14</td>
+<td>R-HSA-173623.sbml</td>
+<td>2</td>
+<td>2</td>
+<td>[Muller-Eberhard and Kunkel 1961, Ziccardi and...</td>
+<td>3</td>
+<td>2</td>
 </tr>
 </tbody>
 </table>
@@ -478,7 +281,204 @@ Files sorted by reaction_count (descending):</code></pre>
 </div>
 </div>
 </div>
-<div id="3405c8bb" class="cell" data-execution_count="5">
+<section id="reactions-per-pathways" class="level1">
+<h1>Reactions per pathways</h1>
+<p>Counting how many reactions there are per each pathway and analyzing its distibution.</p>
+<section id="raw-data" class="level3">
+<h3 class="anchored" data-anchor-id="raw-data">Raw data</h3>
+<div id="4d5305ff" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read Reaction Count data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>reaction_count <span class="op">=</span> df[<span class="st">'reaction_count'</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the row with the maximum reaction count</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>max_idx <span class="op">=</span> df[<span class="st">'reaction_count'</span>].idxmax()  </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>max_row <span class="op">=</span> df.loc[max_idx]   </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">File with Maximum Reaction Count: </span><span class="sc">{</span>max_row[<span class="st">'file_id'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"reaction_count: </span><span class="sc">{</span>max_row[<span class="st">'reaction_count'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#R-HSA-162582.sbml</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+File with Maximum Reaction Count: R-HSA-162582.sbml
+reaction_count: 2584</code></pre>
+</div>
+</div>
+<p><a href="https://reactome.org/content/detail/R-HSA-162582">R-HSA-162582</a></p>
+<div id="da7d92af" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the DataFrame by reaction_count in descending order</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sorted_df <span class="op">=</span> df.sort_values(by<span class="op">=</span><span class="st">'reaction_count'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the top files</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Files sorted by reaction_count (descending):"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>sorted_df.head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Files sorted by reaction_count (descending):</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">file_id</th>
+<th data-quarto-table-cell-role="th">reaction_count</th>
+<th data-quarto-table-cell-role="th">notes_count</th>
+<th data-quarto-table-cell-role="th">all_references</th>
+<th data-quarto-table-cell-role="th">total_references</th>
+<th data-quarto-table-cell-role="th">unique_references</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2824</td>
+<td>R-HSA-162582.sbml</td>
+<td>2584</td>
+<td>2584</td>
+<td>[Boelens et al. 2014, Mosimann et al, 2006, Mo...</td>
+<td>11505</td>
+<td>4922</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2711</td>
+<td>R-HSA-1430728.sbml</td>
+<td>2367</td>
+<td>2367</td>
+<td>[Alderson et al., 2004, Uchida et al., 2007, G...</td>
+<td>5102</td>
+<td>3473</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2817</td>
+<td>R-HSA-1643685.sbml</td>
+<td>2014</td>
+<td>2014</td>
+<td>[TPC, MIM:18850, Hase et al. 2001, Hase and Co...</td>
+<td>9358</td>
+<td>4695</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2823</td>
+<td>R-HSA-168256.sbml</td>
+<td>1811</td>
+<td>1811</td>
+<td>[Umeshita-Suyama et al. 2000, Roy et al. 2002,...</td>
+<td>6168</td>
+<td>3492</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2225</td>
+<td>R-HSA-74160.sbml</td>
+<td>1141</td>
+<td>1141</td>
+<td>[Baniwal et al. 2009, Nishikawa et al. 2010, G...</td>
+<td>2519</td>
+<td>1382</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1976</td>
+<td>R-HSA-5663205.sbml</td>
+<td>1079</td>
+<td>1079</td>
+<td>[Derivery et al. 2009, Yamazaki et al. 2006, T...</td>
+<td>3621</td>
+<td>2050</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2821</td>
+<td>R-HSA-556833.sbml</td>
+<td>998</td>
+<td>998</td>
+<td>[Alderson et al., 2004, Uchida et al., 2007, G...</td>
+<td>1874</td>
+<td>1231</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1801</td>
+<td>R-HSA-1266738.sbml</td>
+<td>980</td>
+<td>980</td>
+<td>[Webster et al, 2014, Laurette et al, 2015, Di...</td>
+<td>4986</td>
+<td>1975</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1351</td>
+<td>R-HSA-73857.sbml</td>
+<td>940</td>
+<td>940</td>
+<td>[Baniwal et al. 2009, Nishikawa et al. 2010, G...</td>
+<td>1647</td>
+<td>951</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2275</td>
+<td>R-HSA-392499.sbml</td>
+<td>929</td>
+<td>929</td>
+<td>[Mevissen et al 2013, Reilly et al. 1982, Urat...</td>
+<td>2518</td>
+<td>1648</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1307</td>
+<td>R-HSA-212436.sbml</td>
+<td>879</td>
+<td>879</td>
+<td>[Baniwal et al. 2009, Nishikawa et al. 2010, G...</td>
+<td>1596</td>
+<td>910</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1725</td>
+<td>R-HSA-1280215.sbml</td>
+<td>791</td>
+<td>791</td>
+<td>[Umeshita-Suyama et al. 2000, Roy et al. 2002,...</td>
+<td>2129</td>
+<td>1405</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2818</td>
+<td>R-HSA-168249.sbml</td>
+<td>762</td>
+<td>762</td>
+<td>[Derivery et al. 2009, Yamazaki et al. 2006, T...</td>
+<td>3556</td>
+<td>1753</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2724</td>
+<td>R-HSA-9006934.sbml</td>
+<td>759</td>
+<td>759</td>
+<td>[Peschard et al. 2001, Petrelli et al. 2002, D...</td>
+<td>1577</td>
+<td>967</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1095</td>
+<td>R-HSA-9824446.sbml</td>
+<td>753</td>
+<td>753</td>
+<td>[Baudin, 2001, Ye, 1999, Hirayama et al., 2004...</td>
+<td>2842</td>
+<td>1508</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="16d2eac5" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics</span></span>
@@ -495,15 +495,15 @@ Files sorted by reaction_count (descending):</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Descriptive Statistics:
-Mean: 25.61
+Mean: 25.78
 Median: 7.00
-Standard Deviation: 108.05
+Standard Deviation: 108.79
 Minimum: 1
-Maximum: 2582
+Maximum: 2584
 5th percentile: 1.00
 25th percentile (Q1): 3.00
 75th percentile (Q3): 18.00
-95th percentile: 79.00
+95th percentile: 81.80
 IQR (Interquartile Range): 15.00</code></pre>
 </div>
 </div>
@@ -511,7 +511,7 @@ IQR (Interquartile Range): 15.00</code></pre>
 <section id="log-scaled-data" class="level3">
 <h3 class="anchored" data-anchor-id="log-scaled-data">Log-scaled data</h3>
 <p>Log10 transformation of the data</p>
-<div id="73a11e61" class="cell" data-execution_count="6">
+<div id="7d190b61" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Log-scaled data </span></span>
@@ -532,7 +532,7 @@ IQR (Interquartile Range): 15.00</code></pre>
 </section>
 <section id="filtered-data-90th-percentile" class="level3">
 <h3 class="anchored" data-anchor-id="filtered-data-90th-percentile">Filtered data 90th percentile</h3>
-<div id="768402f2" class="cell" data-execution_count="7">
+<div id="953d6a95" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span>  df[<span class="st">'reaction_count'</span>],</span>
@@ -555,7 +555,7 @@ IQR (Interquartile Range): 15.00</code></pre>
 </section>
 <section id="references-per-pathway-distribution" class="level1">
 <h1>References per Pathway distribution</h1>
-<div id="31ff2b3a" class="cell" data-execution_count="8">
+<div id="1e3fd487" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>display(Markdown(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">**First reference:**</span><span class="ch">\n</span><span class="sc">{</span>df[<span class="st">'all_references'</span>]<span class="sc">.</span>iloc[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>))</span>
@@ -563,15 +563,15 @@ IQR (Interquartile Range): 15.00</code></pre>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total number of unique references across all files: </span><span class="sc">{</span><span class="bu">sum</span>(df.unique_references.values)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display cell-output-markdown">
-<p><strong>First reference:</strong> [‘Behrens et al, 1998’ ‘Kishida et al, 1998’ ‘Hart et al, 1998’ ‘Rubinfeld et al, 1993’ ‘Su et al, 1993’ ‘Rubinfeld et al, 1996’ ‘Morin et al, 1997’ ‘Shih et al, 2000’ ‘Roh et al, 2001’ ‘Diaz et al, 2013’ ‘reviewed in Saito-’ ‘Polakis, 2000’ ‘Polakis, 2012’]</p>
+<p><strong>First reference:</strong> [‘Chantret et al.&nbsp;2002’ ‘ALG12-CDG, CDG1g’ ‘MIM:607143’ ‘Chantret et al.&nbsp;2002, Grubenmann et al.&nbsp;2002’ ‘Chantret et al.&nbsp;2002, Grubenmann et al.&nbsp;2002’]</p>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-Total number of references in all files (with duplicates): 234925
-Total number of unique references across all files: 131997</code></pre>
+Total number of references in all files (with duplicates): 249124
+Total number of unique references across all files: 138516</code></pre>
 </div>
 </div>
-<div id="d923e359" class="cell" data-execution_count="9">
+<div id="1ec9ccf7" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flatten all references across files into a single list</span></span>
@@ -603,7 +603,7 @@ Total number of unique references across all files: 131997</code></pre>
 </div>
 </div>
 <p>(note: va bene che il primo articolo abbia 6994 e non 10617 perchè il primo è l’articolo più citato tra tutti i file mentre il secondo numero è il massimo numero di citazioni in un file.)</p>
-<div id="1bc42acb" class="cell" data-execution_count="10">
+<div id="62dd11e0" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> df[<span class="st">'total_references'</span>],</span>
@@ -659,19 +659,19 @@ Total number of unique references across all files: 131997</code></pre>
 
 
 Descriptive Statistics:
-Mean: 84.84
-Median: 14.00
-Standard Deviation: 402.42
+Mean: 88.19
+Median: 15.00
+Standard Deviation: 411.35
 Minimum: 0
-Maximum: 11483
+Maximum: 11505
 5th percentile: 0.00
 25th percentile (Q1): 4.00
-75th percentile (Q3): 47.00
-95th percentile: 296.60
-IQR (Interquartile Range): 43.00</code></pre>
+75th percentile (Q3): 50.00
+95th percentile: 316.60
+IQR (Interquartile Range): 46.00</code></pre>
 </div>
 </div>
-<div id="7c5963ea" class="cell" data-execution_count="11">
+<div id="280e1c86" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> df[<span class="st">'unique_references'</span>],</span>
@@ -704,7 +704,7 @@ IQR (Interquartile Range): 43.00</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="pathways_files/figure-html/cell-12-output-1.png" width="566" height="374" class="figure-img"></p>
+<p><img src="pathways_files/figure-html/cell-12-output-1.png" width="565" height="374" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -727,21 +727,21 @@ IQR (Interquartile Range): 43.00</code></pre>
 
 
 Descriptive Statistics:
-Mean: 47.67
-Median: 10.00
-Standard Deviation: 197.77
+Mean: 49.03
+Median: 11.00
+Standard Deviation: 202.14
 Minimum: 0
-Maximum: 4901
+Maximum: 4922
 5th percentile: 0.00
 25th percentile (Q1): 3.00
-75th percentile (Q3): 31.00
-95th percentile: 163.00
-IQR (Interquartile Range): 28.00</code></pre>
+75th percentile (Q3): 32.00
+95th percentile: 171.60
+IQR (Interquartile Range): 29.00</code></pre>
 </div>
 </div>
 <section id="pathways-without-any-reference" class="level2">
 <h2 class="anchored" data-anchor-id="pathways-without-any-reference">Pathways without any reference</h2>
-<div id="1fef9181" class="cell" data-execution_count="12">
+<div id="58f7d678" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>zero_references_count <span class="op">=</span> (df[<span class="st">'total_references'</span>] <span class="op">==</span> <span class="dv">0</span>).<span class="bu">sum</span>()</span>
@@ -750,10 +750,10 @@ IQR (Interquartile Range): 28.00</code></pre>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>df.sort_values(by<span class="op">=</span>[<span class="st">'unique_references'</span>,<span class="st">'reaction_count'</span>], ascending<span class="op">=</span>[<span class="va">True</span>, <span class="va">False</span>]).head(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of file_id with total_references equal to zero: 187
+<pre><code>Number of file_id with total_references equal to zero: 186
 Sorted data by ascending unique_references and descending reaction_count</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 
 
@@ -771,7 +771,7 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1119</td>
+<td data-quarto-table-cell-role="th">1518</td>
 <td>R-HSA-9609646.sbml</td>
 <td>31</td>
 <td>31</td>
@@ -780,7 +780,7 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1216</td>
+<td data-quarto-table-cell-role="th">1743</td>
 <td>R-HSA-354192.sbml</td>
 <td>24</td>
 <td>24</td>
@@ -789,7 +789,7 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1539</td>
+<td data-quarto-table-cell-role="th">1507</td>
 <td>R-HSA-375165.sbml</td>
 <td>23</td>
 <td>23</td>
@@ -798,7 +798,7 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1095</td>
+<td data-quarto-table-cell-role="th">1321</td>
 <td>R-HSA-9610379.sbml</td>
 <td>19</td>
 <td>19</td>
@@ -807,7 +807,7 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">178</td>
+<td data-quarto-table-cell-role="th">580</td>
 <td>R-HSA-1368108.sbml</td>
 <td>18</td>
 <td>18</td>
@@ -816,25 +816,7 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1204</td>
-<td>R-HSA-162592.sbml</td>
-<td>14</td>
-<td>14</td>
-<td>[]</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">1493</td>
-<td>R-HSA-525793.sbml</td>
-<td>14</td>
-<td>14</td>
-<td>[]</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1950</td>
+<td data-quarto-table-cell-role="th">40</td>
 <td>R-HSA-176408.sbml</td>
 <td>14</td>
 <td>14</td>
@@ -843,8 +825,8 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1959</td>
-<td>R-HSA-437239.sbml</td>
+<td data-quarto-table-cell-role="th">250</td>
+<td>R-HSA-162592.sbml</td>
 <td>14</td>
 <td>14</td>
 <td>[]</td>
@@ -852,7 +834,25 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">407</td>
+<td data-quarto-table-cell-role="th">597</td>
+<td>R-HSA-437239.sbml</td>
+<td>14</td>
+<td>14</td>
+<td>[]</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2779</td>
+<td>R-HSA-525793.sbml</td>
+<td>14</td>
+<td>14</td>
+<td>[]</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">126</td>
 <td>R-HSA-418885.sbml</td>
 <td>12</td>
 <td>12</td>
@@ -861,7 +861,7 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1089</td>
+<td data-quarto-table-cell-role="th">2206</td>
 <td>R-HSA-9609690.sbml</td>
 <td>12</td>
 <td>12</td>
@@ -870,7 +870,7 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1906</td>
+<td data-quarto-table-cell-role="th">2172</td>
 <td>R-HSA-76042.sbml</td>
 <td>11</td>
 <td>11</td>
@@ -879,8 +879,8 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">177</td>
-<td>R-HSA-210991.sbml</td>
+<td data-quarto-table-cell-role="th">1706</td>
+<td>R-HSA-75067.sbml</td>
 <td>10</td>
 <td>10</td>
 <td>[]</td>
@@ -888,7 +888,7 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1490</td>
+<td data-quarto-table-cell-role="th">1724</td>
 <td>R-HSA-419037.sbml</td>
 <td>10</td>
 <td>10</td>
@@ -897,8 +897,8 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1788</td>
-<td>R-HSA-75067.sbml</td>
+<td data-quarto-table-cell-role="th">1912</td>
+<td>R-HSA-210991.sbml</td>
 <td>10</td>
 <td>10</td>
 <td>[]</td>
@@ -1395,7 +1395,7 @@ Sorted data by ascending unique_references and descending reaction_count</code><
 <span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>Analysis at Pathway level.</span>
 <span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
 <span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the big dataset </span></span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"../pathways.parquet"</span>)</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./pathways.parquet"</span>)</span>
 <span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of rows in the original data:</span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop_duplicates(subset<span class="op">=</span>[</span>
 <span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">'file_id'</span>, <span class="st">'reaction_count'</span>, <span class="st">'notes_count'</span>,</span>

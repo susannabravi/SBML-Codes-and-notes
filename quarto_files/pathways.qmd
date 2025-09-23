@@ -25,7 +25,7 @@ ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 Analysis at Pathway level.
 ```{python}
 # Read the big dataset 
-df = pd.read_parquet("../pathways.parquet")
+df = pd.read_parquet("./pathways.parquet")
 print(f"Number of rows in the original data:{len(df)}")
 df = df.drop_duplicates(subset=[
     'file_id', 'reaction_count', 'notes_count',

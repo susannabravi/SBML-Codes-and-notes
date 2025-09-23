@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="reactions_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="reactions_files/libs/quarto-html/anchor.min.js"></script>
 <link href="reactions_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="reactions_files/libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="reactions_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="reactions_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="reactions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="reactions_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -102,7 +102,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>While pathways (file_id) are all unique, the reactions inside them are not, so if I group for reaction_id I get less reactions than the total length of the dataframe.</p>
-<div id="96c15ea4" class="cell" data-execution_count="2">
+<div id="e092877c" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the big dataset </span></span>
@@ -112,17 +112,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Unique values for each variable:
-file_id             2769
-reaction_id        15357
-original_notes     14802
-notes              14795
-only_references    10612
-snippet            21751
+file_id             2825
+reaction_id        15686
+original_notes     15142
+notes              15135
+only_references    10947
+snippet            19166
 dtype: int64</code></pre>
 </div>
 </div>
 <p>In the original data there are no duplicates because the cobination of file_id and reaction_id are all uniques.</p>
-<div id="e6681774" class="cell" data-execution_count="3">
+<div id="36ef7e77" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Number of rows in the original data:</span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -131,13 +131,13 @@ dtype: int64</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-Number of rows in the original data:70904
+Number of rows in the original data:72840
 
-Number of rows after dropping duplicates:70904</code></pre>
+Number of rows after dropping duplicates:72840</code></pre>
 </div>
 </div>
 <p>Do not consider the column file_id in order to see the duplicates.</p>
-<div id="a81a003a" class="cell" data-execution_count="4">
+<div id="b47fd34e" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the data and display the first rows</span></span>
@@ -150,13 +150,13 @@ Number of rows after dropping duplicates:70904</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-Original number of rows: 70904
-Number of rows after deduplication (excluding file_id): 21751
-Removed 49153 duplicate rows.</code></pre>
+Original number of rows: 72840
+Number of rows after deduplication (excluding file_id): 19166
+Removed 53674 duplicate rows.</code></pre>
 </div>
 </div>
 <p>Looking at the sorted dataframe it’s possible to see that the only thing that change is the <em>meta-id</em> of the snippet column. (Already deleted).</p>
-<div id="6efa493a" class="cell" data-execution_count="5">
+<div id="4d28d438" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"First rows of sorted dataset by reaction_id:"</span>)</span>
@@ -165,7 +165,7 @@ Removed 49153 duplicate rows.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>First rows of sorted dataset by reaction_id:</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 
 
@@ -183,8 +183,8 @@ Removed 49153 duplicate rows.</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">5357</td>
-<td>R-HSA-166658.sbml</td>
+<td data-quarto-table-cell-role="th">17110</td>
+<td>R-HSA-977606.sbml</td>
 <td>reaction_1006143</td>
 <td>Membrane cofactor protein (MCP; CD46) is a wid...</td>
 <td>Membrane cofactor protein (MCP; CD46) is a wid...</td>
@@ -192,7 +192,7 @@ Removed 49153 duplicate rows.</code></pre>
 <td>&lt;reaction compartment="compartment_876" fast="...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">18120</td>
+<td data-quarto-table-cell-role="th">17125</td>
 <td>R-HSA-977606.sbml</td>
 <td>reaction_1006169</td>
 <td>Factor H (CFH) preferentially binds to host ce...</td>
@@ -201,16 +201,7 @@ Removed 49153 duplicate rows.</code></pre>
 <td>&lt;reaction compartment="compartment_876" fast="...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">5340</td>
-<td>R-HSA-166658.sbml</td>
-<td>reaction_1006169</td>
-<td>Factor H (CFH) preferentially binds to host ce...</td>
-<td>Factor H (CFH) preferentially binds to host ce...</td>
-<td>(Kazatchkine et al. 1979, Meri and Pangburn 1990)</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">8713</td>
+<td data-quarto-table-cell-role="th">11050</td>
 <td>R-HSA-983231.sbml</td>
 <td>reaction_1008200</td>
 <td>The human beta-globin locus control region (LC...</td>
@@ -218,8 +209,8 @@ Removed 49153 duplicate rows.</code></pre>
 <td>None</td>
 <td>&lt;reaction compartment="compartment_7660" fast=...</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8687</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11034</td>
 <td>R-HSA-983231.sbml</td>
 <td>reaction_1008220</td>
 <td>The human beta-globin locus consists of five g...</td>
@@ -227,8 +218,8 @@ Removed 49153 duplicate rows.</code></pre>
 <td>None</td>
 <td>&lt;reaction compartment="compartment_70101" fast...</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">8697</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">11024</td>
 <td>R-HSA-983231.sbml</td>
 <td>reaction_1008240</td>
 <td>NF-E2 is a heterodimer consisting of a hematop...</td>
@@ -236,8 +227,8 @@ Removed 49153 duplicate rows.</code></pre>
 <td>(Motohashi et al. 1997); (Shavit et al. 1998);...</td>
 <td>&lt;reaction compartment="compartment_7660" fast=...</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8678</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11019</td>
 <td>R-HSA-983231.sbml</td>
 <td>reaction_1008248</td>
 <td>GTP-AMP phosphotransferase, also called Adenyl...</td>
@@ -245,8 +236,8 @@ Removed 49153 duplicate rows.</code></pre>
 <td>(Choe et al. 2005)</td>
 <td>&lt;reaction compartment="compartment_5460" fast=...</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">8671</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">11046</td>
 <td>R-HSA-983231.sbml</td>
 <td>reaction_1011576</td>
 <td>The four human EH domain-containing proteins (...</td>
@@ -254,8 +245,8 @@ Removed 49153 duplicate rows.</code></pre>
 <td>(Naslavsky and Caplan 2005); (Salcini et al. 1...</td>
 <td>&lt;reaction compartment="compartment_74700" fast...</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8676</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11018</td>
 <td>R-HSA-983231.sbml</td>
 <td>reaction_1011598</td>
 <td>Members of the Dedicator of cytokinesis (DOCK)...</td>
@@ -263,14 +254,23 @@ Removed 49153 duplicate rows.</code></pre>
 <td>(Cote and Vuori 2002); (Cote and Vuori 2007); ...</td>
 <td>&lt;reaction compartment="compartment_70101" fast...</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">8712</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">11048</td>
 <td>R-HSA-983231.sbml</td>
 <td>reaction_1011600</td>
 <td>The small GTPase Rab5 regulates membrane traff...</td>
 <td>The small GTPase Rab5 regulates membrane traff...</td>
 <td>(Sonnichsen et al. 2000); (Christoforidis et a...</td>
 <td>&lt;reaction compartment="compartment_74700" fast...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">8217</td>
+<td>R-HSA-977443.sbml</td>
+<td>reaction_1013012</td>
+<td>The release of G beta gamma from Gi/o enables ...</td>
+<td>The release of G beta gamma from Gi/o enables ...</td>
+<td>None</td>
+<td>&lt;reaction compartment="compartment_876" fast="...</td>
 </tr>
 </tbody>
 </table>
@@ -295,28 +295,28 @@ Removed 49153 duplicate rows.</code></pre>
 <p><strong>Original notes at index 1:</strong><br>
 Factor H (CFH) preferentially binds to host cells and surfaces that have negatively charged cell surface polyanions such as heparin and sialic acid commonly found on host cells (Kazatchkine et al.&nbsp;1979, Meri and Pangburn 1990). This mediates protection of plasma-exposed host structures.</p>
 <p><strong>Original notes at index 2:</strong><br>
-Factor H (CFH) preferentially binds to host cells and surfaces that have negatively charged cell surface polyanions such as heparin and sialic acid commonly found on host cells (Kazatchkine et al.&nbsp;1979, Meri and Pangburn 1990). This mediates protection of plasma-exposed host structures.</p>
+The human beta-globin locus control region (LCR) controls expression of the beta-globin gene family. It consists of four erythroid-cell-specific DNase I hypersensitive sites, HS1-4. DNAse I HS sites are thought to represent nucleosome-free regions of DNA which are available to trans-acting factors. NF-E2 binds two tandem AP1-like sites in HS2 which form the core of its enhancer activity. Interaction of NF-E2 with HS2 allows a second erythroid factor, GATA-1, to bind its nearby sites.</p>
 <p><strong>Snippet at index 1:</strong></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1006169"</span><span class="ot"> name=</span><span class="st">"Factor H binds host cell surface markers"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1006169_input_1006146"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_1006146"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1006169_input_976788"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_976788"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1006169_input_976788"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_976788"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1006169_input_1006146"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_1006146"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1006169_output_1006173"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1006173"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Snippet at index 2:</strong></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1006169"</span><span class="ot"> name=</span><span class="st">"Factor H binds host cell surface markers"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_7660"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1008200"</span><span class="ot"> name=</span><span class="st">"NFE2 binds the beta globin locus control region"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1006169_input_976788"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_976788"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1006169_input_1006146"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_1006146"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1008200_input_1008228"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_1008228"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1008200_input_1008229"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_1008229"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1006169_output_1006173"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1006173"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1008200_output_1008206"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1008206"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="60d00b68" class="cell" data-execution_count="7">
+<div id="c8e8555b" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show original notes (formatted as text)</span></span>
@@ -330,44 +330,43 @@ Factor H (CFH) preferentially binds to host cells and surfaces that have negativ
 </details>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 10:</strong><br>
-The release of G beta gamma from Gi/o enables binding of G beta gamma to GIRK/Kir3 K+ channels.</p>
+Activation of GABA B receptors by GABA stimulates Gi/o proteins releasing the G beta gamma subunit that binds to voltage dependent Ca2+ channels.</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 11:</strong><br>
-The release of G beta gamma from Gi/o enables binding of G beta gamma to GIRK/Kir3 K+ channels.</p>
+Binding of G beta gamma activates the GIRK/Kir3 channels that allow the efflux of K+ out of the cell resulting in a hyperpolarized membrane potential. This negative membrane potential prevents the activation of voltage dependent Ca2+ channels.</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 10:</strong></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1013012"</span><span class="ot"> name=</span><span class="st">"Binding of Gbeta/gamma to GIRK/Kir3 channels"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1013013"</span><span class="ot"> name=</span><span class="st">"Association of GABA B receptor with G protein beta-gamma subunits"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1013012_input_975294"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_975294"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1013012_input_1013017"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_1013017"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1013013_input_420698"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_420698"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1013013_input_167434"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_167434"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1013012_output_1013011"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1013011"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1013013_output_1013017"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1013017"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_1013012_catalyst_420698"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_420698"</span> /&gt;</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_1013013_catalyst_420698"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_420698"</span> /&gt;</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 11:</strong></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1013012"</span><span class="ot"> name=</span><span class="st">"Binding of Gbeta/gamma to GIRK/Kir3 channels"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_70101"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1013020"</span><span class="ot"> name=</span><span class="st">"Activation of GIRK/Kir3 Channels"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1013012_input_1013017"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_1013017"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1013012_input_975294"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_975294"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1013012_output_1013011"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1013011"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_1013012_catalyst_420698"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_420698"</span> /&gt;</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1013020_input_29804"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_29804"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1013020_output_74126"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_74126"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_1013020_catalyst_1013011"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_1013011"</span> /&gt;</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div id="1c3bf723" class="cell" data-execution_count="8">
+<div id="e89efa70" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show original notes (formatted as text)</span></span>
@@ -381,38 +380,36 @@ The release of G beta gamma from Gi/o enables binding of G beta gamma to GIRK/Ki
 </details>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 16:</strong><br>
-Effects of IFNs result from induction of a subset of genes, called IFN stimulated genes (ISGs). These ISGs are mainly implicated in anti-viral, anti-angiogenic, immunomodulatory, cell cycle inhibitory effects and apoptotic functions. All IFNA/B-stimulated genes have a conserved region of about 15bp in their promoter called the Interferon Stimulation Response Element (ISRE). The transcription factor ISGF3 binds to this ISRE and induce the transcription of these genes by IFN.</p>
+Glycoproteins with lesser folding defects get transported back to the ER and the CNX/CRT complex (Lederkremer, 2009).</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 17:</strong><br>
-Effects of IFNs result from induction of a subset of genes, called IFN stimulated genes (ISGs). These ISGs are mainly implicated in anti-viral, anti-angiogenic, immunomodulatory, cell cycle inhibitory effects and apoptotic functions. All IFNA/B-stimulated genes have a conserved region of about 15bp in their promoter called the Interferon Stimulation Response Element (ISRE). The transcription factor ISGF3 binds to this ISRE and induce the transcription of these genes by IFN.</p>
+Proteins with major folding defects are extracted from futile folding cycles in the calnexin chaperone system and the ER Quality Control Compartment, and are translocated back to the cytosol for ER-associated degradation (ERAD). The N-glycan is used as a signal to distinguish proteins to be degraded, by direct binding to a ubiquitin ligase complex composed of, minimally, an E3 ubiquitin-protein ligase, protein sel-1 homolog 1 (SEL1L), derlin-2 (DERL2) and protein OS-9 (OS9) (Christianson et al.&nbsp;2008, Bernasconi et al.&nbsp;2008, Alcock and Swanton 2009; review Olzmann et al.&nbsp;2013). The mechanism of translocation is unknown.</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 16:</strong></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_7660"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1015699"</span><span class="ot"> name=</span><span class="st">"ISGF3 binds the ISRE promoter elements in IFN-stimulated genes"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_17957"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1017228"</span><span class="ot"> name=</span><span class="st">"Glycoproteins with lesser folding defects get transported back to the ER and the CNX/CRT complex"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015699_input_913527"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_913527"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015699_input_9034125"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_9034125"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015699_output_1015697"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015697"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1017228_input_912297"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_912297"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1017228_output_532672"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_532672"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 17:</strong></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_7660"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1015699"</span><span class="ot"> name=</span><span class="st">"ISGF3 binds the ISRE promoter elements in IFN-stimulated genes"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_70101"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1022127"</span><span class="ot"> name=</span><span class="st">"Ub-unfolded protein:(GlcNAc)2 (Man)9-5 translocates from ERQC to cytosol"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015699_input_9034125"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_9034125"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015699_input_913527"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_913527"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015699_output_1015697"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015697"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1022127_input_8867287"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_8867287"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1022127_output_8866894"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_8866894"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div id="3017c370" class="cell" data-execution_count="9">
+<div id="e77ffee5" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show original notes (formatted as text)</span></span>
@@ -426,99 +423,47 @@ Effects of IFNs result from induction of a subset of genes, called IFN stimulate
 </details>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 18:</strong><br>
-Around 300 IFN-induced genes have been identified from different oligonucleotide microarray studies in melanoma (WM9) and fibrosarcoma (HT1080) cell lines as well as from human dendritic cells treated with IFN. Only the proteins which are well studied and their function characterized are represented here.</p>
+Addition of sialic acid (Neu5Ac) to galactose-containing N-glycan. Neu5Ac is usually found at terminal positions of the N-glycan. This imparts a negative charge at neutral pH which affects the chemico-physical and biological properties of the N-glycans (for a review, see Schauer 2000); moreover, this modification can lead to the addition of extraordinarily long antennae such as polysialic acid (hundreds of sials) or polylactosamine repeats (dozens of disaccharide repeats) (Harduin-Lepers 2001), while the number of modifications on the antennae of N-glycans is usually lower.There are over 20 sialyltransferases known in humans, 5 of which are known to act on N-glycans. Beta-galactoside alpha-2,6-sialyltransferase 1 (ST6GAL1) is the only sialyltransferase known to transfer Neu5Ac to galactose (Gal) on N-Glycans (Dall’Olio 2000). A second beta-Galactoside alpha-2,6-sialyltransferase has been characterized, but this enzyme acts mainly on oligosaccharides (Krzewinski-Recchi et al.&nbsp;2003). Neu5Ac can also be added via an alpha-2,3-linkage to Gal on N-glycans by CMP-N-acetylneuraminate-beta-galactosamide-alpha-2,3-sialyltransferase 4 (ST3GAL4) (Ellies et al.&nbsp;2002). ST8Sia II (ST8SIA2), ST8Sia III (ST8SIA3), and ST8Sia IV (ST8SIA6) have alpha-2,8-activity (Angata et al.&nbsp;1997, Angata et al.&nbsp;2000; Angata and Fuduka 2003).</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 19:</strong><br>
-Around 300 IFN-induced genes have been identified from different oligonucleotide microarray studies in melanoma (WM9) and fibrosarcoma (HT1080) cell lines as well as from human dendritic cells treated with IFN. Only the proteins which are well studied and their function characterized are represented here.</p>
+Addition of sialic acid (Neu5Ac) to galactose-containing N-glycan. Sialic acid is usually found at terminal positions of the N-glycan. This imparts a negative charge at neutral pH which affects the chemico-physical and biological properties of the N-glycans (for a review, see Schauer 2000); moreover, this modification can lead to the addition of extraordinarily long antennae such as polysialic acid (hundreds of sials) or polylactosamine repeats (dozens of disaccharide repeats) (Harduin-Lepers 2001), while the number of modifications on the antennae of N-glycans is usually lower.There are over 20 sialyltransferases known in humans, 5 of which are known to act on N-glycans. Beta-galactoside alpha-2,6-sialyltransferase 1(ST6GAL1) is the only sialyltransferase known to transfer Neu5Ac to Gal on N-Glycans (Dall’Olio 2000). A second beta-galactoside alpha-2,6-sialyltransferase has been characterized, but this enzyme acts mainly on oligosaccharides (Krzewinski-Recchi et al.&nbsp;2003). Neu5Ac can also be added via an alpha-2,3-linkage to Gal on N-glycans by CMP-N-acetylneuraminate-beta-galactosamide-alpha-2,3-sialyltransferase 4 (ST3GAL4) (Ellies et al.&nbsp;2002). ST8Sia II (ST8SIA2), ST8Sia III (ST8SIA3), and ST8Sia IV (ST8SIA6) have alpha-2,8-activity (Angata et al.&nbsp;1997, Angata et al.&nbsp;2000, Angata and Fuduka 2003).</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 18:</strong></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_7660"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1015702"</span><span class="ot"> name=</span><span class="st">"Expression of IFN-induced genes"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_20699"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1022129"</span><span class="ot"> name=</span><span class="st">"ST3GAL4 transfers Neu5Ac to terminal Gal of N-glycans"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_input_9034125"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_9034125"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_168699"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_168699"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015682"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015682"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_947487"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_947487"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_947492"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_947492"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_5624196"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_5624196"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1031703"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1031703"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015687"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015687"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_9684472"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_9684472"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015688"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015688"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015674"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015674"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015677"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015677"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_983117"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_983117"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_53939"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_53939"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015684"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015684"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015673"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015673"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015693"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015693"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_936552"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_936552"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_199523"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199523"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_947491"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_947491"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015680"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015680"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015671"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015671"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015695"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015695"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_5624198"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_5624198"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_937341"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_937341"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_5624199"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_5624199"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_174336"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_174336"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015696"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015696"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_1015702_positiveregulator_1015697"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000459"</span><span class="ot"> species=</span><span class="st">"species_1015697"</span>&gt;</span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">modifierSpeciesReference</span>&gt;</span>
-<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1022129_input_975910"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_975910"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1022129_input_975925"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_975925"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1022129_output_981615"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_981615"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_1022129_catalyst_981490"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_981490"</span> /&gt;</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 19:</strong></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_7660"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1015702"</span><span class="ot"> name=</span><span class="st">"Expression of IFN-induced genes"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_20699"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1022133"</span><span class="ot"> name=</span><span class="st">"ST8SIA2,3,6 transfer Neu5Ac to terminal Gal of N-glycans"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_input_9034125"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_9034125"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015674"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015674"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_168699"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_168699"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_5624198"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_5624198"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_937341"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_937341"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_5624199"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_5624199"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_983117"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_983117"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015684"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015684"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_174336"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_174336"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015696"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015696"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015687"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015687"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_947492"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_947492"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015693"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015693"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1031703"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1031703"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015688"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015688"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015677"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015677"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015695"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015695"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_947491"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_947491"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015682"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015682"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_936552"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_936552"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015680"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015680"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_199523"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199523"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_947487"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_947487"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_53939"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_53939"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_9684472"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_9684472"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_5624196"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_5624196"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015673"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015673"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1015702_output_1015671"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_1015671"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_1015702_positiveregulator_1015697"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000459"</span><span class="ot"> species=</span><span class="st">"species_1015697"</span>&gt;</span>
-<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">modifierSpeciesReference</span>&gt;</span>
-<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1022133_input_975910"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_975910"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1022133_input_975925"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_975925"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1022133_output_981615"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_981615"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_1022133_catalyst_1022134"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_1022134"</span> /&gt;</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <section id="reaction_id-and-notes-combined-unique-values" class="level1">
 <h1>Reaction_id and notes combined unique values</h1>
 <p>Each reaction_id is associated with only one notes while the same note can be associated to different reactions. Grouping by reaction_id and counting the number of unique notes for it:</p>
-<div id="347ef057" class="cell" data-execution_count="10">
+<div id="15f0606e" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by reaction_id and count the number of unique notes for each</span></span>
@@ -531,12 +476,12 @@ Around 300 IFN-induced genes have been identified from different oligonucleotide
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of reaction with more than one note associated: </span><span class="sc">{</span><span class="bu">len</span>(reaction_ids_with_different_notes)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of unique reaction_ids: 15357
+<pre><code>Number of unique reaction_ids: 15686
 Number of reaction with more than one note associated: 0</code></pre>
 </div>
 </div>
 <p>Grouping by note and counting the number of unique reaction_id for it:</p>
-<div id="6d67b625" class="cell" data-execution_count="11">
+<div id="d37f6926" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by 'notes' and count the number of unique reaction_id values</span></span>
@@ -550,11 +495,11 @@ Number of reaction with more than one note associated: 0</code></pre>
 <span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of notes with more than one reaction associated: </span><span class="sc">{</span><span class="bu">len</span>(notes_with_multiple_reactions)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of unique notes: 14795
-Number of notes with more than one reaction associated: 387</code></pre>
+<pre><code>Number of unique notes: 15135
+Number of notes with more than one reaction associated: 379</code></pre>
 </div>
 </div>
-<div id="b02c5218" class="cell" data-execution_count="12">
+<div id="d162e22c" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the original DataFrame to only include those notes</span></span>
@@ -563,24 +508,24 @@ Number of notes with more than one reaction associated: 387</code></pre>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of unique values of the dataset composed by duplicated notes:</span><span class="ch">\n</span><span class="sc">{</span>conflicting_notes_rows<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of rows of the dataset composed by duplicated notes: 1365
+<pre><code>Number of rows of the dataset composed by duplicated notes: 1150
 Number of unique values of the dataset composed by duplicated notes:
-file_id             371
-reaction_id         949
-original_notes      394
-notes               387
-only_references     274
-snippet            1365
+file_id             289
+reaction_id         930
+original_notes      386
+notes               379
+only_references     270
+snippet            1150
 dtype: int64</code></pre>
 </div>
 </div>
-<div id="c3f3fa40" class="cell" data-execution_count="13">
+<div id="f815b924" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>conflicting_notes_rows_sorted <span class="op">=</span> conflicting_notes_rows[[<span class="st">"file_id"</span>,<span class="st">"reaction_id"</span>,<span class="st">"original_notes"</span>,<span class="st">"snippet"</span>]].sort_values(by<span class="op">=</span><span class="st">'original_notes'</span>)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>conflicting_notes_rows_sorted.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="13">
 <div>
 
 
@@ -596,144 +541,144 @@ dtype: int64</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">3398</td>
-<td>R-HSA-1793185.sbml</td>
-<td>reaction_9632034</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2839</td>
-<td>R-HSA-2022870.sbml</td>
-<td>reaction_1971491</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">3396</td>
-<td>R-HSA-1793185.sbml</td>
-<td>reaction_1971491</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2837</td>
-<td>R-HSA-2022870.sbml</td>
-<td>reaction_9632034</td>
-<td>A glucuronate (GlcA) moiety is added to the ch...</td>
-<td>&lt;reaction compartment="compartment_20699" fast...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">5837</td>
-<td>R-HSA-1280218.sbml</td>
-<td>reaction_199576</td>
-<td>A hallmark of human NK cells is the expression...</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5834</td>
-<td>R-HSA-1280218.sbml</td>
+<td data-quarto-table-cell-role="th">8563</td>
+<td>R-HSA-198933.sbml</td>
 <td>reaction_199587</td>
 <td>A hallmark of human NK cells is the expression...</td>
 <td>&lt;reaction compartment="compartment_876" fast="...</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">5839</td>
-<td>R-HSA-1280218.sbml</td>
-<td>reaction_199579</td>
-<td>A hallmark of human NK cells is the expression...</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
-</tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">5854</td>
-<td>R-HSA-1280218.sbml</td>
+<td data-quarto-table-cell-role="th">8572</td>
+<td>R-HSA-198933.sbml</td>
 <td>reaction_198958</td>
 <td>A hallmark of human NK cells is the expression...</td>
 <td>&lt;reaction compartment="compartment_876" fast="...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">5871</td>
-<td>R-HSA-1280218.sbml</td>
-<td>reaction_199558</td>
-<td>A hallmark of human NK cells is the expression...</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5931</td>
-<td>R-HSA-1280218.sbml</td>
-<td>reaction_199566</td>
-<td>A hallmark of human NK cells is the expression...</td>
-<td>&lt;reaction compartment="compartment_876" fast="...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">5941</td>
-<td>R-HSA-1280218.sbml</td>
+<td data-quarto-table-cell-role="th">8575</td>
+<td>R-HSA-198933.sbml</td>
 <td>reaction_199583</td>
 <td>A hallmark of human NK cells is the expression...</td>
 <td>&lt;reaction compartment="compartment_876" fast="...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">12296</td>
+<td data-quarto-table-cell-role="th">8582</td>
+<td>R-HSA-198933.sbml</td>
+<td>reaction_199566</td>
+<td>A hallmark of human NK cells is the expression...</td>
+<td>&lt;reaction compartment="compartment_876" fast="...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8589</td>
+<td>R-HSA-198933.sbml</td>
+<td>reaction_199579</td>
+<td>A hallmark of human NK cells is the expression...</td>
+<td>&lt;reaction compartment="compartment_876" fast="...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">8605</td>
+<td>R-HSA-198933.sbml</td>
+<td>reaction_199558</td>
+<td>A hallmark of human NK cells is the expression...</td>
+<td>&lt;reaction compartment="compartment_876" fast="...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8568</td>
+<td>R-HSA-198933.sbml</td>
+<td>reaction_199576</td>
+<td>A hallmark of human NK cells is the expression...</td>
+<td>&lt;reaction compartment="compartment_876" fast="...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7675</td>
 <td>R-HSA-446652.sbml</td>
 <td>reaction_446701</td>
 <td>A series of sequential phosphorylation events ...</td>
 <td>&lt;reaction compartment="compartment_70101" fast...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">15237</td>
-<td>R-HSA-975871.sbml</td>
+<td data-quarto-table-cell-role="th">9080</td>
+<td>R-HSA-168176.sbml</td>
 <td>reaction_975853</td>
 <td>A series of sequential phosphorylation events ...</td>
 <td>&lt;reaction compartment="compartment_876" fast="...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">11929</td>
-<td>R-HSA-9020702.sbml</td>
-<td>reaction_446701</td>
-<td>A series of sequential phosphorylation events ...</td>
-<td>&lt;reaction compartment="compartment_70101" fast...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">19685</td>
-<td>R-HSA-168249.sbml</td>
-<td>reaction_975125</td>
-<td>A series of sequential phosphorylation events ...</td>
-<td>&lt;reaction compartment="compartment_74700" fast...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">14516</td>
+<td data-quarto-table-cell-role="th">1103</td>
 <td>R-HSA-975155.sbml</td>
 <td>reaction_975125</td>
 <td>A series of sequential phosphorylation events ...</td>
 <td>&lt;reaction compartment="compartment_74700" fast...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">12689</td>
-<td>R-HSA-9683673.sbml</td>
+<td data-quarto-table-cell-role="th">12474</td>
+<td>R-HSA-168142.sbml</td>
+<td>reaction_975853</td>
+<td>A series of sequential phosphorylation events ...</td>
+<td>&lt;reaction compartment="compartment_876" fast="...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6292</td>
+<td>R-HSA-9678108.sbml</td>
 <td>reaction_9683769</td>
 <td>A sialyltransferase adds a terminal sialic aci...</td>
 <td>&lt;reaction compartment="compartment_190626" fas...</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">12683</td>
-<td>R-HSA-9683673.sbml</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6333</td>
+<td>R-HSA-9678108.sbml</td>
 <td>reaction_9683760</td>
 <td>A sialyltransferase adds a terminal sialic aci...</td>
 <td>&lt;reaction compartment="compartment_190626" fas...</td>
 </tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17576</td>
+<td>R-HSA-112314.sbml</td>
+<td>reaction_420975</td>
+<td>AMPA receptors bind glutamate, released in the...</td>
+<td>&lt;reaction compartment="compartment_984" fast="...</td>
+</tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">206</td>
-<td>R-HSA-399710.sbml</td>
+<td data-quarto-table-cell-role="th">9835</td>
+<td>R-HSA-112315.sbml</td>
 <td>reaction_420977</td>
 <td>AMPA receptors bind glutamate, released in the...</td>
 <td>&lt;reaction compartment="compartment_984" fast="...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">209</td>
-<td>R-HSA-399710.sbml</td>
+<td data-quarto-table-cell-role="th">9855</td>
+<td>R-HSA-112315.sbml</td>
 <td>reaction_420975</td>
 <td>AMPA receptors bind glutamate, released in the...</td>
 <td>&lt;reaction compartment="compartment_984" fast="...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">17566</td>
+<td>R-HSA-112314.sbml</td>
+<td>reaction_420977</td>
+<td>AMPA receptors bind glutamate, released in the...</td>
+<td>&lt;reaction compartment="compartment_984" fast="...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15302</td>
+<td>R-HSA-74158.sbml</td>
+<td>reaction_112055</td>
+<td>Abortive initiation, the repetitive formation ...</td>
+<td>&lt;reaction compartment="compartment_7660" fast=...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">15304</td>
+<td>R-HSA-74158.sbml</td>
+<td>reaction_112149</td>
+<td>Abortive initiation, the repetitive formation ...</td>
+<td>&lt;reaction compartment="compartment_7660" fast=...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15300</td>
+<td>R-HSA-74158.sbml</td>
+<td>reaction_112054</td>
+<td>Abortive initiation, the repetitive formation ...</td>
+<td>&lt;reaction compartment="compartment_7660" fast=...</td>
 </tr>
 </tbody>
 </table>
@@ -741,7 +686,7 @@ dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div id="51de3ef1" class="cell" data-execution_count="14">
+<div id="28d92674" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show original notes (formatted as text)</span></span>
@@ -755,86 +700,70 @@ dtype: int64</code></pre>
 </details>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 0:</strong><br>
-A glucuronate (GlcA) moiety is added to the chondroitin chain by dual-activity enzymes, the chondroitin sulfate synthases 1-3 (CHSY1, CHPF and CHSY3) (Kitagawa et al.&nbsp;2001, Yada et al.&nbsp;2003, Yada et al.&nbsp;2003b). They possess both beta-1,3-glucuronic acid and beta-1,4-N-acetylgalactosamine transferase activity. These three enzymes require divalent metals as cofactors, manganese producing the highest activities. Another candidate enzyme, chondroitin sulfate glucuronyltransferase (CHPF2) possess only beta-1,3-glucuronic acid transferase activity (Izumikawa et al.&nbsp;2008, Gotoh et al.&nbsp;2002). Defects in CHSY1 cause Temtamy preaxial brachydactyly syndrome (TPBS) (MIM:605282) (Tian et al.&nbsp;2010, Li et al.&nbsp;2010).</p>
+A hallmark of human NK cells is the expression of HLA class I-specific killer-cell immunoglobulin-like receptors (KIR). KIRs are not only variably expressed on the level of single NK cells but they are also highly polymorphic and polygenic (i.e.&nbsp;the gene content of the KIR cluster varies from individual to individual).There are 15 functional KIR genes known to date, 11 encoding receptors with two immunoglobulin domains (KIR2D genes) and 4 with three domains (KIR3D genes). Inhibitory KIR genes are characterized by long cytoplasmic tails featuring immunoreceptor tyrosine-based inhibitory motifs (ITIM), which upon engagement transmit inhibitory signals leading to the general shutdown of NK cell effector functions. There are six inhibitory KIRs with clearly defined specificities, all of the inhibitory kind and all for HLA class I allotypes: KIR2DL2 and KIR2DL3 for HLA-C group 1, KIR2DL1 for HLA-C group 2, KIR3DL1 for HLA-B (Bw4 epitope), KIR3DL2 with HLA-A3 and KIR2DL4 with HLA-G.In contrast, stimulatory KIR have short cytoplasmic tails lacking ITIM, but have a charged amino acid in the transmembrane region that provides a docking site for the activating adapter molecule DAP12. KIR2DS1 is known to bind HLA-C group 2 and KIR2DS2 binds HLA-C group 1.</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 1:</strong><br>
-A glucuronate (GlcA) moiety is added to the chondroitin chain by dual-activity enzymes, the chondroitin sulfate synthases 1-3 (CHSY1, CHPF and CHSY3) (Kitagawa et al.&nbsp;2001, Yada et al.&nbsp;2003, Yada et al.&nbsp;2003b). They possess both beta-1,3-glucuronic acid and beta-1,4-N-acetylgalactosamine transferase activity. These three enzymes require divalent metals as cofactors, manganese producing the highest activities. Another candidate enzyme, chondroitin sulfate glucuronyltransferase (CHPF2) possess only beta-1,3-glucuronic acid transferase activity (Izumikawa et al.&nbsp;2008, Gotoh et al.&nbsp;2002). Defects in CHSY1 cause Temtamy preaxial brachydactyly syndrome (TPBS) (MIM:605282) (Tian et al.&nbsp;2010, Li et al.&nbsp;2010).</p>
+A hallmark of human NK cells is the expression of HLA class I-specific killer-cell immunoglobulin-like receptors (KIR). KIRs are not only variably expressed on the level of single NK cells but they are also highly polymorphic and polygenic (i.e.&nbsp;the gene content of the KIR cluster varies from individual to individual).There are 15 functional KIR genes known to date, 11 encoding receptors with two immunoglobulin domains (KIR2D genes) and 4 with three domains (KIR3D genes). Inhibitory KIR genes are characterized by long cytoplasmic tails featuring immunoreceptor tyrosine-based inhibitory motifs (ITIM), which upon engagement transmit inhibitory signals leading to the general shutdown of NK cell effector functions. There are six inhibitory KIRs with clearly defined specificities, all of the inhibitory kind and all for HLA class I allotypes: KIR2DL2 and KIR2DL3 for HLA-C group 1, KIR2DL1 for HLA-C group 2, KIR3DL1 for HLA-B (Bw4 epitope), KIR3DL2 with HLA-A3 and KIR2DL4 with HLA-G.In contrast, stimulatory KIR have short cytoplasmic tails lacking ITIM, but have a charged amino acid in the transmembrane region that provides a docking site for the activating adapter molecule DAP12. KIR2DS1 is known to bind HLA-C group 2 and KIR2DS2 binds HLA-C group 1.</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 2:</strong><br>
-A glucuronate (GlcA) moiety is added to the chondroitin chain by dual-activity enzymes, the chondroitin sulfate synthases 1-3 (CHSY1, CHPF and CHSY3) (Kitagawa et al.&nbsp;2001, Yada et al.&nbsp;2003, Yada et al.&nbsp;2003b). They possess both beta-1,3-glucuronic acid and beta-1,4-N-acetylgalactosamine transferase activity. These three enzymes require divalent metals as cofactors, manganese producing the highest activities. Another candidate enzyme, chondroitin sulfate glucuronyltransferase (CHPF2) possess only beta-1,3-glucuronic acid transferase activity (Izumikawa et al.&nbsp;2008, Gotoh et al.&nbsp;2002). Defects in CHSY1 cause Temtamy preaxial brachydactyly syndrome (TPBS) (MIM:605282) (Tian et al.&nbsp;2010, Li et al.&nbsp;2010).</p>
+A hallmark of human NK cells is the expression of HLA class I-specific killer-cell immunoglobulin-like receptors (KIR). KIRs are not only variably expressed on the level of single NK cells but they are also highly polymorphic and polygenic (i.e.&nbsp;the gene content of the KIR cluster varies from individual to individual).There are 15 functional KIR genes known to date, 11 encoding receptors with two immunoglobulin domains (KIR2D genes) and 4 with three domains (KIR3D genes). Inhibitory KIR genes are characterized by long cytoplasmic tails featuring immunoreceptor tyrosine-based inhibitory motifs (ITIM), which upon engagement transmit inhibitory signals leading to the general shutdown of NK cell effector functions. There are six inhibitory KIRs with clearly defined specificities, all of the inhibitory kind and all for HLA class I allotypes: KIR2DL2 and KIR2DL3 for HLA-C group 1, KIR2DL1 for HLA-C group 2, KIR3DL1 for HLA-B (Bw4 epitope), KIR3DL2 with HLA-A3 and KIR2DL4 with HLA-G.In contrast, stimulatory KIR have short cytoplasmic tails lacking ITIM, but have a charged amino acid in the transmembrane region that provides a docking site for the activating adapter molecule DAP12. KIR2DS1 is known to bind HLA-C group 2 and KIR2DS2 binds HLA-C group 1.</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 3:</strong><br>
-A glucuronate (GlcA) moiety is added to the chondroitin chain by dual-activity enzymes, the chondroitin sulfate synthases 1-3 (CHSY1, CHPF and CHSY3) (Kitagawa et al.&nbsp;2001, Yada et al.&nbsp;2003, Yada et al.&nbsp;2003b). They possess both beta-1,3-glucuronic acid and beta-1,4-N-acetylgalactosamine transferase activity. These three enzymes require divalent metals as cofactors, manganese producing the highest activities. Another candidate enzyme, chondroitin sulfate glucuronyltransferase (CHPF2) possess only beta-1,3-glucuronic acid transferase activity (Izumikawa et al.&nbsp;2008, Gotoh et al.&nbsp;2002). Defects in CHSY1 cause Temtamy preaxial brachydactyly syndrome (TPBS) (MIM:605282) (Tian et al.&nbsp;2010, Li et al.&nbsp;2010).</p>
+A hallmark of human NK cells is the expression of HLA class I-specific killer-cell immunoglobulin-like receptors (KIR). KIRs are not only variably expressed on the level of single NK cells but they are also highly polymorphic and polygenic (i.e.&nbsp;the gene content of the KIR cluster varies from individual to individual).There are 15 functional KIR genes known to date, 11 encoding receptors with two immunoglobulin domains (KIR2D genes) and 4 with three domains (KIR3D genes). Inhibitory KIR genes are characterized by long cytoplasmic tails featuring immunoreceptor tyrosine-based inhibitory motifs (ITIM), which upon engagement transmit inhibitory signals leading to the general shutdown of NK cell effector functions. There are six inhibitory KIRs with clearly defined specificities, all of the inhibitory kind and all for HLA class I allotypes: KIR2DL2 and KIR2DL3 for HLA-C group 1, KIR2DL1 for HLA-C group 2, KIR3DL1 for HLA-B (Bw4 epitope), KIR3DL2 with HLA-A3 and KIR2DL4 with HLA-G.In contrast, stimulatory KIR have short cytoplasmic tails lacking ITIM, but have a charged amino acid in the transmembrane region that provides a docking site for the activating adapter molecule DAP12. KIR2DS1 is known to bind HLA-C group 2 and KIR2DS2 binds HLA-C group 1.</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 0:</strong></p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_20699"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_9632034"</span><span class="ot"> name=</span><span class="st">"CHSY1 transfers GlcA to chondroitin"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb29"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_199587"</span><span class="ot"> name=</span><span class="st">"KIR2DS1 interacting with HLA-C group 2 (Cw4)"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_9632034_input_1889970"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_1889970"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_9632034_input_2064172"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_2064172"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199587_input_199586"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199586"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199587_input_198911"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_198911"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_9632034_output_205687"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_205687"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_9632034_output_2064050"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_2064050"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_9632034_catalyst_1971431"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_1971431"</span> /&gt;</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199587_output_199585"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199585"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 1:</strong></p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_20699"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1971491"</span><span class="ot"> name=</span><span class="st">"CHPF,CHPF2,CHSY3 transfer GlcA to chondroitin"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb30"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_198958"</span><span class="ot"> name=</span><span class="st">"KIR2DL2/3 interacting with HLA-C group 1 (Cw4)"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1971491_input_1889970"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_1889970"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1971491_input_2064172"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_2064172"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_198958_input_199540"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199540"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_198958_input_198911"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_198911"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1971491_output_2064050"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_2064050"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1971491_output_205687"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_205687"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_1971491_catalyst_1971467"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_1971467"</span> /&gt;</span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_198958_output_198909"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_198909"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 2:</strong></p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_20699"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_1971491"</span><span class="ot"> name=</span><span class="st">"CHPF,CHPF2,CHSY3 transfer GlcA to chondroitin"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb31"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_199583"</span><span class="ot"> name=</span><span class="st">"KIR2DS2 interacting with HLA-C group 1 (Cw3)"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1971491_input_1889970"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_1889970"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1971491_input_2064172"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_2064172"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199583_input_199562"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199562"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199583_input_199584"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199584"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1971491_output_205687"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_205687"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_1971491_output_2064050"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_2064050"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_1971491_catalyst_1971467"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_1971467"</span> /&gt;</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199583_output_199588"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199588"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 3:</strong></p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_20699"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_9632034"</span><span class="ot"> name=</span><span class="st">"CHSY1 transfers GlcA to chondroitin"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb32"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_199566"</span><span class="ot"> name=</span><span class="st">"KIR3DL1 interacting with HLA Bw4"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_9632034_input_1889970"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_1889970"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_9632034_input_2064172"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_2064172"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199566_input_197742"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_197742"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199566_input_199567"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199567"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_9632034_output_2064050"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_2064050"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_9632034_output_205687"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_205687"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_9632034_catalyst_1971431"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_1971431"</span> /&gt;</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199566_output_199565"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199565"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div id="b849e1d3" class="cell" data-execution_count="15">
+<div id="d57a9636" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show original notes (formatted as text)</span></span>
@@ -860,109 +789,125 @@ A hallmark of human NK cells is the expression of HLA class I-specific killer-ce
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 7:</strong><br>
-A hallmark of human NK cells is the expression of HLA class I-specific killer-cell immunoglobulin-like receptors (KIR). KIRs are not only variably expressed on the level of single NK cells but they are also highly polymorphic and polygenic (i.e.&nbsp;the gene content of the KIR cluster varies from individual to individual).There are 15 functional KIR genes known to date, 11 encoding receptors with two immunoglobulin domains (KIR2D genes) and 4 with three domains (KIR3D genes). Inhibitory KIR genes are characterized by long cytoplasmic tails featuring immunoreceptor tyrosine-based inhibitory motifs (ITIM), which upon engagement transmit inhibitory signals leading to the general shutdown of NK cell effector functions. There are six inhibitory KIRs with clearly defined specificities, all of the inhibitory kind and all for HLA class I allotypes: KIR2DL2 and KIR2DL3 for HLA-C group 1, KIR2DL1 for HLA-C group 2, KIR3DL1 for HLA-B (Bw4 epitope), KIR3DL2 with HLA-A3 and KIR2DL4 with HLA-G.In contrast, stimulatory KIR have short cytoplasmic tails lacking ITIM, but have a charged amino acid in the transmembrane region that provides a docking site for the activating adapter molecule DAP12. KIR2DS1 is known to bind HLA-C group 2 and KIR2DS2 binds HLA-C group 1.</p>
+A series of sequential phosphorylation events lead to full or hyper-phopshorylation of IRAK1. Under in vitro conditions these are all autophosphorylation events. First, Thr-209 is phosphorylated resulting in a conformational change of the kinase domain. Next, Thr-387 in the activation loop is phosphorylated, leading to full enzymatic activity. Several additional residues are phosphorylated in the proline-, serine-, and threonine-rich (ProST) region between the N-terminal death domain and kinase domain. Hyperphosphorylation of this region leads to dissociation of IRAK1 from the upstream adapters MyD88 and Tollip. The significance of these phosphorylation events is not clear; the kinase activity of IRAK1 is dispensable for IL1-induced NFkB and MAP kinase activation (Knop and Martin, 1999), unlike that of IRAK4 (Suzuki et al.&nbsp;2002; Kozicak-Holbro et al.&nbsp;2007), so IRAK1 is believed to act primarily as an adaptor for TRAF6 (Conze et al.&nbsp;2008).</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 8:</strong><br>
-A hallmark of human NK cells is the expression of HLA class I-specific killer-cell immunoglobulin-like receptors (KIR). KIRs are not only variably expressed on the level of single NK cells but they are also highly polymorphic and polygenic (i.e.&nbsp;the gene content of the KIR cluster varies from individual to individual).There are 15 functional KIR genes known to date, 11 encoding receptors with two immunoglobulin domains (KIR2D genes) and 4 with three domains (KIR3D genes). Inhibitory KIR genes are characterized by long cytoplasmic tails featuring immunoreceptor tyrosine-based inhibitory motifs (ITIM), which upon engagement transmit inhibitory signals leading to the general shutdown of NK cell effector functions. There are six inhibitory KIRs with clearly defined specificities, all of the inhibitory kind and all for HLA class I allotypes: KIR2DL2 and KIR2DL3 for HLA-C group 1, KIR2DL1 for HLA-C group 2, KIR3DL1 for HLA-B (Bw4 epitope), KIR3DL2 with HLA-A3 and KIR2DL4 with HLA-G.In contrast, stimulatory KIR have short cytoplasmic tails lacking ITIM, but have a charged amino acid in the transmembrane region that provides a docking site for the activating adapter molecule DAP12. KIR2DS1 is known to bind HLA-C group 2 and KIR2DS2 binds HLA-C group 1.</p>
+A series of sequential phosphorylation events lead to full or hyper-phopshorylation of IRAK1. Under in vitro conditions these are all autophosphorylation events. First, Thr-209 is phosphorylated resulting in a conformational change of the kinase domain. Next, Thr-387 in the activation loop is phosphorylated, leading to full enzymatic activity. Several additional residues are phosphorylated in the proline-, serine-, and threonine-rich (ProST) region between the N-terminal death domain and kinase domain. Hyperphosphorylation of this region leads to dissociation of IRAK1 from the upstream adapters MyD88 and Tollip. The significance of these phosphorylation events is not clear; the kinase activity of IRAK1 is dispensable for IL1-induced NFkB and MAP kinase activation (Knop and Martin, 1999), unlike that of IRAK4 (Suzuki et al.&nbsp;2002; Kozicak-Holbro et al.&nbsp;2007), so IRAK1 is believed to act primarily as an adaptor for TRAF6 (Conze et al.&nbsp;2008).</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 9:</strong><br>
-A hallmark of human NK cells is the expression of HLA class I-specific killer-cell immunoglobulin-like receptors (KIR). KIRs are not only variably expressed on the level of single NK cells but they are also highly polymorphic and polygenic (i.e.&nbsp;the gene content of the KIR cluster varies from individual to individual).There are 15 functional KIR genes known to date, 11 encoding receptors with two immunoglobulin domains (KIR2D genes) and 4 with three domains (KIR3D genes). Inhibitory KIR genes are characterized by long cytoplasmic tails featuring immunoreceptor tyrosine-based inhibitory motifs (ITIM), which upon engagement transmit inhibitory signals leading to the general shutdown of NK cell effector functions. There are six inhibitory KIRs with clearly defined specificities, all of the inhibitory kind and all for HLA class I allotypes: KIR2DL2 and KIR2DL3 for HLA-C group 1, KIR2DL1 for HLA-C group 2, KIR3DL1 for HLA-B (Bw4 epitope), KIR3DL2 with HLA-A3 and KIR2DL4 with HLA-G.In contrast, stimulatory KIR have short cytoplasmic tails lacking ITIM, but have a charged amino acid in the transmembrane region that provides a docking site for the activating adapter molecule DAP12. KIR2DS1 is known to bind HLA-C group 2 and KIR2DS2 binds HLA-C group 1.</p>
+A series of sequential phosphorylation events lead to full or hyper-phopshorylation of IRAK1. Under in vitro conditions these are all autophosphorylation events. First, Thr-209 is phosphorylated resulting in a conformational change of the kinase domain. Next, Thr-387 in the activation loop is phosphorylated, leading to full enzymatic activity. Several additional residues are phosphorylated in the proline-, serine-, and threonine-rich (ProST) region between the N-terminal death domain and kinase domain. Hyperphosphorylation of this region leads to dissociation of IRAK1 from the upstream adapters MyD88 and Tollip. The significance of these phosphorylation events is not clear; the kinase activity of IRAK1 is dispensable for IL1-induced NFkB and MAP kinase activation (Knop and Martin, 1999), unlike that of IRAK4 (Suzuki et al.&nbsp;2002; Kozicak-Holbro et al.&nbsp;2007), so IRAK1 is believed to act primarily as an adaptor for TRAF6 (Conze et al.&nbsp;2008).</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 10:</strong><br>
-A hallmark of human NK cells is the expression of HLA class I-specific killer-cell immunoglobulin-like receptors (KIR). KIRs are not only variably expressed on the level of single NK cells but they are also highly polymorphic and polygenic (i.e.&nbsp;the gene content of the KIR cluster varies from individual to individual).There are 15 functional KIR genes known to date, 11 encoding receptors with two immunoglobulin domains (KIR2D genes) and 4 with three domains (KIR3D genes). Inhibitory KIR genes are characterized by long cytoplasmic tails featuring immunoreceptor tyrosine-based inhibitory motifs (ITIM), which upon engagement transmit inhibitory signals leading to the general shutdown of NK cell effector functions. There are six inhibitory KIRs with clearly defined specificities, all of the inhibitory kind and all for HLA class I allotypes: KIR2DL2 and KIR2DL3 for HLA-C group 1, KIR2DL1 for HLA-C group 2, KIR3DL1 for HLA-B (Bw4 epitope), KIR3DL2 with HLA-A3 and KIR2DL4 with HLA-G.In contrast, stimulatory KIR have short cytoplasmic tails lacking ITIM, but have a charged amino acid in the transmembrane region that provides a docking site for the activating adapter molecule DAP12. KIR2DS1 is known to bind HLA-C group 2 and KIR2DS2 binds HLA-C group 1.</p>
+A series of sequential phosphorylation events lead to full or hyper-phopshorylation of IRAK1. Under in vitro conditions these are all autophosphorylation events. First, Thr-209 is phosphorylated resulting in a conformational change of the kinase domain. Next, Thr-387 in the activation loop is phosphorylated, leading to full enzymatic activity. Several additional residues are phosphorylated in the proline-, serine-, and threonine-rich (ProST) region between the N-terminal death domain and kinase domain. Hyperphosphorylation of this region leads to dissociation of IRAK1 from the upstream adapters MyD88 and Tollip. The significance of these phosphorylation events is not clear; the kinase activity of IRAK1 is dispensable for IL1-induced NFkB and MAP kinase activation (Knop and Martin, 1999), unlike that of IRAK4 (Suzuki et al.&nbsp;2002; Kozicak-Holbro et al.&nbsp;2007), so IRAK1 is believed to act primarily as an adaptor for TRAF6 (Conze et al.&nbsp;2008).</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 4:</strong></p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_199576"</span><span class="ot"> name=</span><span class="st">"KIR3DL2 interacting with HLA-A3"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb34"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_199579"</span><span class="ot"> name=</span><span class="st">"KIR2DL4 interacting with HLA-G"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199576_input_199571"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199571"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199576_input_197713"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_197713"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199579_input_197726"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_197726"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199579_input_199581"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199581"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199576_output_199573"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199573"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199579_output_199578"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199578"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
 <span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 5:</strong></p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_199587"</span><span class="ot"> name=</span><span class="st">"KIR2DS1 interacting with HLA-C group 2 (Cw4)"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb35"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_199558"</span><span class="ot"> name=</span><span class="st">"KIR2DL1 interacting with HLA-C group 2 (Cw3)"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199587_input_198911"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_198911"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199587_input_199586"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199586"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199558_input_199562"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199562"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199558_input_199538"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199538"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199587_output_199585"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199585"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199558_output_199560"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199560"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
 <span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 6:</strong></p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_199579"</span><span class="ot"> name=</span><span class="st">"KIR2DL4 interacting with HLA-G"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb36"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_199576"</span><span class="ot"> name=</span><span class="st">"KIR3DL2 interacting with HLA-A3"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199579_input_197726"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_197726"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199579_input_199581"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199581"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199576_input_197713"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_197713"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199576_input_199571"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199571"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199579_output_199578"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199578"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199576_output_199573"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199573"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
 <span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 7:</strong></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_198958"</span><span class="ot"> name=</span><span class="st">"KIR2DL2/3 interacting with HLA-C group 1 (Cw4)"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb37"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_70101"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_446701"</span><span class="ot"> name=</span><span class="st">"IRAK4-activated IRAK1 autophosphorylates"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_198958_input_198911"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_198911"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_198958_input_199540"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199540"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_446701_input_446689"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_446689"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_446701_input_113592"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_113592"</span><span class="ot"> stoichiometry=</span><span class="st">"4"</span> /&gt;</span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_198958_output_198909"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_198909"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_446701_output_446696"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_446696"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_446701_output_29370"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_29370"</span><span class="ot"> stoichiometry=</span><span class="st">"4"</span> /&gt;</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_446701_catalyst_446689"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_446689"</span> /&gt;</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 8:</strong></p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_199558"</span><span class="ot"> name=</span><span class="st">"KIR2DL1 interacting with HLA-C group 2 (Cw3)"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb38"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_975853"</span><span class="ot"> name=</span><span class="st">"Multiple IRAK1 autophosphorylation within the complex p-IRAK4:oligo MyD88:activated TLR"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199558_input_199562"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199562"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199558_input_199538"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199538"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_975853_input_113592"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_113592"</span><span class="ot"> stoichiometry=</span><span class="st">"16"</span> /&gt;</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_975853_input_975883"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_975883"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199558_output_199560"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199560"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_975853_output_29370"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_29370"</span><span class="ot"> stoichiometry=</span><span class="st">"16"</span> /&gt;</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_975853_output_975877"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_975877"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_975853_catalyst_975883"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_975883"</span> /&gt;</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 9:</strong></p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_199566"</span><span class="ot"> name=</span><span class="st">"KIR3DL1 interacting with HLA Bw4"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb39"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_74700"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_975125"</span><span class="ot"> name=</span><span class="st">"Multiple IRAK1 autophosphorylation steps within the complex pIRAK4:MyD88:activated TLR7/8 or 9"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199566_input_199567"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199567"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199566_input_197742"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_197742"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_975125_input_113592"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_113592"</span><span class="ot"> stoichiometry=</span><span class="st">"16"</span> /&gt;</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_975125_input_975161"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_975161"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199566_output_199565"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199565"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_975125_output_975107"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_975107"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_975125_output_29370"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_29370"</span><span class="ot"> stoichiometry=</span><span class="st">"16"</span> /&gt;</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_975125_catalyst_975161"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_975161"</span> /&gt;</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Snippet at index 10:</strong></p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_199583"</span><span class="ot"> name=</span><span class="st">"KIR2DS2 interacting with HLA-C group 1 (Cw3)"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
+<div class="sourceCode" id="cb40"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">reaction</span><span class="ot"> compartment=</span><span class="st">"compartment_876"</span><span class="ot"> fast=</span><span class="st">"false"</span><span class="ot"> id=</span><span class="st">"reaction_975853"</span><span class="ot"> name=</span><span class="st">"Multiple IRAK1 autophosphorylation within the complex p-IRAK4:oligo MyD88:activated TLR"</span><span class="ot"> reversible=</span><span class="st">"false"</span>&gt;</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfReactants</span>&gt;</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199583_input_199562"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199562"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199583_input_199584"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_199584"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_975853_input_975883"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_975883"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_975853_input_113592"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000010"</span><span class="ot"> species=</span><span class="st">"species_113592"</span><span class="ot"> stoichiometry=</span><span class="st">"16"</span> /&gt;</span>
 <span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfReactants</span>&gt;</span>
 <span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_199583_output_199588"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_199588"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_975853_output_29370"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_29370"</span><span class="ot"> stoichiometry=</span><span class="st">"16"</span> /&gt;</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">speciesReference</span><span class="ot"> constant=</span><span class="st">"true"</span><span class="ot"> id=</span><span class="st">"speciesreference_975853_output_975877"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000011"</span><span class="ot"> species=</span><span class="st">"species_975877"</span><span class="ot"> stoichiometry=</span><span class="st">"1"</span> /&gt;</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfProducts</span>&gt;</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">modifierSpeciesReference</span><span class="ot"> id=</span><span class="st">"modifierspeciesreference_975853_catalyst_975883"</span><span class="ot"> sboTerm=</span><span class="st">"SBO:0000013"</span><span class="ot"> species=</span><span class="st">"species_975883"</span> /&gt;</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">listOfModifiers</span>&gt;</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">reaction</span>&gt;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="references-per-reaction-distribution" class="level1">
 <h1>References per reaction distribution</h1>
-<div id="a372a2fa" class="cell" data-execution_count="16">
+<div id="445a0673" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df_dedup[<span class="st">'parsed_references'</span>] <span class="op">=</span> df_dedup[<span class="st">'only_references'</span>].<span class="bu">apply</span>(extract_references)</span>
@@ -982,10 +927,10 @@ A hallmark of human NK cells is the expression of HLA class I-specific killer-ce
 <div class="cell-output cell-output-stdout">
 <pre><code>Total number of references per reaction:</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="20">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>reaction_id
 reaction_1006143    0
-reaction_1006169    2
+reaction_1006169    1
 reaction_1008200    0
 reaction_1008220    0
 reaction_1008240    5
@@ -997,7 +942,7 @@ reaction_1013012    0
 Name: parsed_references, dtype: int64</code></pre>
 </div>
 </div>
-<div id="fd3562e1" class="cell" data-execution_count="17">
+<div id="5740c1fd" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Unique references per reaction:"</span>) </span>
@@ -1006,7 +951,7 @@ Name: parsed_references, dtype: int64</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unique references per reaction:</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="21">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>reaction_id
 reaction_1006143    0
 reaction_1006169    1
@@ -1021,7 +966,7 @@ reaction_1013012    0
 Name: parsed_references, dtype: int64</code></pre>
 </div>
 </div>
-<div id="bdc63116" class="cell" data-execution_count="18">
+<div id="f6332c9e" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> references_per_reaction,</span>
@@ -1060,14 +1005,14 @@ Name: parsed_references, dtype: int64</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="reactions_files/figure-html/cell-19-output-2.png" width="558" height="374" class="figure-img"></p>
+<p><img src="reactions_files/figure-html/cell-19-output-2.png" width="567" height="374" class="figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="reactions_files/figure-html/cell-19-output-3.png" width="558" height="374" class="figure-img"></p>
+<p><img src="reactions_files/figure-html/cell-19-output-3.png" width="567" height="374" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1075,21 +1020,21 @@ Name: parsed_references, dtype: int64</code></pre>
 <pre><code>Raw data statistics
 
 Descriptive Statistics:
-Mean: 4.88
+Mean: 4.33
 Median: 2.00
-Standard Deviation: 11.36
+Standard Deviation: 12.37
 Minimum: 0
-Maximum: 460
+Maximum: 598
 5th percentile: 0.00
 25th percentile (Q1): 1.00
-75th percentile (Q3): 5.00
-95th percentile: 18.00
-IQR (Interquartile Range): 4.00</code></pre>
+75th percentile (Q3): 4.00
+95th percentile: 14.00
+IQR (Interquartile Range): 3.00</code></pre>
 </div>
 </div>
 <section id="references-without-duplicates-per-reaction-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="references-without-duplicates-per-reaction-distribution">References without duplicates per reaction distribution</h2>
-<div id="d32da1d6" class="cell" data-execution_count="19">
+<div id="e6a25f4e" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>plot_data(data <span class="op">=</span> unique_refs_per_reactions,</span>
@@ -1143,9 +1088,9 @@ IQR (Interquartile Range): 4.00</code></pre>
 <pre><code>Unique references raw data statistics
 
 Descriptive Statistics:
-Mean: 2.79
+Mean: 2.84
 Median: 2.00
-Standard Deviation: 4.34
+Standard Deviation: 4.45
 Minimum: 0
 Maximum: 121
 5th percentile: 0.00
