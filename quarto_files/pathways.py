@@ -1,12 +1,12 @@
 import pandas as pd
-from quarto_files.descriptive_stat_functions import extract_references
+from descriptive_stat_functions import extract_references
 import pyarrow.parquet as pq
 '''
 Create the pathway data with colunms:
 File_id | Reaction_count | Total References | Unique References | All References | Notes Count
 '''
-df_path = pd.read_parquet("./pathways.parquet")
-df = pd.read_parquet("./reactions.parquet")
+df_path = pd.read_parquet("../pathways.parquet")
+df = pd.read_parquet("../reactions.parquet")
 
 df['parsed_references'] = df['only_references'].apply(extract_references)
 
