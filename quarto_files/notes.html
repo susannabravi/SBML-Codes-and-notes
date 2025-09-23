@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="notes_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="notes_files/libs/quarto-html/anchor.min.js"></script>
 <link href="notes_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="notes_files/libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="notes_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="notes_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="notes_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="notes_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -101,20 +101,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="39f9b78b" class="cell" data-execution_count="2">
+<div id="185b9d48" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"../reaction_sentences.parquet"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df_sentences <span class="op">=</span> pd.read_parquet(<span class="st">"../sentences.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reaction_sentences.parquet"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df_sentences <span class="op">=</span> pd.read_parquet(<span class="st">"./sentences.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Reaction Sentences dataframe</p>
-<div id="88f8e553" class="cell" data-execution_count="3">
+<div id="02f3e5b4" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -131,72 +131,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>The tumor suppressor APC is a central componen...</td>
-<td>The tumor suppressor APC is a central componen...</td>
-<td>[The tumor suppressor APC is a central compone...</td>
-<td>3</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>In neuroendocrine cells such as pancreatic alp...</td>
-<td>In neuroendocrine cells such as pancreatic alp...</td>
-<td>[In neuroendocrine cells such as pancreatic al...</td>
-<td>3</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>In muscle cells such as cardiac, skeletal, vas...</td>
-<td>In muscle cells such as cardiac, skeletal, vas...</td>
-<td>[In muscle cells such as cardiac, skeletal, va...</td>
+<td>Dol-P-Man: Man(7)GlcNAc(2)-PP-Dol alpha-1,6-ma...</td>
+<td>Dol-P-Man:Man(7)GlcNAc(2)-PP-Dol alpha-1,6-man...</td>
+<td>[Dol-P-Man: Man(7)GlcNAc(2)-PP-Dol alpha-1,6-m...</td>
 <td>4</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>APEX1 (APE1) bound to the apurinic/apyrimidini...</td>
-<td>APEX1 (APE1) bound to the apurinic/apyrimidini...</td>
-<td>[APEX1 (APE1) bound to the apurinic/apyrimidin...</td>
-<td>1</td>
+<td data-quarto-table-cell-role="th">1</td>
+<td>MMACHC: B12r (cob(II)alamin, vitamin B12r) bin...</td>
+<td>MMACHC:B12r (cob(II)alamin, vitamin B12r) bind...</td>
+<td>[MMACHC: B12r (cob(II)alamin, vitamin B12r) bi...</td>
+<td>4</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>After incision of the DNA strand 5' to the apu...</td>
-<td>After incision of the DNA strand 5' to the apu...</td>
-<td>[After incision of the DNA strand 5' to the ap...</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>Ligand-activated NTRK2 (TRKB) phosphorylates P...</td>
-<td>Ligand-activated NTRK2 (TRKB) phosphorylates P...</td>
-<td>[Ligand-activated NTRK2 (TRKB) phosphorylates ...</td>
-<td>6</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>Autophosphorylated tyrosine Y817 of NTRK2 (cor...</td>
-<td>Autophosphorylated tyrosine Y817 of NTRK2 (cor...</td>
-<td>[Autophosphorylated tyrosine Y817 of NTRK2 (co...</td>
+<td data-quarto-table-cell-role="th">2</td>
+<td>SDK1 and SDK2 are homophilic adhesion molecule...</td>
+<td>SDK1 and SDK2 are homophilic adhesion molecule...</td>
+<td>[SDK1 and SDK2 are homophilic adhesion molecul...</td>
 <td>3</td>
 </tr>
 <tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>SLC24A6 (NCKX6, NCLX) encodes a protein which ...</td>
+<td>SLC24A6 (NCKX6, NCLX) (Palty R et al, 2004) en...</td>
+<td>[SLC24A6 (NCKX6, NCLX) encodes a protein which...</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>The sodium/calcium exchangers 1, 2 and 3 (SCL8...</td>
+<td>The sodium/calcium exchangers 1, 2 and 3 (SCL8...</td>
+<td>[The sodium/calcium exchangers 1, 2 and 3 (SCL...</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>The five members of the NCKX (SLC24) family ar...</td>
+<td>The five members of the NCKX (SLC24) family ar...</td>
+<td>[The five members of the NCKX (SLC24) family a...</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>The five members of the NCKX (SLC24) family ar...</td>
+<td>The five members of the NCKX (SLC24) family ar...</td>
+<td>[The five members of the NCKX (SLC24) family a...</td>
+<td>4</td>
+</tr>
+<tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
-<td>Based on the accepted model of PLCgamma1 (PLCG...</td>
-<td>Based on the accepted model of PLCgamma1 (PLCG...</td>
-<td>[Based on the accepted model of PLCgamma1 (PLC...</td>
-<td>1</td>
+<td>Bifunctional 3'-phosphoadenosine 5'-phosphosul...</td>
+<td>Bifunctional 3'-phosphoadenosine 5'-phosphosul...</td>
+<td>[Bifunctional 3'-phosphoadenosine 5'-phosphosu...</td>
+<td>2</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
-<td>Activated CAMKK2 (CaMKK-beta) phosphorylates t...</td>
-<td>Activated CAMKK2 (CaMKK-beta) phosphorylates t...</td>
-<td>[Activated CAMKK2 (CaMKK-beta) phosphorylates ...</td>
+<td>Gluthathioselenol (GSSeH) and reduced glutathi...</td>
+<td>Gluthathioselenol (GSSeH) and reduced glutathi...</td>
+<td>[Gluthathioselenol (GSSeH) and reduced glutath...</td>
 <td>2</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
-<td>AMPK, activated by CAMKK2-mediated phosphoryla...</td>
-<td>AMPK, activated by CAMKK2-mediated phosphoryla...</td>
-<td>[AMPK, activated by CAMKK2-mediated phosphoryl...</td>
+<td>A yet to be identified enzyme with 3'-phosphoa...</td>
+<td>A yet to be identified enzyme with 3'-phosphoa...</td>
+<td>[A yet to be identified enzyme with 3'-phospho...</td>
 <td>2</td>
 </tr>
 </tbody>
@@ -205,22 +205,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="3afdb80c" class="cell" data-execution_count="4">
+<div id="8a023216" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of rows:</span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of rows:14802</code></pre>
+<pre><code>Number of rows:15142</code></pre>
 </div>
 </div>
 <p>Sentences dataframe</p>
-<div id="4c826e51" class="cell" data-execution_count="5">
+<div id="037ae0b9" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_sentences.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 
 
@@ -240,92 +240,92 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
 <td>0</td>
-<td>The tumor suppressor APC is a central componen...</td>
-<td>The tumor suppressor APC is a central componen...</td>
-<td>The tumor suppressor APC is a central componen...</td>
-<td>3</td>
+<td>Dol-P-Man: Man(7)GlcNAc(2)-PP-Dol alpha-1,6-ma...</td>
+<td>Dol-P-Man:Man(7)GlcNAc(2)-PP-Dol alpha-1,6-man...</td>
+<td>Dol-P-Man: Man(7)GlcNAc(2)-PP-Dol alpha-1,6-ma...</td>
+<td>4</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>0</td>
-<td>The tumor suppressor APC is a central componen...</td>
-<td>The tumor suppressor APC is a central componen...</td>
-<td>These protein-protein interactions are critica...</td>
-<td>3</td>
+<td>Dol-P-Man: Man(7)GlcNAc(2)-PP-Dol alpha-1,6-ma...</td>
+<td>Dol-P-Man:Man(7)GlcNAc(2)-PP-Dol alpha-1,6-man...</td>
+<td>Defects in ALG12 are associated with congenita...</td>
+<td>4</td>
 <td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
 <td>0</td>
-<td>The tumor suppressor APC is a central componen...</td>
-<td>The tumor suppressor APC is a central componen...</td>
-<td>Cancer cells with expressing truncated forms o...</td>
-<td>3</td>
-<td>1</td>
+<td>Dol-P-Man: Man(7)GlcNAc(2)-PP-Dol alpha-1,6-ma...</td>
+<td>Dol-P-Man:Man(7)GlcNAc(2)-PP-Dol alpha-1,6-man...</td>
+<td>CDG type 1 diseases result in a wide variety o...</td>
+<td>4</td>
+<td>7</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>1</td>
-<td>In neuroendocrine cells such as pancreatic alp...</td>
-<td>In neuroendocrine cells such as pancreatic alp...</td>
-<td>In neuroendocrine cells such as pancreatic alp...</td>
-<td>3</td>
+<td>0</td>
+<td>Dol-P-Man: Man(7)GlcNAc(2)-PP-Dol alpha-1,6-ma...</td>
+<td>Dol-P-Man:Man(7)GlcNAc(2)-PP-Dol alpha-1,6-man...</td>
+<td>Point mutations that can cause ALG12-CDG are F...</td>
+<td>4</td>
 <td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>1</td>
-<td>In neuroendocrine cells such as pancreatic alp...</td>
-<td>In neuroendocrine cells such as pancreatic alp...</td>
-<td>These channels are blocked by excess intracell...</td>
-<td>3</td>
-<td>2</td>
+<td>MMACHC: B12r (cob(II)alamin, vitamin B12r) bin...</td>
+<td>MMACHC:B12r (cob(II)alamin, vitamin B12r) bind...</td>
+<td>MMACHC: B12r (cob(II)alamin, vitamin B12r) bin...</td>
+<td>4</td>
+<td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
 <td>1</td>
-<td>In neuroendocrine cells such as pancreatic alp...</td>
-<td>In neuroendocrine cells such as pancreatic alp...</td>
-<td>When the ATP is low, ATP dissociates and the c...</td>
-<td>3</td>
-<td>2</td>
+<td>MMACHC: B12r (cob(II)alamin, vitamin B12r) bin...</td>
+<td>MMACHC:B12r (cob(II)alamin, vitamin B12r) bind...</td>
+<td>Both MMACHC and MMADHC are implicated in the i...</td>
+<td>4</td>
+<td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
-<td>2</td>
-<td>In muscle cells such as cardiac, skeletal, vas...</td>
-<td>In muscle cells such as cardiac, skeletal, vas...</td>
-<td>In muscle cells such as cardiac, skeletal, vas...</td>
+<td>1</td>
+<td>MMACHC: B12r (cob(II)alamin, vitamin B12r) bin...</td>
+<td>MMACHC:B12r (cob(II)alamin, vitamin B12r) bind...</td>
+<td>Defects in MMADHC cause methylmalonic aciduria...</td>
 <td>4</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
-<td>2</td>
-<td>In muscle cells such as cardiac, skeletal, vas...</td>
-<td>In muscle cells such as cardiac, skeletal, vas...</td>
-<td>The human gene encoding SUR2 gives rise to two...</td>
+<td>1</td>
+<td>MMACHC: B12r (cob(II)alamin, vitamin B12r) bin...</td>
+<td>MMACHC:B12r (cob(II)alamin, vitamin B12r) bind...</td>
+<td>There are 3 biochemical phenotypes for this di...</td>
 <td>4</td>
 <td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
 <td>2</td>
-<td>In muscle cells such as cardiac, skeletal, vas...</td>
-<td>In muscle cells such as cardiac, skeletal, vas...</td>
-<td>These channels are blocked by excess intracell...</td>
-<td>4</td>
-<td>2</td>
+<td>SDK1 and SDK2 are homophilic adhesion molecule...</td>
+<td>SDK1 and SDK2 are homophilic adhesion molecule...</td>
+<td>SDK1 and SDK2 are homophilic adhesion molecules.</td>
+<td>3</td>
+<td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
 <td>2</td>
-<td>In muscle cells such as cardiac, skeletal, vas...</td>
-<td>In muscle cells such as cardiac, skeletal, vas...</td>
-<td>When the ATP is low, ATP dissociates and the c...</td>
-<td>4</td>
-<td>2</td>
+<td>SDK1 and SDK2 are homophilic adhesion molecule...</td>
+<td>SDK1 and SDK2 are homophilic adhesion molecule...</td>
+<td>Cells expressing them exhibit a strong prefere...</td>
+<td>3</td>
+<td>1</td>
 </tr>
 </tbody>
 </table>
@@ -333,13 +333,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="708aad82" class="cell" data-execution_count="6">
+<div id="14dc69f3" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of rows:</span><span class="sc">{</span><span class="bu">len</span>(df_sentences)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of rows:53079</code></pre>
+<pre><code>Number of rows:54679</code></pre>
 </div>
 </div>
 <details class="code-fold">
@@ -351,38 +351,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  display(Markdown(<span class="ss">f"**Sentences of note at index </span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss">:**  </span><span class="ch">\n</span><span class="sc">{</span>sentences<span class="sc">}</span><span class="ss">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <p><strong>notes at index 0:</strong><br>
-The tumor suppressor APC is a central component of the destruction complex that makes direct, functionally important contacts with a number of other destruction complex members, including AXIN, beta-catenin and GSK3. These protein-protein interactions are critical to APC’s role in promoting the proteasome-mediated degradation of beta-catenin, and are abrogated by APC truncations that are common in the vast majority of colorectal cancers. Cancer cells with expressing truncated forms of APC have high levels of free beta-catenin and aberrant WNT target gene expression.</p>
+Dol-P-Man: Man(7)GlcNAc(2)-PP-Dol alpha-1,6-mannosyltransferase (ALG12) normally tranfers the 8th mannose moiety to the lipid-linked oligosaccharide (LLO aka N-glycan precursor) which is required for subsequent N-glycosylation of proteins. Defects in ALG12 are associated with congenital disorder of glycosylation 1g, a multisystem disorder caused by a defect in glycoprotein biosynthesis and characterised by under-glycosylated serum glycoproteins. CDG type 1 diseases result in a wide variety of clinical features, such as defects in the nervous system development, psychomotor retardation, dysmorphic features, hypotonia, coagulation disorders, and immunodeficiency. Point mutations that can cause ALG12-CDG are F142V, T67M, R146Q, G101R, L158P and Y414*.</p>
 <p><strong>Sentences of note at index 0:</strong><br>
-<strong>-</strong> The tumor suppressor APC is a central component of the destruction complex that makes direct, functionally important contacts with a number of other destruction complex members, including AXIN, beta-catenin and GSK3.<br>
-<strong>-</strong> These protein-protein interactions are critical to APC’s role in promoting the proteasome-mediated degradation of beta-catenin, and are abrogated by APC truncations that are common in the vast majority of colorectal cancers.<br>
-<strong>-</strong> Cancer cells with expressing truncated forms of APC have high levels of free beta-catenin and aberrant WNT target gene expression.</p>
+<strong>-</strong> Dol-P-Man: Man(7)GlcNAc(2)-PP-Dol alpha-1,6-mannosyltransferase (ALG12) normally tranfers the 8th mannose moiety to the lipid-linked oligosaccharide (LLO aka N-glycan precursor) which is required for subsequent N-glycosylation of proteins.<br>
+<strong>-</strong> Defects in ALG12 are associated with congenital disorder of glycosylation 1g, a multisystem disorder caused by a defect in glycoprotein biosynthesis and characterised by under-glycosylated serum glycoproteins.<br>
+<strong>-</strong> CDG type 1 diseases result in a wide variety of clinical features, such as defects in the nervous system development, psychomotor retardation, dysmorphic features, hypotonia, coagulation disorders, and immunodeficiency.<br>
+<strong>-</strong> Point mutations that can cause ALG12-CDG are F142V, T67M, R146Q, G101R, L158P and Y414*.</p>
 <p><strong>notes at index 1:</strong><br>
-In neuroendocrine cells such as pancreatic alpha-, beta-, and delta-cells and in the brain, ATP sensitive K+ channels assemble as octamers of four Kir 6.1, 6.2 subunits and four high-affinity sulfonyl urea receptor 1 subunits (SUR1). These channels are blocked by excess intracellular levels of ATP. When the ATP is low, ATP dissociates and the channel opens to allow K+ efflux.</p>
+MMACHC: B12r (cob(II)alamin, vitamin B12r) binding to methylmalonic aciduria and homocystinuria type D protein (MMADHC) represents a branch point in the targeted delivery of B12r to either cytosolic or mitochondrial enzymes requiring this cofactor. Both MMACHC and MMADHC are implicated in the intracellular transport of cobalamins but exact details of the mechanisms involved remain unclear. Defects in MMADHC cause methylmalonic aciduria and homocystinuria type cblD, a disorder of cobalamin metabolism characterized by decreased levels of the coenzymes adenosylcobalamin (AdoCbl) and methylcobalamin (MeCbl). There are 3 biochemical phenotypes for this disorder; sufferers with homocystinuria (mutants L259P, T182N and Y249C), methylmalonic aciduria (mutants S20<em>, and R54</em>), and combined homocystinuria and methylmalonic aciduria (mutants R250* and Y140*).</p>
 <p><strong>Sentences of note at index 1:</strong><br>
-<strong>-</strong> In neuroendocrine cells such as pancreatic alpha-, beta-, and delta-cells and in the brain, ATP sensitive K+ channels assemble as octamers of four Kir 6.1, 6.2 subunits and four high-affinity sulfonyl urea receptor 1 subunits (SUR1).<br>
-<strong>-</strong> These channels are blocked by excess intracellular levels of ATP.<br>
-<strong>-</strong> When the ATP is low, ATP dissociates and the channel opens to allow K+ efflux.</p>
+<strong>-</strong> MMACHC: B12r (cob(II)alamin, vitamin B12r) binding to methylmalonic aciduria and homocystinuria type D protein (MMADHC) represents a branch point in the targeted delivery of B12r to either cytosolic or mitochondrial enzymes requiring this cofactor.<br>
+<strong>-</strong> Both MMACHC and MMADHC are implicated in the intracellular transport of cobalamins but exact details of the mechanisms involved remain unclear.<br>
+<strong>-</strong> Defects in MMADHC cause methylmalonic aciduria and homocystinuria type cblD, a disorder of cobalamin metabolism characterized by decreased levels of the coenzymes adenosylcobalamin (AdoCbl) and methylcobalamin (MeCbl).<br>
+<strong>-</strong> There are 3 biochemical phenotypes for this disorder; sufferers with homocystinuria (mutants L259P, T182N and Y249C), methylmalonic aciduria (mutants S20<em>, and R54</em>), and combined homocystinuria and methylmalonic aciduria (mutants R250* and Y140*).</p>
 <p><strong>notes at index 2:</strong><br>
-In muscle cells such as cardiac, skeletal, vascular and nonvascular smooth muscle, ATP sensitive K+ channels assemble as octamers of four Kir 6.x subunits and four low-affinity sulfonyl urea receptor 2 subunits (SUR2). The human gene encoding SUR2 gives rise to two splice variants, SUR2A and SUR2B. These channels are blocked by excess intracellular levels of ATP. When the ATP is low, ATP dissociates and the channel opens to allow K+ efflux.</p>
+SDK1 and SDK2 are homophilic adhesion molecules. Cells expressing them exhibit a strong preference to interact exclusively with cells expressing the same sidekick form. The N-terminal four Ig domains are arranged in a horseshoe conformation and mediate homophilic adhesion, with Ig1-2 conferring the majority of binding affinity and differential specificity.</p>
 <p><strong>Sentences of note at index 2:</strong><br>
-<strong>-</strong> In muscle cells such as cardiac, skeletal, vascular and nonvascular smooth muscle, ATP sensitive K+ channels assemble as octamers of four Kir 6.x subunits and four low-affinity sulfonyl urea receptor 2 subunits (SUR2).<br>
-<strong>-</strong> The human gene encoding SUR2 gives rise to two splice variants, SUR2A and SUR2B.<br>
-<strong>-</strong> These channels are blocked by excess intracellular levels of ATP.<br>
-<strong>-</strong> When the ATP is low, ATP dissociates and the channel opens to allow K+ efflux.</p>
+<strong>-</strong> SDK1 and SDK2 are homophilic adhesion molecules.<br>
+<strong>-</strong> Cells expressing them exhibit a strong preference to interact exclusively with cells expressing the same sidekick form.<br>
+<strong>-</strong> The N-terminal four Ig domains are arranged in a horseshoe conformation and mediate homophilic adhesion, with Ig1-2 conferring the majority of binding affinity and differential specificity.</p>
 <p><strong>notes at index 3:</strong><br>
-APEX1 (APE1) bound to the apurinic/apyrimidinic site (AP site) in the DNA recruits DNA polymerase beta (POLB) into a ternary complex.</p>
+SLC24A6 (NCKX6, NCLX) encodes a protein which can transport Li+ or Na+ in exchange for Ca2+ in an K+-independent manner. Lithium exchange with calcium is shown here.</p>
 <p><strong>Sentences of note at index 3:</strong><br>
-<strong>-</strong> APEX1 (APE1) bound to the apurinic/apyrimidinic site (AP site) in the DNA recruits DNA polymerase beta (POLB) into a ternary complex.</p>
+<strong>-</strong> SLC24A6 (NCKX6, NCLX) encodes a protein which can transport Li+ or Na+ in exchange for Ca2+ in an K+-independent manner.<br>
+<strong>-</strong> Lithium exchange with calcium is shown here.</p>
 <p><strong>notes at index 4:</strong><br>
-After incision of the DNA strand 5’ to the apurinic/apyrimidinic (AP) site by APEX1 (APE1), POLB (DNA polymerase beta) excises the 5’-terminal abasic deoxyribose phosphate (5’-dRP), thus removing the AP site.</p>
+The sodium/calcium exchangers 1, 2 and 3 (SCL8A1,2,3 aka NCX1,2,3) belong to one of three families that control Ca2+ flux across the plasma membrane or intracellular compartments. They extrude Ca2+ from the cell, using the electrochemical gradient of Na+ as it flows into the cell. One Ca2+ is exchanged for three Na+. During this electrogenic exchange, the membrane potential is altered. SLC8A1, 2, 3 play a minor role during phase 2, since they begin to restore ion concentrations. The high concentration of intracellular calcium starts contraction of those cells, which is sustained in the plateau phase. SLC8A1 has a ubiquitous expression profile (highest expression in heart, brain and kidney) and was originally cloned and characterized from human cardiac muscle. Both SLC8A2) and SLC8A3 are expressed in the brain.In Rabbits, sorcin (SRI) activates SLC8A1, via the interaction of the respective Ca2+-binding domains. Calmodulin (CALM1) binds to the cytoplasmic loop of NCX1 to negatively regulate exchange activity.</p>
 <p><strong>Sentences of note at index 4:</strong><br>
-<strong>-</strong> After incision of the DNA strand 5’ to the apurinic/apyrimidinic (AP) site by APEX1 (APE1), POLB (DNA polymerase beta) excises the 5’-terminal abasic deoxyribose phosphate (5’-dRP), thus removing the AP site.</p>
-<div id="65b149e0" class="cell" data-execution_count="8">
+<strong>-</strong> The sodium/calcium exchangers 1, 2 and 3 (SCL8A1,2,3 aka NCX1,2,3) belong to one of three families that control Ca2+ flux across the plasma membrane or intracellular compartments.<br>
+<strong>-</strong> They extrude Ca2+ from the cell, using the electrochemical gradient of Na+ as it flows into the cell.<br>
+<strong>-</strong> One Ca2+ is exchanged for three Na+.<br>
+<strong>-</strong> During this electrogenic exchange, the membrane potential is altered.<br>
+<strong>-</strong> SLC8A1, 2, 3 play a minor role during phase 2, since they begin to restore ion concentrations.<br>
+<strong>-</strong> The high concentration of intracellular calcium starts contraction of those cells, which is sustained in the plateau phase.<br>
+<strong>-</strong> SLC8A1 has a ubiquitous expression profile (highest expression in heart, brain and kidney) and was originally cloned and characterized from human cardiac muscle.<br>
+<strong>-</strong> Both SLC8A2) and SLC8A3 are expressed in the brain.<br>
+<strong>-</strong> In Rabbits, sorcin (SRI) activates SLC8A1, via the interaction of the respective Ca2+-binding domains.<br>
+<strong>-</strong> Calmodulin (CALM1) binds to the cytoplasmic loop of NCX1 to negatively regulate exchange activity.</p>
+<div id="bfd4fdd8" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df.sort_values(by<span class="op">=</span><span class="st">"num_sentences"</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
 
@@ -398,74 +409,74 @@ After incision of the DNA strand 5’ to the apurinic/apyrimidinic (AP) site by 
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">5962</td>
+<td data-quarto-table-cell-role="th">2199</td>
 <td>During differentiation of stratum granulosum k...</td>
 <td>During differentiation of stratum granulosum k...</td>
 <td>[During differentiation of stratum granulosum ...</td>
 <td>128</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">6147</td>
+<td data-quarto-table-cell-role="th">219</td>
 <td>Trunk bipotent pancreatic progenitor cells (bi...</td>
 <td>Trunk bipotent pancreatic progenitor cells (bi...</td>
 <td>[Trunk bipotent pancreatic progenitor cells (b...</td>
 <td>102</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">5975</td>
+<td data-quarto-table-cell-role="th">2200</td>
+<td>This cell development step describes how mamma...</td>
+<td>This cell development step describes how mamma...</td>
+<td>[This cell development step describes how mamm...</td>
+<td>93</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13475</td>
 <td>Pancreatic pro-acinar cells mature into pancre...</td>
 <td>Pancreatic pro-acinar cells mature into pancre...</td>
 <td>[Pancreatic pro-acinar cells mature into pancr...</td>
 <td>88</td>
 </tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2207</td>
+<td>This cell development step describes commitmen...</td>
+<td>This cell development step describes commitmen...</td>
+<td>[This cell development step describes commitme...</td>
+<td>77</td>
+</tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">6118</td>
+<td data-quarto-table-cell-role="th">13476</td>
 <td>The formation of foregut endoderm cells from d...</td>
 <td>The formation of foregut endoderm cells from d...</td>
 <td>[The formation of foregut endoderm cells from ...</td>
 <td>65</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">6122</td>
+<td data-quarto-table-cell-role="th">13480</td>
 <td>The formation of foregut endoderm cells from d...</td>
 <td>The formation of foregut endoderm cells from d...</td>
 <td>[The formation of foregut endoderm cells from ...</td>
 <td>60</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">7369</td>
+<td data-quarto-table-cell-role="th">9443</td>
 <td>Transcriptional coactivators recruited to the ...</td>
 <td>Transcriptional coactivators recruited to the ...</td>
 <td>[Transcriptional coactivators recruited to the...</td>
 <td>57</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">5837</td>
-<td>Optineurin (OPTN, also called FIP2 and NRP), i...</td>
-<td>Optineurin (OPTN, also called FIP2 and NRP), i...</td>
-<td>[Optineurin (OPTN, also called FIP2 and NRP), ...</td>
-<td>42</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">10986</td>
+<td data-quarto-table-cell-role="th">14399</td>
 <td>Angiotensin-converting enzyme (ACE) is a centr...</td>
 <td>Angiotensin-converting enzyme (ACE) is a centr...</td>
 <td>[Angiotensin-converting enzyme (ACE) is a cent...</td>
 <td>42</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">11544</td>
-<td>Acetylcholinesterase (ACHE) is involved in the...</td>
-<td>Acetylcholinesterase (ACHE) is involved in the...</td>
-<td>[Acetylcholinesterase (ACHE) is involved in th...</td>
-<td>41</td>
-</tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1299</td>
-<td>β-adrenergic receptor antagonists ("β-blockers...</td>
-<td>β-adrenergic receptor antagonists ("β-blockers...</td>
-<td>[β-adrenergic receptor antagonists ("β-blocker...</td>
-<td>41</td>
+<td data-quarto-table-cell-role="th">2102</td>
+<td>Optineurin (OPTN, also called FIP2 and NRP), i...</td>
+<td>Optineurin (OPTN, also called FIP2 and NRP), i...</td>
+<td>[Optineurin (OPTN, also called FIP2 and NRP), ...</td>
+<td>42</td>
 </tr>
 </tbody>
 </table>
@@ -483,7 +494,7 @@ After incision of the DNA strand 5’ to the apurinic/apyrimidinic (AP) site by 
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>display(Markdown(<span class="ss">f"**Original Note with max value of sentences**</span><span class="ch">\n</span><span class="sc">{</span>df[<span class="st">'original_notes'</span>]<span class="sc">.</span>iloc[df[<span class="st">'num_sentences'</span>].idxmax()]<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <p><strong>Original Note with max value of sentences</strong> During differentiation of stratum granulosum keratinocytes into corneocytes, lytic enzymes are activated by the influx of Ca2+ and all metabolic activity ceases. Corneocytes, in the form of flattened squames, represent cellular skeletons filled with keratin filaments and sealed together by lipids. Corneocytes form an impermeable and insoluble barrier that protects against the invasion of microorganisms and loss of bodily fluids (reviewed by Fuchs 1990).Markers of granular keratinocytes are summarized in the “Table of granular keratinocytes in interfollicular epidermis”. Some of the markers, in particular AQP3, LGLAS7, and FABP5, are described in more detail in the sections “Keratinocyte stem cell differentiates into transit amplifying cell in the basal layer of interfollicular epidermis” and “Keratinocyte of spinosum layer differentiates into keratinocyte of granulosum layer in interfollicular epidermis”.CALML5 (Calmodulin-like protein 5, also known as Calmodulin-like skin protein or CLSP) is expressed in keratinocytes of stratum granulosum and lower layers of stratum corneum and is a marker of late keratinocyte differentiation (Mehul et al.&nbsp;2001). CALML5 is proteolytically degraded in upper layers of normal but not psoriatic stratum corneum, which is prevented by Ca2+ (Mehul et al.&nbsp;2006). CALML5 is implicated in regulation of function of Ca2+-dependent proteins involved in skin barrier formation (Donovan et al.&nbsp;2015). By RNA sequencing, CALML5 is the most enriched gene in differentiating outer epidermis. CALML5 gene transcription is upregulated by ZNF750 transcription factor and CALML5 mRNA is stabilized by noncoding RNA TINCR; CALML5 knockdown interferes with terminal differentiation of keratinocytes, formation of keratohyalin granules, and the skin barrier function. SFN is a binding partner of CALML5 (Sun et al.&nbsp;2015).Table of markers of granular keratinocytes in interfollicular epidermis. Please note that keratinocytes in CellMarker database and PanglaoDB correspond to granular keratinocytes in Reactome.Marker (protein/RNA)Literature ReferenceCellMarker database – RNA/Protein (Hu et al.&nbsp;2022)PanglaoDB – RNA (Franzén et al.&nbsp;2019)AQP3 (protein)Sugiyama et al.&nbsp;2001Ma et al.&nbsp;2002 Sougrat et al.&nbsp;2002NoYesCALML5 (protein)Mehul et al.&nbsp;2001Mehul et al.&nbsp;2006Donovan et al.&nbsp;2015Sun et al.&nbsp;2015NoYesDMKN (protein)Matsui et al.&nbsp;2004Higashi et al.&nbsp;2012Leclerc et al.&nbsp;2014NoYesFAPB5 (protein)Let et al.&nbsp;1998NoFLG (protein)Smoller et al.&nbsp;1990Steven et al.&nbsp;1990Juhlin et al.&nbsp;1992Girbal Neuhauser et al.&nbsp;1997Yoneda et al.&nbsp;2012Sakabe et al.&nbsp;2013Wong et al.&nbsp;2015reviewed in McLean 2016reviewed in Ishida Yamamoto et al.&nbsp;2018NoYesGJB3 (protein)Butterweck et al.&nbsp;1994Di et al.&nbsp;2001NoYesHOPX (protein)Obarzanek Fojt et al.&nbsp;2011NoNoIVL (protein)Bernard et al.&nbsp;1985Smoller et al.&nbsp;1990van Duijnhoven et al.&nbsp;1992Ishida Yamamoto et al.&nbsp;1996Crish et al.&nbsp;2002Chen et al.&nbsp;2013NoYes&gt;KLK5 (protein)Ishida Yamamoto et al.&nbsp;2005Sakabe et al.&nbsp;2013Miyai et al.&nbsp;2014NoNoKLK7 (protein)Ishida Yamamoto et al.&nbsp;2005Miyai et al.&nbsp;2014NoNoKPRP (protein)Lee et al.&nbsp;2005Suga et al.&nbsp;2019Jeriha et al.&nbsp;2020NoYesKRT1 (protein)reviewed in Fuchs 1990Totsuka et al.&nbsp;2017NoYesKRT10 (protein)Yoneda et al.&nbsp;2012Totsuka et al.&nbsp;2017NoYesKRTDAP (protein)Matsui et al.&nbsp;2004Tsuchida et al.&nbsp;2004NoNoLGALS7 (protein)Magnaldo et al.&nbsp;1995Umayahara et al.&nbsp;2020NoYesLORICRIN (protein, RNA)Steven et al.&nbsp;1990Juhlin et al.&nbsp;1992Magnaldo et al.&nbsp;1992Ishida Yamamoto et al.&nbsp;1996reviewed in Ishida Yamamoto et al.&nbsp;1998Yoneda et al.&nbsp;2012reviewed in Ishida Yamamoto et al.&nbsp;2018NoNoPRSS3 (protein)Nakanishi et al.&nbsp;2010Miyai et al.&nbsp;2014NoNoSBSN (protein)Matsui et al.&nbsp;2004Bazzi et al.&nbsp;2007Aoshima et al.&nbsp;2019NoYesSPINK5, also known as LEKTI (protein)Bitoun et al.&nbsp;2003Ishida Yamamoto et al.&nbsp;2005Galliano et al.&nbsp;2005reviewed in Ishida Yamamoto et al.&nbsp;2018NoNoSPRR2A (protein)Hohl et al.&nbsp;1995Sark et al.&nbsp;1998Cabral et al.&nbsp;2003YesNoDMKN (dermokine)-endcoding gene is part of the keratinocyte related locus on human chromosome 19q13.1 that also includes SBSN and KRTDAP genes. Coordinated transcription of these genes is detectable in stratum spinosum, but proteins are the most prominent in the granular layer keratinocytes, from which they are secreted. DMKN has several splicing isoforms, of which alpha, beta, and gamma are known to be expressed in the epidermis (Matsui et al.&nbsp;2004). DMKN beta splicing isoform was shown to inhibit activating phosphorylation of MAPK1/MAPK3, which depends on the interaction of DMKN with GRP78 (Higashi et al.&nbsp;2012). The pups of mice deficient in Dmkn beta have smaller keratohyalin granules and their cornified envelopes are more sensitive to mechanical stress (Leclerc et al.&nbsp;2014).In human skin biopsies, FLG (filaggrin) is expressed in all keratinocytes above the stratum spinosum (Smoller et al.&nbsp;1990), including keratinocytes of the granular layer of epidermis (Juhlin et al.&nbsp;1992). In newborn mouse skin, FLG is first detected in large, irregular shaped keratohyalin granules in the keratinocytes of stratum granulosum, and then distributed throughout the cytoplasm of the corneocytes of the innermost layer of stratum corneum (Steven et al.&nbsp;1990). Anti-(pro)filaggrin autoantibodies derived from patients with rheumatoid arthritis produce granular staining of stratum granulosum (Girbal Neuhauser et al.&nbsp;1997). FLG is detectable in the cytosol and nucleus of stratum granulosum cells formed by cultured human keratinocytes. As FLG undergoes proteolytic cleavage upon terminal differentiation of granular keratinocytes, FLG cleavage products are detectable (Yoneda et al.&nbsp;2012). Profilaggrin is expressed in the stratum granulosum of human epidermis by immunochemistry (Sakabe et al.&nbsp;2013). Hypoxia leads to HIF1A- and EPAS1 (HIF2A)-mediated stimulation of FLG transcription in a Ca2+-independent and cell confluency-independent manner, and stimulates expression of SPINK5, an inhibitor of epidermal serine proteases that regulates conversion of profilaggrin into monomeric filaggrin. Three putative hypoxia response elements (HREs) are found in the promoter region of the human FLG gene, of which two HREs are functional. One of the two functional HREs is evolutionarily conserved. Direct binding of HIF1A/EPAS1 to these HREs has not been demonstrated. Simultaneous HIF1A and EPAS1 deficiency inhibits terminal differentiation of keratinocytes and formation of stratum granulosum and cornified envelope. ARNT Aryl hydrocarbon receptor nuclear translocator involved in ceramide synthesis also positively regulates FLG expression (Wong et al.&nbsp;2015). Profilaggrin, a protein of &gt;400 kDa that is the major protein constituent of keratohyalin granules in keratinocytes of stratum granulosum, consists of 10 to 12 near identical repeats of FLG monomers connected by short cleavable linkers. When granular keratinocytes commit to differentiation into corneocytes, profilaggrin is cleaved and 37 kDa FLG monomers are release. FLG monomers bind to and condense keratin cytoskeleton, facilitating cellular compression. In the stratum corneum, FLG monomers are further broken down to form natural moisturizing factor - NMF - a pool of hygroscopic amino acids and derivatives. Loss-of-function mutations in the FLG gene, present in ~10% of human population, are the cause of ichthyosis vulgaris, dry flaky skin phenotype. Ichthyosis vulgaris is mild in heterozygous carriers, and the phenotype severity also depends on environmental and lifestyle factors, being more pronounced in cold, dry climates, and ameliorated by the use of skin moisturizers. A naturally occurring Flg mutation in mice results in the “flaky tail” phenotype. Loss-of-function FLG mutations as well as subtle size variations in the FLG gene predispose carriers to atopic conditions such as eczema and allergy, by compromising the skin barrier and allowing allergens to cross the skin epidermis, triggering Th-2 allergic immunity (reviewed in McLean 2016). Profilaggrin, synthesized in granular keratinocytes, is proteolyzed into FLG monomers in cornified keratinocytes, concurrent with disappearance of nucleus and cell organelles and FLG mediated aggregation of keratin filaments into a tight matrix (reviewed in Ishida Yamamoto et al.&nbsp;2018).GJB3 (Gap junction beta 3 protein, also known as Connexin 31 or CX31), is expressed in stratum granulosum of mouse epidermis (Butterweck et al.&nbsp;1994). In normal human epidermis, GJB3 is predominantly expressed in stratum granulosum, with a punctate staining at the plasma membrane, consistent with its involvement in formation of gap junctions. Mutations in GJB3 gene are associated with erythrokeratoderma variabilis (Di et al.&nbsp;2001).HOPX is an atypical homeodomain protein unable to bind to DNA, expressed in keratinocytes of stratum granulosum of human epidermis, and induced during Ca2+-mediated differentiation of cultured primary human keratinocytes. Overexpression of HOPX leads to upregulation of FLG and LORICRIN, while HOPX knockdown interferes with Ca2+-mediated induction of FLG and LORICRIN expression. Flg and Loricrin mRNA levels are downregulated in the epidermis of Hopx knockout mice (Obarzanek Fojt et al.&nbsp;2011).IVL is detected in stratum granulosum in normal epidermis and all layers except the basal layer in psoriatic epidermis (Bernard et al.&nbsp;1985). In human skin biopsies, involucrin is expressed in all keratinocytes above the stratum spinosum (Smoller et al.&nbsp;1990). Human IVL is expressed in keratinocytes of stratum granulosum, with expression increasing as the cells reach confluence (van Duijnhoven et al.&nbsp;1992). In the keratinocytes of stratum granulosum, IVL is detected along the plasma membrane. In the corneocytes, involucrin labeling is reduced, but it is very intense in the psoriatic epidermis. Formation of the cornified envelope likely first involves the deposition of IVL, followed by incorporation of LORICRIN. In psoriatic epidermis, IVL deposition at the cornified envelope occurs precociously, without further maturation of the cornified envelope (Ishida Yamamoto et al.&nbsp;1996). The distal regulatory region of the human IVL gene promoter, located at 2 2.5 kb upstream of the transcription start site, is needed to recapitulate the normal pattern of IVL expression in the epidermis of transgenic mice. The distal regulatory region contains two distinct, spatially separate regulatory elements that likely bind AP1 transcription factors (Crish et al.&nbsp;2002). In the normal skin, IVL is detectable in the stratum granulosum and upper layers of stratum spinosum. IVL expression may be upregulated by IL13, IL17A, EDN1, TNF, IFNG, and MAPK1/MAPK3 and GSK3B signaling (Chen et al.&nbsp;2013).In normal epidermis, KLK5 (Kallikrein-5) and KLK7 (Kallikrein-7) are found in lamellar granules in stratum granulosum, localized separately from SPINK5, which is also found in lamellar granules (Ishida Yamamoto et al.&nbsp;2005). KLK5 is expressed in stratum granulosum of human epidermis by immunochemistry. KLK5 co localizes with profilaggrin and is responsible for profilaggrin cleavage at the linker domain and release of FLG monomers (Sakabe et al.&nbsp;2013). KLK5 and KLK7 co-localize with PRSS3 in the upper layers of stratum granulosum and can be activated by PRSS3 mediated proteolytic cleavage. KLK5 is thought to be the initiator of the kallikrein proteolytic cascade that leads to activation of kallikrein-related peptidases - KLKs - and degradation of corneodesmosomes, leading to desquamation - shedding of the outermost layer of corneocytes (Miyai et al.&nbsp;2014).Expression of KPRP gene, encoding human keratinocyte proline rich protein, is induced by Ca2+ in cultured normal human epidermal keratinocytes. KPRP is predominantly expressed in upper layers of stratum granulosum. In psoriatic epidermis, KPRP levels are increased compared to normal epidermis (Lee et al.&nbsp;2005). KPRP is expressed in upper layers of stratum granulosum of human epidermis and is significantly decreased in atopic dermatitis compared to normal skin. KPRP co localizes with LORICRIN and is mainly detected in the cytoskeleton fraction of human keratinocytes (Suga et al.&nbsp;2019). In an in vitro model of Ca2+ induced differentiation of human keratinocytes, KPRP is a marker of stratum granulosum, consistent with its in vivo expression pattern (Jeriha et al.&nbsp;2020).While keratinocytes in stratum granulosum stop transcribing keratin genes, keratin proteins, including KRT1, are still detectable (Totsuka et al.&nbsp;2017, reviewed in Fuchs 1990).KRT10 protein is detectable in stratum granulosum keratinocytes (Totsuka et al.&nbsp;2017). In stratum granulosum formed by cultured human keratinocytes, KRT10 protein is detectable in the cytosol and nucleus, and co-localizes with the N-terminal cleavage product of profilaggrin (Yoneda et al.&nbsp;2012).KRTDAP gene, encoding keratinocyte differentiation-associated protein (also known as KDAP), is part of the keratinocyte related locus on human chromosome 19q13.1 that also includes SBSN and DKMN genes. Coordinated transcription of these genes is detectable in stratum spinosum, but proteins are the most prominent in the granular layer keratinocytes, from which they are secreted (Matsui et al.&nbsp;2004). In normal human skin, KRTDAP protein is found exclusively in lamellar granules of keratinocytes in stratum granulosum and in the intercellular space in stratum corneum. In psoriatic skin, KRTDAP is expressed more widely and detected in all suprabasal keratinocytes (Tsuchida et al.&nbsp;2004).In newborn mouse skin, LORICRIN is first detected in small, round, keratohyalin granules in keratinocytes of stratum granulosum, and then at the periphery of corneocytes throughout the stratum corneum (Steven et al.&nbsp;1990). LORICRIN is expressed in keratinocytes of granular layer of human epidermis. In skin disorders characterized by incomplete differentiation, e.g.&nbsp;psoriasis, LORICRIN is not detected but FLG is still expressed (Juhlin et al.&nbsp;1992). LORICRIN mRNA and protein are present in stratum granulosum and both transcript and protein are diminished upon treatment of human epidermis culture with retinoic acid (Magnaldo et al.&nbsp;1992). LORICRIN is distributed diffusely in keratinocytes of stratum granulosum, occasionally in granular aggregates in the cytoplasm and nucleus, and concentrated on the desmosomal attachment plaques where it co-localizes with desmoglein. LORICRIN is diminished in psoriatic epidermis (Ishida Yamamoto et al.&nbsp;1996). LORICRIN, diffusely distributed in granular keratinocytes, is associated with the cornified envelope in corneocytes, a tough structure beneath the corneocyte plasma membrane. Mutations in LORICRIN gene are implicated in two hereditary skin disorders, Vohwinkel’s syndrome and progressive symmetric erythrokeratoderma (reviewed in Ishida Yamamoto et al.&nbsp;1998). LORICRIN is detectable in the cytosol and nucleus of cultured human keratinocytes in stratum granulosum, where it co-localizes with the N-terminal cleavage product of FLG (Yoneda et al.&nbsp;2012). As granular keratinocytes differentiate into corneocytes, cornified envelope is formed by covalent crosslinking through transglutamination of various proteins, including LORICRIN, which is one of the main constituents of the cornified envelope (reviewed in Ishida Yamamoto et al.&nbsp;2018).PRSS3, also known as mesotrypsin, is expressed only in the granular layer of epidermis. In cultured keratinocytes, PRSS3 mRNA is expressed at the confluent stage and is strongly upregulated after air exposure (Nakanishi et al.&nbsp;2010). PRSS3 is expressed in the upper granular layer of epidermis, where KLKs and SPINK5 are also found. PRSS3 is able to proteolytically activate KLK5 and KLK7, and hydrolyze SPINK5 fragments bound to KLKs, thus contributing to the desquamation process. PRSS3 expression level in epidermis decreases after the age of 60 (Miyai et al.&nbsp;2014).SBSN gene, encoding Suprabasin, is part of the keratinocyte related locus on human chromosome 19q13.1 that also includes KRTDAP and DKMN genes. Coordinated transcription of these genes is detectable in stratum spinosum, but proteins are the most prominent in the granular layer keratinocytes, from which they are secreted (Matsui et al.&nbsp;2004). The cluster of Sbsn, Krtdap, and Dkmn genes is conserved on mouse chromosome 7, and these genes are coordinately expressed during epidermal differentiation (Bazzi et al.&nbsp;2007). SBSN deficient human skin three dimensional model has compact stratum corneum, immature stratum granulosum, and increased keratinocyte apoptosis (Aoshima et al.&nbsp;2019).SPINK5, also known as serine protease inhibitor LEKTI, is strongly expressed in keratinocytes of stratum granulosum and uppermost layers of keratinocytes of stratum spinosum. Two isoforms of SPINK5, of 145 kDa and 125 kDa, are detectable in keratinocytes. Both isoforms are glycosylated ad processed by a FURIN-like enzyme in the post-endoplasmic reticulum compartment, yielding fragments of 42 kDa, 65 kDa, and 68 kDa. SPINK5 genetic defects lead to Netherthon syndrome, a severe autosomal recessive ichtyosis (Bitoun et al.&nbsp;2003). In normal epidermis, SPINK5 is found in lamellar granules, membrane-bound organelles of stratum granulosum and uppermost layers of stratum spinosum, that fuse with the plasma membrane and secrete their contents into the extracellular space. SPINK5 localizes separately from KLK5 and KLK7, which are also found in lamellar granules, and is likely secreted before KLK5 and KLK7 (Ishida Yamamoto et al.&nbsp;2005). SPINK5 is expressed in keratinocytes of stratum granulosum of both human and mouse epidermis (Galliano et al.&nbsp;2005). SPINK5 cleavage fragments function as inhibitors of KLK5 and KLK7 proteases, preventing premature degradation of corneodesmosomes by KLK5/KLK7, and thus maintaining integrity and cohesion of the stratum corneum (reviewed in Ishida Yamamoto et al.&nbsp;2018).SPRR2A gene is part of a gene cluster of 1.5 Mb on human chromosomal band 1q21 that includes several other small proline-rich protein genes, as well as LORICRIN and IVL genes, which have all likely evolved from a common ancestor. By immunohistochemistry, SPRR2A protein is expressed at moderate levels in stratum granulosum of interfollicular epidermis, and by in situ RNA hybridization SPRR2A mRNA is restricted to the uppermost spinous and granular epidermis layers. Retinoic acid inhibit accumulation of SPRR2A mRNA and protein in keratinocytes. SPRR2A may be a precursor protein of the cornified envelope (Hohl et al.&nbsp;1995). SPRR2A expression is strongly induced by binding of the epithelium-specific transcription factor ELF3, also known as ESE-1, upregulated during Ca2+-induced terminal differentiation of keratinocytes, to the Ets site in the SPRR2A gene promoter (Sark et al.&nbsp;1998). POU2F3 transcription factor isoform Skn-1a cooperates with the transcription factor ELF3 in the induction of SPRR2A gene expression during terminal differentiation of keratinocytes in the epidermis (Cabral et al.&nbsp;2003).Markers of the stratum corneum keratinocytes (corneocytes) are summarized in the “Table of markers of corneocytes in interfollicular epidermis”. Some of the markers, in particular LGLAS7, are described in more detail in the section “Keratinocyte stem cell differentiates into transit amplifying cell in the basal layer of interfollicular epidermis”.Table of markers of corneocytes in interfollicular epidermis. Please note that keratinocytes in CellMarker database and PanglaoDB correspond to corneocytes in Reactome.Marker (protein/RNA)Literature ReferenceCellMarker database – RNA/Protein (Hu et al.&nbsp;2022)PanglaoDB – RNA (Franzén et al.&nbsp;2019)CALML5 (protein)Mehul et al.&nbsp;2001Mehul et al.&nbsp;2006NoYesCASP14Fischer et al.&nbsp;2004Alibardi et al.&nbsp;2004NoNoFLGSimon et al.&nbsp;1996Girbal Neuhauser et al.&nbsp;1997Pendaries et al.&nbsp;2014NoYesKLK5Caubet et al.&nbsp;2004de Veer et al.&nbsp;2017NoNoKLK7Caubet et al.&nbsp;2004de Veer et al.&nbsp;2017NoNoLGALS7Magnaldo et al.&nbsp;1995Umayahara et al.&nbsp;2020NoYesCALML5 is expressed in keratinocytes of lower layers of the stratum corneum. CALML5 is proteolytically degraded in upper layers of normal but not psoriatic stratum corneum, which is prevented by Ca2+ (Mehul et al.&nbsp;2006).CASP14 is highly expressed in differentiated epidermal keratinocytes and is the predominant caspase in the stratum corneum where it is normally present exclusively in its processed form. Both pro-caspase-14 and CASP14 subunits produced by cleavage are present in incompletely matured stratum corneum in psoriasis and seborrheic dermatitis (Fischer et al.&nbsp;2004). CASP14 is first detectable in the nuclei and keratohyalin granules of stratum granulosum keratinocytes, and it is present in the cornified envelope, cytosol, and nucleus of corneocytes (Alibardi et al.&nbsp;2004).FLG partially co-localizes with the cornified envelope in corneocytes (Simon et al.&nbsp;1996). Anti-(pro)filaggrin autoantibodies derived from patients with rheumatoid arthritis produce diffuse staining of stratum corneum (Girbal-Neuhauser et al.&nbsp;1997). FLG is expressed in corneocytes and needed for the maintenance of the corneocyte intracellular matrix.KLK5 (Caubet et al.&nbsp;2004). KLK5 is expressed in stratum corneum and is able to directly cleave all three components of corneodesmosomes, CDSN, DSC1, and DSG1, and to proteolytically activate KLK7; de Veer et al.&nbsp;2017: KLK5 can be isolated from the plantar stratum corneum, and contributes to desquamation).KLK7 is expressed in the stratum corneum and can directly cleave CDSN and DSC1 components of corneodesmosomes, but not DSG1 (Caubet et al.&nbsp;2004). KLK7 can be isolated from the plantar stratum corneum and is the main protease involved in desquamation (de Veer et al.&nbsp;2017).LGALS7 is expressed in all epidermal layers, especially highly in the stratum corneum (Umayahara et al.&nbsp;2020).For molecular details of cornified envelope formation during differentiation of stratum granulosum keratinocytes into corneocytes, please refer to Reactome pathway “Formation of the cornified envelope”, a subpathway of the Reactome “Keratinization” pathway (Blumenberg, M. 2016. “Keratinization.” Reactome - a Curated Knowledgebase of Biological Pathways 58 (September). https://doi.org/10.3180/r hsa 6805567.1).</p>
-<div id="94a60ec6" class="cell" data-execution_count="11">
+<div id="228149ba" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Statistics of variable num_sentences:"</span>)</span>
@@ -493,9 +504,9 @@ After incision of the DNA strand 5’ to the apurinic/apyrimidinic (AP) site by 
 <pre><code>Statistics of variable num_sentences:
 
 Descriptive Statistics:
-Mean: 3.59
+Mean: 3.61
 Median: 3.00
-Standard Deviation: 3.54
+Standard Deviation: 3.68
 Minimum: 1
 Maximum: 128
 5th percentile: 1.00
@@ -507,7 +518,7 @@ IQR (Interquartile Range): 2.00</code></pre>
 </div>
 <section id="repeated-sentences" class="level1">
 <h1>Repeated sentences</h1>
-<div id="8141d171" class="cell" data-execution_count="12">
+<div id="69669947" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sentence_counts <span class="op">=</span> df_sentences[<span class="st">'sentence'</span>].value_counts().reset_index()</span>
@@ -515,7 +526,7 @@ IQR (Interquartile Range): 2.00</code></pre>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>repeated_sentences <span class="op">=</span> sentence_counts[sentence_counts[<span class="st">'count'</span>] <span class="op">&gt;</span> <span class="dv">1</span>]</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>repeated_sentences</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 
 
@@ -545,12 +556,12 @@ IQR (Interquartile Range): 2.00</code></pre>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>The mechanism of translocation is unknown.</td>
+<td>Mutations within the C-propeptides further sug...</td>
 <td>24</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
-<td>Mutations within the C-propeptides further sug...</td>
+<td>Most early refolding studies were performed wi...</td>
 <td>24</td>
 </tr>
 <tr class="even">
@@ -559,38 +570,38 @@ IQR (Interquartile Range): 2.00</code></pre>
 <td>...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">3336</td>
-<td>BAG4-overexpressing HeLa cells showed reduced ...</td>
+<td data-quarto-table-cell-role="th">3476</td>
+<td>Eight catalytically active members are found i...</td>
 <td>2</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3337</td>
-<td>Binding to human RB1 increases the endonucleas...</td>
+<td data-quarto-table-cell-role="th">3477</td>
+<td>The C-terminal UBD of OPTN binds polyubiquitin...</td>
 <td>2</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">3338</td>
-<td>The polyA tail also seems to play a role in th...</td>
+<td data-quarto-table-cell-role="th">3478</td>
+<td>Members of RNase A family share specific eleme...</td>
 <td>2</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3339</td>
-<td>Protein protein interactions involving activat...</td>
+<td data-quarto-table-cell-role="th">3479</td>
+<td>During infectious processes S100A8 and S100A9 ...</td>
 <td>2</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">3340</td>
-<td>mRNA2 encodes the S protein.</td>
+<td data-quarto-table-cell-role="th">3480</td>
+<td>Further research is needed to fully understand...</td>
 <td>2</td>
 </tr>
 </tbody>
 </table>
 
-<p>3341 rows × 2 columns</p>
+<p>3481 rows × 2 columns</p>
 </div>
 </div>
 </div>
-<div id="cc1c1992" class="cell" data-execution_count="13">
+<div id="3730f9c0" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sentence_to_check <span class="op">=</span> repeated_sentences.iloc[<span class="dv">1</span>][<span class="st">'sentence'</span>]</span>
@@ -601,15 +612,15 @@ IQR (Interquartile Range): 2.00</code></pre>
 </details>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 0:</strong><br>
-This COVID-19 event has been created by a combination of computational inference from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.Nonstructural protein 15 (nsp15) of the SARS coronavirus (SARS-CoV-1) binds to the replication-transcription complex (RTC) through interaction with nsp8. This interaction appears to be conserved in other coronaviruses, such as mouse hepatitis virus (MHV). nsp15 is an endonuclease characteristic for the order Nidovirales that includes the family Coronaviridae. nsp15 preferentially cleaves 3’ of uridines, generating 2’-3’ cyclic phosphates after cleavage. nsp15 requires Mn2+ ions for catalytic activity. Functional nsp15 is needed for production of viable virions and for viral transcription. The biological role of nsp15 has not been elucidated. It may degrade host mRNAs to shut down host translation, but so far no human or viral RNA targets have been identified.</p>
+This COVID-19 event has been created by a combination of computational inference from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.The viral nucleocapsid complex, released into the host cell cytosol, dissociates to release the viral RNA genome.</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 1:</strong><br>
-This COVID-19 event has been created by a combination of computational inference from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.The SARS-CoV nsp3 was shown to bind ORF7a and Nsp6 by using proteomics analysis</p>
+This COVID-19 event has been created by a combination of computational inference from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.The SARS-CoV-2 nucleocapsid is released from the host cell endosome into the cytosol. Molecular details of this step are not well worked out. Studies of the infection of the human cultured cells with HCoV-229E coronavirus established a requirement for VCP (transitional endoplasmic reticulum ATPase) protein function for release to occur. A similar requirement for VCP involvement in SARS-CoV-2 nucleocapsid release is inferred here.</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 2:</strong><br>
-This COVID-19 event has been created by a combination of computational inference from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.Non-structural protein 14 (nsp14) of the human SARS coronavirus is a bifunctional enzyme bearing 3’-5 exoribonuclease activity involved in replication fidelity and RNA cap N7-guanine methyltransferase activity involved in 5’-RNA capping. nsp14 binds to the minimal replication and transcription complex (RTC), composed of nsp7, nsp8, and nsp12, by directly binding to nsp12 (the main RNA-dependent RNA polymerase). Binding of nsp14 does not affect the processivity of the RTC.</p>
+This COVID-19 event has been created by a combination of computational inference from SARS-CoV-1 data and manual curation, as described in the summation for the overall SARS-CoV-2 infection pathway.The SARS-CoV nsp3 was shown to bind ORF7a and Nsp6 by using proteomics analysis</p>
 </div>
 <div class="cell-output cell-output-display cell-output-markdown">
 <p><strong>Original notes at index 3:</strong><br>
@@ -1096,8 +1107,8 @@ This COVID-19 event has been created by a combination of computational inference
 <span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"../reaction_sentences.parquet"</span>)</span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>df_sentences <span class="op">=</span> pd.read_parquet(<span class="st">"../sentences.parquet"</span>)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_parquet(<span class="st">"./reaction_sentences.parquet"</span>)</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>df_sentences <span class="op">=</span> pd.read_parquet(<span class="st">"./sentences.parquet"</span>)</span>
 <span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>Reaction Sentences dataframe</span>

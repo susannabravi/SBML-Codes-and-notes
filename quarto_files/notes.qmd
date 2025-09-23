@@ -22,8 +22,8 @@ ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 ```
 
 ```{python}
-df = pd.read_parquet("../reaction_sentences.parquet")
-df_sentences = pd.read_parquet("../sentences.parquet")
+df = pd.read_parquet("./reaction_sentences.parquet")
+df_sentences = pd.read_parquet("./sentences.parquet")
 ```
 
 Reaction Sentences dataframe
