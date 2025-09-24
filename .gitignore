@@ -188,6 +188,9 @@ finetune_data/
 *.json
 *.jsonl
 
+# Finetuning 
+deepseek-dora-finetuned-small/
+
 # Images and plots
 *.png
 *.jpg
