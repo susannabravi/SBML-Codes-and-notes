@@ -32,7 +32,7 @@ ggplot_colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 ```{python}
 
 df = pd.read_parquet("../reactions_train.parquet")
-tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-Coder-V2-Base", trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/deepseek-coder-v2-lite-base", trust_remote_code=True)
 analyze_tokenization(df, 
                     tokenizer,        
                     text_columns=['snippet', 'notes'],

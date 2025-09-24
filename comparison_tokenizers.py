@@ -9,7 +9,7 @@ nltk.download('punkt_tab')
 df = pd.read_parquet("./reactions_train.parquet")
 
 # Load the DeepSeek tokenizer 
-deepseek_tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-Coder-V2-Base", trust_remote_code=True)
+deepseek_tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/deepseek-coder-v2-lite-base", trust_remote_code=True)
 extended_tokenizer = AutoTokenizer.from_pretrained("./extended_tokenizer")
 
 print(f"Extended tokenizer model  max lenght: {extended_tokenizer.model_max_length}\n") #16384

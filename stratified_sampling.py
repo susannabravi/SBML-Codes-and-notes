@@ -98,7 +98,7 @@ def print_stats(df):
     print(f"Least common category: {category_summary.index[0]} ({category_summary.iloc[0]} samples)")
     print(f"Balance ratio: {category_summary.iloc[-1] / category_summary.iloc[0]:.2f}:1")
 
-def stratified_split(df, train_size = 0.7, val_size = 0.15, test_size = 0.15, random_state = 42):
+def stratified_split(df, train_size=0.8, val_size=0.15, test_size=0.05, random_state=42):
     # First split: train vs (val + test)
     train_df, temp_df = train_test_split(
         df, 
@@ -106,16 +106,20 @@ def stratified_split(df, train_size = 0.7, val_size = 0.15, test_size = 0.15, ra
         stratify=df['combined_category'],
         random_state=random_state
     )
-    
-    # Second split: val vs test
-    val_ratio = val_size / (val_size + test_size)
+
+    # Compute absolute sizes for val and test
+    n_temp = len(temp_df)
+    n_val = int(round(val_size * len(df)))
+    n_test = n_temp - n_val  # ensure leftover goes to test
+
+    # Second split with exact sizes
     val_df, test_df = train_test_split(
         temp_df,
-        test_size=(1 - val_ratio),
+        test_size=n_test,
         stratify=temp_df['combined_category'],
         random_state=random_state
     )
-    
+
     return train_df, val_df, test_df
 
 def prepare_for_finetuning(df: pd.DataFrame, instruction_template: str = None) -> pd.DataFrame:
@@ -185,9 +189,9 @@ def main():
     print("\nPerforming stratified split")
     train_df, val_df, test_df = stratified_split(
         df_categorized, 
-        train_size=0.7, 
+        train_size=0.8, 
         val_size=0.15, 
-        test_size=0.15,
+        test_size=0.05,
         random_state=42
     )
     

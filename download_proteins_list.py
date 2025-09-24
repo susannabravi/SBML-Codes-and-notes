@@ -25,7 +25,7 @@ def process_pathway(pathway_id):
     
     return proteins
 
-def extract_proteins(input_file='complete_list_of_pathways_nuova.txt'):
+def extract_proteins(input_file='complete_list_of_pathways.txt'):
     # Load pathways
     print("Loading pathway file...")
     with open(input_file, 'r') as file:
