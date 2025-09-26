@@ -1,13 +1,15 @@
 import copy
 import random
 import os
+import json
 from dataclasses import dataclass, field
 from typing import Optional, Dict, Sequence
+from datetime import datetime
 
 import torch
 import torch.distributed
 import transformers
-from transformers import Trainer, BitsAndBytesConfig
+from transformers import Trainer, BitsAndBytesConfig, TrainerCallback
 from datasets import load_dataset
 from peft import LoraConfig, get_peft_model, TaskType, prepare_model_for_kbit_training
 
@@ -79,11 +81,116 @@ class TrainingArguments(transformers.TrainingArguments):
     save_total_limit: int = field(default=3)
     load_best_model_at_end: bool = field(default=False)  # Will be set to True if eval data provided
     metric_for_best_model: str = field(default="loss")
+    greater_is_better: bool = field(default=False)  # For loss, smaller is better
     
-    # Disable wandb and hub
-    report_to: str = field(default="none")  # Disable wandb/tensorboard reporting
+    # Logging configuration - UPDATED for terminal output
+    report_to: str = field(default="none")  # Disable wandb/tensorboard
+    logging_dir: Optional[str] = field(default="./logs")
+    logging_steps: int = field(default=10)  # Log every 10 steps
+    logging_first_step: bool = field(default=True)  # Log the first step
+    logging_strategy: str = field(default="steps")  # Always log based on steps
+    log_level: str = field(default="info")  # Set logging level to info
+    disable_tqdm: bool = field(default=False)  # Keep progress bar enabled
+    
+    # Disable hub
     push_to_hub: bool = field(default=False)
     hub_model_id: Optional[str] = field(default=None)
+    
+    # Custom logging to file
+    save_logs_to_file: bool = field(default=True, metadata={"help": "Save training logs to JSON file"})
+
+
+class CustomLoggingCallback(TrainerCallback):
+    """Custom callback to log training metrics to console and optionally to file."""
+    
+    def __init__(self, save_to_file=True, output_dir="./"):
+        self.save_to_file = save_to_file
+        self.output_dir = output_dir
+        self.log_history = []
+        
+        if self.save_to_file:
+            self.log_file = os.path.join(output_dir, "training_log.json")
+            print(f"Training logs will be saved to: {self.log_file}")
+    
+    def on_log(self, args, state, control, logs=None, **kwargs):
+        """Called when logging happens."""
+        if logs is None:
+            return
+        
+        # Add timestamp
+        logs["timestamp"] = datetime.now().isoformat()
+        logs["global_step"] = state.global_step
+        logs["epoch"] = state.epoch
+        
+        # Format the output for terminal
+        output_parts = [f"\n[Step {state.global_step}]"]
+        
+        # Add epoch info if available
+        if state.epoch is not None:
+            output_parts.append(f"Epoch: {state.epoch:.2f}")
+        
+        # Add loss info
+        if "loss" in logs:
+            output_parts.append(f"Training Loss: {logs['loss']:.4f}")
+        
+        # Add eval metrics if available
+        if "eval_loss" in logs:
+            output_parts.append(f"Validation Loss: {logs['eval_loss']:.4f}")
+        
+        # Add learning rate if available
+        if "learning_rate" in logs:
+            output_parts.append(f"Learning Rate: {logs['learning_rate']:.2e}")
+        
+        # Add gradient norm if available  
+        if "grad_norm" in logs:
+            output_parts.append(f"Gradient Norm: {logs['grad_norm']:.4f}")
+        
+        # Print to console with clear formatting
+        if len(output_parts) > 1:  # Only print if we have actual metrics
+            print(" | ".join(output_parts))
+            print("-" * 80)  # Separator line
+        
+        # Save to file if enabled
+        if self.save_to_file:
+            self.log_history.append(logs)
+            with open(self.log_file, 'w') as f:
+                json.dump(self.log_history, f, indent=2, default=str)
+    
+    def on_train_end(self, args, state, control, **kwargs):
+        """Called at the end of training."""
+        print("\n" + "="*80)
+        print("TRAINING COMPLETED!")
+        print("="*80)
+        print(f"Total steps: {state.global_step}")
+        print(f"Total epochs: {state.epoch:.2f}")
+        
+        if self.save_to_file and self.log_history:
+            # Save final summary
+            summary = {
+                "training_completed": datetime.now().isoformat(),
+                "total_steps": state.global_step,
+                "total_epochs": state.epoch,
+                "final_train_loss": self.log_history[-1].get("loss", "N/A"),
+                "final_eval_loss": self.log_history[-1].get("eval_loss", "N/A")
+            }
+            
+            summary_file = os.path.join(self.output_dir, "training_summary.json")
+            with open(summary_file, 'w') as f:
+                json.dump(summary, f, indent=2)
+            
+            print(f"\nTraining summary saved to: {summary_file}")
+            print(f"Full training log saved to: {self.log_file}")
+    
+    def on_evaluation(self, args, state, control, metrics=None, **kwargs):
+        """Called after evaluation phase."""
+        if metrics:
+            print("\n" + "="*80)
+            print("EVALUATION RESULTS:")
+            for key, value in metrics.items():
+                if key.startswith("eval_"):
+                    metric_name = key.replace("eval_", "").replace("_", " ").title()
+                    print(f"  {metric_name}: {value:.4f}")
+            print("="*80 + "\n")
 
 
 def safe_save_model_for_hf_trainer(trainer: transformers.Trainer, output_dir: str):
@@ -230,7 +337,7 @@ def setup_dora_model(model, model_args, training_args):
             use_dora=model_args.use_dora,
             modules_to_save=modules_to_save_list
         )
-        print("ho usato DoRA")
+        print(f"Using {'DoRA' if model_args.use_dora else 'LoRA'} configuration")
     else:
         # Fallback: create config without use_dora
         lora_config = PeftLoraConfig(
@@ -254,7 +361,7 @@ def setup_dora_model(model, model_args, training_args):
     model = get_peft_model(model, lora_config)
     
     # Print configuration
-    print(f"{'DoRA' if model_args.use_dora else 'LoRA'} Configuration:")
+    print(f"\n{'DoRA' if model_args.use_dora else 'LoRA'} Configuration:")
     print(f"  Rank: {training_args.lora_r}")
     print(f"  Alpha: {training_args.lora_alpha}")
     print(f"  Dropout: {training_args.lora_dropout}")
@@ -321,6 +428,15 @@ def train():
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
     os.environ["WANDB_DISABLED"] = "true"  # Disable wandb completely
     
+    # Set up logging to console
+    import logging
+    logging.basicConfig(
+        format='%(asctime)s - %(levelname)s - %(name)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S',
+        level=logging.INFO,
+    )
+    logger = logging.getLogger(__name__)
+    
     print('='*100)
     print(f"Fine-tuning DeepSeek Coder V2 with {'DoRA' if model_args.use_dora else 'LoRA'}")
     if model_args.use_quantization:
@@ -331,7 +447,7 @@ def train():
     # Setup tokenizer
     tokenizer = setup_tokenizer(model_args.model_name_or_path, training_args.model_max_length)
     
-    print(f"Tokenizer setup complete:")
+    print(f"\nTokenizer setup complete:")
     print(f"  Vocab size: {len(tokenizer)}")
     print(f"  PAD token: {tokenizer.pad_token} (ID: {tokenizer.pad_token_id})")
     print(f"  EOS token: {tokenizer.eos_token} (ID: {tokenizer.eos_token_id})")
@@ -348,7 +464,7 @@ def train():
     model = setup_dora_model(model, model_args, training_args)
     
     # Load and process training dataset
-    print(f"Loading dataset from: {data_args.data_path}")
+    print(f"\nLoading dataset from: {data_args.data_path}")
     raw_train_datasets = load_dataset(
         'json',
         data_files=data_args.data_path,
@@ -370,7 +486,7 @@ def train():
     # Load eval dataset if provided
     eval_dataset = None
     if data_args.eval_data_path:
-        print(f"Loading eval dataset from: {data_args.eval_data_path}")
+        print(f"\nLoading eval dataset from: {data_args.eval_data_path}")
         raw_eval_datasets = load_dataset(
             'json',
             data_files=data_args.eval_data_path,
@@ -395,39 +511,75 @@ def train():
         training_args.load_best_model_at_end = True
         print("Evaluation enabled with eval dataset")
     
-    print(f"Training dataset samples: {len(train_dataset)}")
+    print(f"\nTraining dataset samples: {len(train_dataset)}")
+    
+    # Calculate and display training statistics
+    total_steps = len(train_dataset) // (training_args.per_device_train_batch_size * training_args.gradient_accumulation_steps) * training_args.num_train_epochs
+    print(f"\nTraining Configuration:")
+    print(f"  Total training samples: {len(train_dataset)}")
+    print(f"  Batch size per device: {training_args.per_device_train_batch_size}")
+    print(f"  Gradient accumulation steps: {training_args.gradient_accumulation_steps}")
+    print(f"  Effective batch size: {training_args.per_device_train_batch_size * training_args.gradient_accumulation_steps}")
+    print(f"  Number of epochs: {training_args.num_train_epochs}")
+    print(f"  Total optimization steps: {total_steps}")
+    print(f"  Logging every {training_args.logging_steps} steps")
+    if eval_dataset:
+        print(f"  Evaluating every {training_args.eval_steps} steps")
+    print(f"  Saving checkpoints every {training_args.save_steps} steps")
     
     # Show sample data
+    print("\nSample training data:")
     for index in random.sample(range(min(len(train_dataset), 10)), min(2, len(train_dataset))):
-        print(f"\nSample {index}:")
-        print(f"  Input length: {len(train_dataset[index]['input_ids'])}")
-        print(f"  Sample text (first 300 chars):")
+        print(f"\n  Sample {index}:")
+        print(f"    Input length: {len(train_dataset[index]['input_ids'])}")
+        print(f"    Sample text (first 300 chars):")
         decoded = tokenizer.decode(train_dataset[index]['input_ids'])
-        print(f"  {decoded[:300]}...")
+        print(f"    {decoded[:300]}...")
     
     # Setup data collator
     data_collator = DataCollatorForSupervisedDataset(tokenizer=tokenizer)
     
-    # Initialize trainer
+    # Create custom logging callback
+    custom_callback = CustomLoggingCallback(
+        save_to_file=training_args.save_logs_to_file,
+        output_dir=training_args.output_dir
+    )
+    
+    # Initialize trainer with custom callback
     trainer = Trainer(
         model=model,
-        processing_class=tokenizer,  # Changed from tokenizer to processing_class
+        tokenizer=tokenizer,
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
         data_collator=data_collator,
+        callbacks=[custom_callback],  # Add custom callback
     )
     
     # Clear cache before training
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
-        print(f"GPU memory cleared. Available GPUs: {torch.cuda.device_count()}")
+        print(f"\nGPU memory cleared. Available GPUs: {torch.cuda.device_count()}")
+        for i in range(torch.cuda.device_count()):
+            props = torch.cuda.get_device_properties(i)
+            print(f"  GPU {i}: {props.name}, Memory: {props.total_memory / 1024**3:.1f} GB")
     
     # Train the model
-    print(f"\nStarting {'DoRA' if model_args.use_dora else 'LoRA'} fine-tuning...")
-    print(f"Total training steps: {len(train_dataset) // (training_args.per_device_train_batch_size * training_args.gradient_accumulation_steps) * training_args.num_train_epochs}")
+    print(f"\n{'='*100}")
+    print(f"Starting {'DoRA' if model_args.use_dora else 'LoRA'} fine-tuning...")
+    print(f"{'='*100}\n")
     
-    trainer.train()
+    train_result = trainer.train()
+    
+    # Print training results
+    print("\n" + "="*100)
+    print("Training Results:")
+    print(f"  Total training time: {train_result.metrics['train_runtime']:.2f} seconds")
+    print(f"  Training samples per second: {train_result.metrics['train_samples_per_second']:.2f}")
+    print(f"  Training steps per second: {train_result.metrics['train_steps_per_second']:.2f}")
+    print(f"  Total FLOPs: {train_result.metrics.get('total_flos', 'N/A')}")
+    print(f"  Final training loss: {train_result.metrics['train_loss']:.4f}")
+    print("="*100)
     
     # Save the final model
     trainer.save_model()
@@ -436,12 +588,29 @@ def train():
     # Save tokenizer
     tokenizer.save_pretrained(training_args.output_dir)
     
-    print('='*100)
+    # Run final evaluation if eval dataset exists
+    if eval_dataset:
+        print("\nRunning final evaluation...")
+        eval_results = trainer.evaluate()
+        
+        print("\nFinal Evaluation Results:")
+        for key, value in eval_results.items():
+            if key.startswith("eval_"):
+                metric_name = key.replace("eval_", "").replace("_", " ").title()
+                print(f"  {metric_name}: {value:.4f}")
+        
+        # Save evaluation results
+        eval_results_file = os.path.join(training_args.output_dir, "final_eval_results.json")
+        with open(eval_results_file, 'w') as f:
+            json.dump(eval_results, f, indent=2)
+        print(f"\nEvaluation results saved to: {eval_results_file}")
+    
+    print("\n" + "="*100)
     print(f"{'DoRA' if model_args.use_dora else 'LoRA'} fine-tuning completed successfully!")
     print(f"Model saved to: {training_args.output_dir}")
     if model_args.use_quantization:
         print("Note: Model was trained with 4-bit quantization (QDoRA)")
-    print('='*100)
+    print("="*100)
 
 
 if __name__ == "__main__":
